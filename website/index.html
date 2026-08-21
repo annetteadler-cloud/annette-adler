@@ -889,7 +889,7 @@ function render(year){
   setBar('y-co2-fuhrpark', d.co2FuhrparkVJ, d.co2Fuhrpark, py, year, ka(fmtDe(d.co2FuhrparkVJ)), fmtDe(d.co2Fuhrpark));
   setHTML('y-co2-fuhrpark-delta', d.co2FuhrparkVJ==null ? 'Vorjahreswert nicht ausgewiesen' : (deltaPct(d.co2FuhrparkVJ, d.co2Fuhrpark, true) + ' ggü. Vorjahr'));
 
-  setHTML('y-co2-total', d.co2TotalDelta == null ? ka(null) : (d.co2TotalDelta > 0 ? '+' : '') + fmtDe(d.co2TotalDelta, d.co2TotalDelta % 1 !== 0 ? 1 : 0) + ' <sup>t</sup>');
+  setHTML('y-co2-total', d.co2TotalDelta == null ? ka(null) : (d.co2TotalDelta > 0 ? '+' : (d.co2TotalDelta < 0 ? '−' : '')) + fmtDe(Math.abs(d.co2TotalDelta), d.co2TotalDelta % 1 !== 0 ? 1 : 0) + ' <sup>t</sup>');
   setHTML('y-co2-total-sub', d.co2TotalNote);
   setHTML('y-pv', d.pv + ' <sup>kWh</sup>');
   setHTML('y-pv-sub', d.pvNote);
