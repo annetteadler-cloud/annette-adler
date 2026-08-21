@@ -210,6 +210,8 @@ section.band.tint{ background: var(--surface-2); }
 
 /* footer */
 footer{ padding: 48px 0 56px; border-top: 1px solid var(--rule); }
+.footer-motif{ width: 120px; margin: 0 auto 32px; color: var(--ink-faint); }
+.footer-motif svg{ width:100%; height:auto; display:block; }
 footer .cols{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
 @media (max-width:700px){ footer .cols{ grid-template-columns:1fr; } }
 footer h4{ font-size:.86rem; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-soft); margin-bottom:10px; font-weight:700; }
