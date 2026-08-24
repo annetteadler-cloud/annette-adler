@@ -81,7 +81,7 @@
       <p class="note">Vier Stationen über 30 Jahre – vom wissenschaftlichen Archiv über Presse- und Öffentlichkeitsarbeit bis zur Nachhaltigkeitsberichterstattung.</p>
     </div>
 
-    <div class="section-photo">
+    <div class="section-photo" style="aspect-ratio:1000/563; height:auto;">
       <img src="images/berufserfahrung-strategie.jpg" alt="Annette Adler im Meetingraum, Bildschirm zeigt Strategie-Präsentation">
       <div class="caption">Strategiearbeit im Vorstandsstab: von der Sparkasse Fürstenfeldbruck bis zur Stadtsparkasse München</div>
     </div>
@@ -154,7 +154,7 @@
       <p class="note">Zwei berufsbegleitende Fachwirt-Abschlüsse und aktuell die Zertifizierung zur KI-Consultant.</p>
     </div>
 
-    <div class="section-photo">
+    <div class="section-photo" style="aspect-ratio:1000/563; height:auto;">
       <img src="images/weiterbildung-meeting.jpg" alt="Meetingraum mit Bildschirm: Weiterbildung – Wissen. Fähigkeiten. Zukunft.">
       <div class="caption">Berufsbegleitendes Lernen als roter Faden – vom Fachwirt bis zur KI-Consultant-Zertifizierung</div>
     </div>
@@ -178,7 +178,7 @@
     </div>
 
     <div class="grid-2" style="margin-top:20px;">
-      <a href="certificates/zertifikat-de.pdf" target="_blank" rel="noopener" class="cert-card" style="text-decoration:none; color:inherit; display:block;">
+      <div class="cert-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openCertModal('de')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('de');}">
         <div class="cert-card-head">
           <h4>Zertifikat</h4>
           <span>Business Trends Academy</span>
@@ -192,10 +192,10 @@
             <dt>Ausstellungsort</dt><dd>Berlin, 17.08.2026</dd>
           </dl>
           <p class="cert-sign">Unterschrieben von Cordula Stübing, Akademieleiterin</p>
-          <p class="sub" style="margin-top:10px;">PDF-Zertifikat öffnen ↗</p>
+          <p class="sub" style="margin-top:10px; color:var(--red); font-weight:600;">Vollständiges Zertifikat anzeigen ↗</p>
         </div>
-      </a>
-      <a href="certificates/certificate-en.pdf" target="_blank" rel="noopener" class="cert-card" style="text-decoration:none; color:inherit; display:block;">
+      </div>
+      <div class="cert-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openCertModal('en')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('en');}">
         <div class="cert-card-head">
           <h4>Certificate</h4>
           <span>Business Trends Academy</span>
@@ -209,9 +209,9 @@
             <dt>Issued at</dt><dd>Berlin, 08/17/2026</dd>
           </dl>
           <p class="cert-sign">Signed by Cordula Stübing, Academy director</p>
-          <p class="sub" style="margin-top:10px;">Open PDF certificate ↗</p>
+          <p class="sub" style="margin-top:10px; color:var(--red); font-weight:600;">Show full certificate ↗</p>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
@@ -246,14 +246,14 @@
     </div>
 
     <div class="grid-2" style="margin-top:20px;">
-      <figure style="margin:0;">
-        <img src="images/studium-erlangen.jpg" alt="Schloss Erlangen, Hauptgebäude der Friedrich-Alexander-Universität Erlangen-Nürnberg" style="width:100%; border-radius:8px; display:block;">
-        <figcaption style="margin-top:8px; font-size:.8rem; color:var(--ink-soft);">Friedrich-Alexander-Universität Erlangen-Nürnberg (Schloss Erlangen) · Foto: MisterHorsus · CC BY-SA 4.0</figcaption>
-      </figure>
-      <figure style="margin:0;">
-        <img src="images/studium-parma.jpg" alt="Palazzo dell'Università, Hauptgebäude der Università degli Studi di Parma" style="width:100%; border-radius:8px; display:block;">
-        <figcaption style="margin-top:8px; font-size:.8rem; color:var(--ink-soft);">Università degli Studi di Parma (Palazzo dell'Università) · Foto: Parma1983 · CC BY-SA 4.0</figcaption>
-      </figure>
+      <div class="card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:14px;">
+        <img src="images/studium-erlangen-logo.jpg" alt="Siegel der Friedrich-Alexander-Universität Erlangen-Nürnberg" style="max-height:130px; width:auto;">
+        <p class="sub">Friedrich-Alexander-Universität Erlangen-Nürnberg</p>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:14px;">
+        <img src="images/studium-parma-logo.png" alt="Logo der Università degli Studi di Parma" style="max-height:130px; width:auto;">
+        <p class="sub">Università degli Studi di Parma</p>
+      </div>
     </div>
   </div>
 </section>
@@ -355,7 +355,7 @@
       </div>
     </div>
 
-    <div class="section-photo" style="margin-top:34px;">
+    <div class="section-photo" style="margin-top:34px; aspect-ratio:1000/428; height:auto;">
       <img src="images/impression-ladesaeulen.jpg" alt="Annette Adler vor Ladesäulen und E-Autos an einem modernen Gebäude">
       <div class="caption">Nachhaltigkeit in der Praxis: an den Ladesäulen</div>
     </div>
@@ -445,12 +445,176 @@
       </div>
       <div>
         <h4>Bildnachweis</h4>
-        <p>Portraitfotos: privat. Dashboard-Ausschnitt: eigenes Projekt (siehe <a href="index.html" style="color:var(--red);">Nachhaltigkeits-Dashboard</a>). Universitätsgebäude Erlangen: MisterHorsus, CC BY-SA 4.0. Universitätsgebäude Parma: Parma1983, CC BY-SA 4.0 (beide via Wikimedia Commons).</p>
+        <p>Portraitfotos: privat. Dashboard-Ausschnitt: eigenes Projekt (siehe <a href="index.html" style="color:var(--red);">Nachhaltigkeits-Dashboard</a>). Hochschul-Logos: offizielle Siegel/Logos der jeweiligen Universität.</p>
       </div>
     </div>
     <p class="fine">Zurück zum <a href="index.html" style="color:inherit;">Sparkasse-FFB-Nachhaltigkeits-Dashboard</a>.</p>
   </div>
 </footer>
+
+<!-- ============================================================ -->
+<!-- ZERTIFIKAT-MODALS -->
+<!-- ============================================================ -->
+<div class="cert-modal-backdrop" id="cert-modal-de" hidden onclick="if(event.target===this)closeCertModal('de')">
+  <div class="cert-modal-box" role="dialog" aria-modal="true" aria-label="Zertifikat KI Consultant, Deutsch">
+    <div class="cert-card-head" style="border-radius:12px 12px 0 0;">
+      <h4>Zertifikat</h4>
+      <span>Business Trends Academy</span>
+    </div>
+    <button type="button" class="cert-modal-close" onclick="closeCertModal('de')" aria-label="Schließen">✕</button>
+    <div class="cert-modal-body">
+      <dl style="display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0 0 14px; font-size:.88rem;">
+        <dt style="color:var(--ink-faint); font-weight:600;">Name</dt><dd style="margin:0;">Frau Annette Adler</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Zeitraum</dt><dd style="margin:0;">21.07.2026 – 17.08.2026</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Programm</dt><dd style="margin:0;">KI Consultant</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Umfang</dt><dd style="margin:0;">Akademische Vollzeit-Weiterbildung, 180 Unterrichtsstunden</dd>
+      </dl>
+      <p class="sub" style="margin-bottom:6px;">Der Kurs umfasst die aktive, kollaborative Umsetzung von fünf realen Business-Cases im Projektmodus. In diesem Rahmen wurden die Projekte nicht nur im eigenen Fokus bearbeitet, sondern auch die übrigen Projektteams unterstützt, sodass ein belastbarer Nachweis praktischer Umsetzungs- und Beratungskompetenz entsteht.</p>
+
+      <h5>AI Foundations &amp; Consulting Mindset</h5>
+      <ul>
+        <li>KI-Grundverständnis</li>
+        <li>Übertragung aktueller Themen/Anforderungen in unternehmerische Anwendungsfälle, inkl. Zielbild, Nutzenargumentation und pragmatischer Umsetzungsplanung</li>
+        <li>Einordnung von DSGVO, Urheberrecht und EU AI Act in Beratung, Toolauswahl, Datenräume und Dokumentation</li>
+      </ul>
+
+      <h5>Vibe Coding &amp; AI-Native Software Development</h5>
+      <ul>
+        <li>Erstellung funktionierender Prototypen und Applikationen durch natürliche Sprache, strukturierte Anforderungen und KI-gestützte Umsetzung (vibe coding / Natural Language Programming)</li>
+        <li>Entwicklung von Web-Apps, MVPs und internen Tools (z. B. mit Lovable, Replit, v0 oder vergleichbaren AI-Buildern)</li>
+        <li>Übersetzung von Business-Anforderungen in Datenmodell, UI-Flows, Validierungslogik und funktionale Schnittstellen (Frontend-/Backend-Logik)</li>
+        <li>Agile Verbesserungsschleifen via KI-gestütztem Debugging, Testing-Heuristiken und Refactoring (Iterative Development)</li>
+      </ul>
+
+      <h5>Advanced Prompt Engineering &amp; System Design</h5>
+      <ul>
+        <li>Prompt-Architektur (Ziel-/Kontextdefinition, Output-Formate, Constraints, Guardrails, Rollen-/Persona-Design)</li>
+        <li>Fortgeschrittene Methoden: u. a. Few-Shot Prompting, Meta-Prompting, strukturierte Denk- und Prüfschritte zur Erhöhung von Konsistenz und Ergebnisqualität</li>
+        <li>Entwicklung stabiler System-Instruktionen (z. B. Tonalität/Corporate Language), Dokumentations- und Qualitätsstandards</li>
+        <li>Umgang mit Prompt Injection, Datenabflussrisiken, Quellen-/Nachweislogik</li>
+      </ul>
+
+      <h5>Multi-Model LLM Strategy &amp; Orchestration</h5>
+      <ul>
+        <li>Auswahl und Kombination mehrerer Modelle/Plattformen je nach Anforderung (Reasoning, Geschwindigkeit, Kosten, Datenschutz, Multimodalität)</li>
+        <li>Lokale bzw. kontrollierte Deployments (z. B. Mistral, Meta Llama, DeepSeek via LM Studio/Ollama) für sensible Datenräume</li>
+        <li>Evidenzbasierte Recherche/Analyse und Quellenmanagement</li>
+      </ul>
+
+      <h5>Agentic AI &amp; Workflow Automation</h5>
+      <ul>
+        <li>Agenten-Architektur: Design spezialisierter Assistenten inkl. Rollenlogik, Tool-Anbindung, Zuständigkeiten, Übergaben und Qualitätssicherung</li>
+        <li>Anbindung von Wissensdatenbanken zur Reduktion von Halluzinationen</li>
+        <li>Umsetzung skalierbarer Automatisierungsstrecken mit n8n (Self-Hosted/Advanced Workflows) sowie Make.com und Zapier</li>
+        <li>Prozessmodellierung, Monitoring/Fehlerpfade und iterative Optimierung</li>
+        <li>Einordnung und testweiser Einsatz experimenteller Tools/Plattformen (z. B. Google Antigravity, Opal AI)</li>
+      </ul>
+
+      <h5>KI-gesteuertes Projekt- &amp; Transformationsmanagement</h5>
+      <ul>
+        <li>KI-adaptierte Anwendung von Scrum/Kanban, Lean, Design Thinking, Business Model Canvas, sowie strukturierende Framework-Logiken (z. B. PRINCE2)</li>
+        <li>Lifecycle Management</li>
+        <li>Stakeholder- &amp; Change-Orientierung (Erwartungsmanagement, Nutzenargumentation, Adoption-Planung und „Operating Model"-Denken für nachhaltige Implementierung)</li>
+      </ul>
+
+      <div class="cert-modal-foot">
+        <p class="cert-sign" style="margin:0; border:none; padding:0;">Berlin, 17.08.2026 · Unterschrieben von Cordula Stübing, Akademieleiterin</p>
+        <a class="cert-modal-pdf-link" href="certificates/zertifikat-de.pdf" target="_blank" rel="noopener">PDF-Datei öffnen (lokal) ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cert-modal-backdrop" id="cert-modal-en" hidden onclick="if(event.target===this)closeCertModal('en')">
+  <div class="cert-modal-box" role="dialog" aria-modal="true" aria-label="Certificate KI Consultant, English">
+    <div class="cert-card-head" style="border-radius:12px 12px 0 0;">
+      <h4>Certificate</h4>
+      <span>Business Trends Academy</span>
+    </div>
+    <button type="button" class="cert-modal-close" onclick="closeCertModal('en')" aria-label="Close">✕</button>
+    <div class="cert-modal-body">
+      <dl style="display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0 0 14px; font-size:.88rem;">
+        <dt style="color:var(--ink-faint); font-weight:600;">Name</dt><dd style="margin:0;">Ms Annette Adler</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Period</dt><dd style="margin:0;">21st July 2026 – 17th August 2026</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Program</dt><dd style="margin:0;">KI Consultant</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Scope</dt><dd style="margin:0;">Full-time academic continuing education, 180 teaching hours (language of instruction: German)</dd>
+      </dl>
+      <p class="sub" style="margin-bottom:6px;">The course comprises the active, collaborative implementation of five real business cases in project mode. Within this framework, the projects were not only worked on independently, but the other project teams were also supported, resulting in reliable proof of practical implementation and consulting skills.</p>
+
+      <h5>AI Foundations &amp; Consulting Mindset</h5>
+      <ul>
+        <li>Basic understanding of AI</li>
+        <li>Translation of current topics/requirements into business use cases, including target vision, benefit arguments and pragmatic implementation planning</li>
+        <li>Classification of GDPR, copyright and EU AI Act in consulting, tool selection, data rooms and documentation</li>
+      </ul>
+
+      <h5>Vibe Coding &amp; AI-Native Software Development</h5>
+      <ul>
+        <li>Creation of functioning prototypes and applications through natural language, structured requirements and AI-supported implementation (vibe coding / natural language programming)</li>
+        <li>Development of web apps, MVPs and internal tools (e.g. with Lovable, Replit, v0 or comparable AI builders)</li>
+        <li>Translation of business requirements into data models, UI flows, validation logic and functional interfaces (front-end/back-end logic)</li>
+        <li>Agile improvement loops via AI-supported debugging, testing heuristics and refactoring (iterative development)</li>
+      </ul>
+
+      <h5>Advanced Prompt Engineering &amp; System Design</h5>
+      <ul>
+        <li>Prompt architecture (goal/context definition, output formats, constraints, guardrails, role/persona design)</li>
+        <li>Advanced methods: including few-shot prompting, meta-prompting, structured thinking and testing steps to increase consistency and result quality</li>
+        <li>Development of stable system instructions (e.g. tonality/corporate language), documentation and quality standards</li>
+        <li>Dealing with prompt injection, data leakage risks, source/evidence logic</li>
+      </ul>
+
+      <h5>Multi-Model LLM Strategy &amp; Orchestration</h5>
+      <ul>
+        <li>Selection and combination of multiple models/platforms depending on requirements (reasoning, speed, cost, data protection, multimodality)</li>
+        <li>Local or controlled deployments (e.g. Mistral, Meta Llama, DeepSeek via LM Studio/Ollama) for sensitive data rooms</li>
+        <li>Evidence-based research/analysis and source management</li>
+      </ul>
+
+      <h5>Agentic AI &amp; Workflow Automation</h5>
+      <ul>
+        <li>Agent architecture: design of specialised assistants including role logic, tool integration, responsibilities, handoffs and quality assurance</li>
+        <li>Integration of knowledge databases to reduce hallucinations</li>
+        <li>Implementation of scalable automation pipelines with n8n (self-hosted/advanced workflows) as well as Make.com and Zapier</li>
+        <li>Process modelling, monitoring/error paths and iterative optimisation</li>
+        <li>Classification and trial use of experimental tools/platforms (e.g. Google Antigravity, Opal AI)</li>
+      </ul>
+
+      <h5>AI-Driven Project &amp; Transformation Management</h5>
+      <ul>
+        <li>AI-adapted application of Scrum/Kanban, Lean, Design Thinking, Business Model Canvas, as well as structuring framework logics (e.g. PRINCE2)</li>
+        <li>Lifecycle management</li>
+        <li>Stakeholder &amp; change orientation (expectation management, benefit argumentation, adoption planning and 'operating model' thinking for sustainable implementation)</li>
+      </ul>
+
+      <div class="cert-modal-foot">
+        <p class="cert-sign" style="margin:0; border:none; padding:0;">Berlin, 08/17/2026 · Signed by Cordula Stübing, Academy director</p>
+        <a class="cert-modal-pdf-link" href="certificates/certificate-en.pdf" target="_blank" rel="noopener">Open PDF file (local) ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openCertModal(id){
+  var m = document.getElementById('cert-modal-' + id);
+  if(!m) return;
+  m.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function closeCertModal(id){
+  var m = document.getElementById('cert-modal-' + id);
+  if(!m) return;
+  m.hidden = true;
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.cert-modal-backdrop:not([hidden])').forEach(function(m){ m.hidden = true; });
+    document.body.style.overflow = '';
+  }
+});
+</script>
 
 </body>
 </html>
