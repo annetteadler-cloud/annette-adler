@@ -355,7 +355,7 @@ footer .fine{ margin-top:24px; font-size:.76rem; color: var(--ink-faint); }
 @media (max-width: 560px){ .competency-grid{ grid-template-columns: 1fr; } }
 
 /* Impressionen-Galerie */
-.gallery-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.gallery-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .gallery-grid figure{ margin:0; border-radius: 8px; overflow:hidden; border:1px solid var(--rule); box-shadow: var(--shadow); }
 .gallery-grid img{ width:100%; aspect-ratio: 4/3; object-fit:cover; display:block; }
 .gallery-grid figcaption{ padding: 8px 10px; font-size:.76rem; color: var(--ink-soft); background: var(--surface); }

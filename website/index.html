@@ -495,9 +495,17 @@
       <p class="note" id="y-region-note">451 Institutionen und Initiativen im Landkreis wurden 2025 finanziell unterstützt.</p>
     </div>
 
-    <div class="section-photo">
+    <div class="section-photo" id="y-region-photo">
       <img src="images/region-amper-web.jpg" alt="Amper-Flussschleife mit Uferwald bei Olching im Landkreis Fürstenfeldbruck">
       <div class="caption">Die Amper bei Olching, Landkreis Fürstenfeldbruck · Foto: Richard Huber · CC BY-SA 3.0</div>
+    </div>
+
+    <div id="y-region-2024" style="display:none;">
+      <video src="videos/nachhaltigkeitsbericht-2024.mp4" controls preload="metadata" poster="images/nachhaltigkeitsbericht-2024-poster.jpg" style="width:100%; border-radius:10px; display:block; box-shadow:var(--shadow); border:1px solid var(--rule); margin-bottom:14px;"></video>
+      <div class="section-photo" style="height:auto; aspect-ratio:1100/580; margin-bottom:34px;">
+        <img src="images/nachhaltigkeitsbericht-2024-infografik.jpg" alt="Infografik: Nachhaltigkeitsbericht 2024 der Sparkasse Fürstenfeldbruck – Kennzahlen und ökologischer Fußabdruck">
+        <div class="caption">Nachhaltigkeitsbericht 2024 auf einen Blick – Kennzahlen &amp; ökologischer Fußabdruck</div>
+      </div>
     </div>
 
     <div class="tiles" style="margin-bottom:26px;">
@@ -941,6 +949,8 @@ function render(year){
 
   // Region
   setHTML('y-region-note', d.spendenInstitutionen + ' Institutionen und Initiativen im Landkreis wurden ' + year + ' finanziell unterstützt.');
+  document.getElementById('y-region-photo').style.display = (year === 2024) ? 'none' : 'block';
+  document.getElementById('y-region-2024').style.display = (year === 2024) ? 'block' : 'none';
   setHTML('y-spenden', d.spenden);
   setHTML('y-spenden-sub', 'an ' + d.spendenInstitutionen + ' Institutionen &amp; Initiativen');
   setHTML('y-stiftung-gesamt', d.stiftungGesamt);
