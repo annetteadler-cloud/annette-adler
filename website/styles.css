@@ -336,7 +336,15 @@ footer .fine{ margin-top:24px; font-size:.76rem; color: var(--ink-faint); }
 }
 .timeline-content h3{ font-size: 1.02rem; font-weight:700; font-family:"Public Sans",sans-serif; }
 .timeline-content .sub{ margin-top:2px; margin-bottom:10px; }
-@media (max-width: 640px){ .timeline-item{ grid-template-columns: 1fr; gap:6px; } }
+.timeline-logo-wrap{ text-align:center; margin-top:12px; }
+.timeline-logo{
+  display:inline-block; max-height:40px; max-width:120px; width:auto; height:auto;
+  background:#fff; padding:6px 10px; border-radius:6px; border:1px solid var(--rule);
+}
+@media (max-width: 640px){
+  .timeline-item{ grid-template-columns: 1fr; gap:6px; }
+  .timeline-logo-wrap{ text-align:left; margin-top:8px; }
+}
 
 /* Kompetenz-Grid */
 .competency-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
