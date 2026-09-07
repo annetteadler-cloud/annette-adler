@@ -93,13 +93,13 @@ img,svg{ display:block; max-width:100%; }
 .topbar-inner{
   display:flex; align-items:center; justify-content: space-between;
   gap: 20px; padding: 12px 28px; max-width: 1120px; margin:0 auto;
+  flex-wrap: wrap; row-gap: 6px;
 }
 .brand{ display:flex; align-items:center; gap:11px; font-family:"Archivo",sans-serif; font-weight:700; font-size: 1rem; white-space: nowrap; }
 .brand-mark{ width:44px; height:44px; flex:none; border-radius: 10px; overflow:hidden; }
 .brand-mark svg{ display:block; width:100%; height:100%; }
 .brand small{ display:block; font-family:"Public Sans",sans-serif; font-weight:500; font-size:.72rem; letter-spacing:.02em; color: var(--ink-soft); }
-nav.jump{ display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; }
-nav.jump::-webkit-scrollbar{ display:none; }
+nav.jump{ display:flex; flex-wrap:wrap; gap:2px; }
 nav.jump a{
   text-decoration:none; font-size:.82rem; font-weight:700; color: var(--ink-soft);
   padding: 8px 12px; border-radius: 6px; white-space:nowrap;
@@ -359,6 +359,8 @@ footer .fine{ margin-top:24px; font-size:.76rem; color: var(--ink-faint); }
 .gallery-grid figure{ margin:0; border-radius: 8px; overflow:hidden; border:1px solid var(--rule); box-shadow: var(--shadow); }
 .gallery-grid img{ width:100%; aspect-ratio: 4/3; object-fit:cover; display:block; }
 .gallery-grid figcaption{ padding: 8px 10px; font-size:.76rem; color: var(--ink-soft); background: var(--surface); }
+.gallery-grid figure.flyer-figure{ grid-row: span 2; }
+.gallery-grid figure.flyer-figure img{ aspect-ratio: 900/1272; object-fit: contain; background: var(--surface); }
 @media (max-width: 880px){ .gallery-grid{ grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px){ .gallery-grid{ grid-template-columns: 1fr; } }
 

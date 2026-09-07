@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluation &amp; Quality Assurance – KI-gestützter Nachhaltigkeitsbericht – Sparkasse Fürstenfeldbruck</title>
+<meta name="description" content="Evaluation- und Quality-Assurance-Blueprint für den KI-gestützten Nachhaltigkeitsbericht der Sparkasse Fürstenfeldbruck – mit messbaren Qualitätszielen, QA-Gates, Testfällen, Human-in-the-Loop, Scorecard und Freigabeprotokoll.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e2001a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ============================================================
+   EVALUATION & QUALITY ASSURANCE – seitenspezifische Ergänzungen zu styles.css
+   Alle Klassen mit Präfix "eq-" sind lokal zu dieser Seite.
+   ============================================================ */
+
+/* Ampel-Farbwerte + Navy-Akzent (identisch zum LLM- & KI-Strategie-Blueprint) */
+:root{
+  --green: #1a7d3a; --green-bg: #e8f5ec;
+  --amber: #a3690a; --amber-bg: #fbf0dc;
+  --red-status: #b3261e; --red-status-bg: #fbe6e5;
+  --navy: #0f2035;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --green: #6fcf8f; --green-bg: #163223;
+    --amber: #e8b95c; --amber-bg: #332a15;
+    --red-status: #f3958f; --red-status-bg: #3a1d1c;
+    --navy: #1a3350;
+  }
+}
+:root[data-theme="dark"]{
+  --green: #6fcf8f; --green-bg: #163223;
+  --amber: #e8b95c; --amber-bg: #332a15;
+  --red-status: #f3958f; --red-status-bg: #3a1d1c;
+  --navy: #1a3350;
+}
+
+/* ============ AKTIVER NAV-LINK ============ */
+nav.jump a.current{ color: var(--red); background: var(--surface-2); }
+
+/* ============ KONZEPT-HINWEISLEISTE ============ */
+.eq-topline{ background: var(--surface-2); border-bottom: 1px solid var(--rule); padding: 8px 0; }
+.eq-topline .wrap{ display:flex; align-items:center; gap:10px; }
+.eq-topline-mark{ width:16px; height:16px; border-radius:3px; background: var(--red); flex:none; display:flex; align-items:center; justify-content:center; }
+.eq-topline-mark svg{ width:9px; height:9px; }
+.eq-topline span.txt{ font-size:.74rem; color: var(--ink-soft); letter-spacing:.01em; }
+
+/* ============ UNTER-NAVIGATION (STICKY) ============ */
+.eq-subnav{ position: sticky; top: 57px; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--rule); }
+.eq-subnav-inner{ max-width:1120px; margin:0 auto; padding:10px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+@media (max-width:640px){ .eq-subnav-inner{ padding:10px 18px; } }
+.eq-subnav-label{ font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: var(--ink-faint); flex:none; }
+.eq-subnav-links{ display:flex; gap:2px; flex-wrap:wrap; }
+.eq-subnav-links a{ text-decoration:none; font-size:.8rem; font-weight:700; color: var(--ink-soft); padding:7px 12px; border-radius:20px; white-space:nowrap; }
+.eq-subnav-links a:hover{ color: var(--red); background: var(--surface-2); }
+.eq-subnav-links a.current{ color: var(--red); background: var(--surface-2); }
+.eq-subnav-links a.highlight{ background: var(--red); color:#fff; }
+.eq-subnav-links a.highlight:hover{ background: var(--red-deep); color:#fff; }
+.eq-subnav-links a.highlight.current{ background: var(--red-deep); color:#fff; }
+
+/* ============ HERO ============ */
+.eq-hero{ position:relative; overflow:hidden; padding: 92px 0 76px; background: linear-gradient(135deg, var(--ink) 0%, #12202f 55%, var(--navy) 145%); color:#fff; }
+.eq-hero::after{ content:""; position:absolute; inset:0; background: radial-gradient(circle at 85% 12%, rgba(226,0,26,.30), transparent 55%); pointer-events:none; }
+.eq-hero .wrap{ position:relative; z-index:1; }
+.eq-hero-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap:44px; align-items:start; margin-top:6px; }
+@media (max-width:880px){ .eq-hero-grid{ grid-template-columns:1fr; } }
+.eq-hero h1{ font-size: clamp(2.1rem, 4.4vw, 3.2rem); margin-top:20px; max-width:22ch; color:#fff; }
+.eq-subhead{ margin-top:14px; font-family:"Archivo",sans-serif; font-weight:700; font-size:1.12rem; color:#ffb3b3; }
+.eq-hero .lede{ margin-top:16px; max-width:54ch; font-size:1.02rem; color: rgba(255,255,255,.86); }
+.eq-principle-card{ background: rgba(255,255,255,.97); color: var(--ink); border-radius:10px; padding:26px 26px 24px; box-shadow: 0 10px 30px rgba(0,0,0,.35); margin-top:6px; }
+.eq-principle-card h3{ font-size:.82rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color: var(--red-deep); }
+.eq-principle-card .lines{ margin-top:12px; font-family:"Archivo",sans-serif; font-weight:800; font-size:1.15rem; line-height:1.35; color: var(--ink); }
+.eq-principle-card p.txt{ margin-top:14px; font-size:.86rem; color: var(--ink-soft); line-height:1.55; }
+
+/* ============ DEFINITION OF DONE ============ */
+.eq-dod{ margin-top:26px; background: var(--surface); border:2px solid var(--red); border-radius:8px; padding:22px 26px; box-shadow: var(--shadow); }
+.eq-dod h3{ font-size:.94rem; text-transform:uppercase; letter-spacing:.04em; color: var(--red-deep); }
+.eq-dod .plist{ margin-top:14px; }
+
+/* ============ QA-SCORE GAUGE ============ */
+.eq-score-top{ display:grid; grid-template-columns: 200px 1fr; gap:40px; align-items:center; margin-top:8px; }
+@media (max-width:640px){ .eq-score-top{ grid-template-columns:1fr; justify-items:center; text-align:center; } }
+.eq-gauge-wrap{ position:relative; width:180px; height:180px; }
+.eq-gauge{ width:180px; height:180px; }
+.eq-gauge-track{ fill:none; stroke: var(--rule); stroke-width:15; }
+.eq-gauge-fill{ fill:none; stroke: var(--green); stroke-width:15; stroke-linecap:round; }
+.eq-gauge-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.eq-gauge-num{ font-family:"Archivo",sans-serif; font-weight:800; font-size:2.5rem; color: var(--ink); line-height:1; }
+.eq-gauge-den{ font-size:.82rem; color: var(--ink-soft); margin-top:2px; }
+.eq-go-badge{ display:inline-block; padding:7px 18px; border-radius:20px; background: var(--green); color:#fff; font-weight:800; letter-spacing:.05em; text-transform:uppercase; font-size:.86rem; }
+.eq-formula-line{ margin-top:14px; font-size:1rem; font-weight:700; color: var(--ink); max-width:48ch; }
+.eq-formula-line b{ color: var(--red-deep); }
+
+/* ============ SCORE-BLÖCKE MIT BALKEN ============ */
+.eq-score-block{ background: var(--surface); border:1px solid var(--rule); border-top:3px solid var(--red); border-radius:6px; padding:22px 24px; box-shadow: var(--shadow); }
+.eq-score-block h3{ font-size:.94rem; display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+.eq-score-block h3 .tot{ font-family:"IBM Plex Mono",monospace; font-weight:800; color: var(--red-deep); font-size:1.1rem; }
+.eq-bar-list{ margin-top:18px; display:flex; flex-direction:column; gap:12px; }
+.eq-bar-row{ display:grid; grid-template-columns: 1fr; gap:5px; }
+.eq-bar-top{ display:flex; justify-content:space-between; font-size:.82rem; }
+.eq-bar-top .lbl{ color: var(--ink-soft); font-weight:600; }
+.eq-bar-top .num{ font-family:"IBM Plex Mono",monospace; font-weight:700; color: var(--ink); }
+.eq-bar-track{ height:8px; border-radius:3px; background: var(--surface-2); overflow:hidden; }
+.eq-bar-fill{ height:100%; border-radius:3px; background: var(--red); }
+
+/* ============ RELEASE-LOGIK ============ */
+.eq-release-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; margin-top:28px; }
+@media (max-width:880px){ .eq-release-grid{ grid-template-columns:1fr; } }
+.eq-release-card{ border-radius:8px; padding:20px 22px; border:1px solid var(--rule); background: var(--surface); border-top:4px solid transparent; box-shadow: var(--shadow); }
+.eq-release-card.go{ border-top-color: var(--green); }
+.eq-release-card.cgo{ border-top-color: var(--amber); }
+.eq-release-card.stop{ border-top-color: var(--red-status); }
+.eq-release-tag{ display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; padding:3px 10px; border-radius:20px; margin-bottom:10px; }
+.eq-release-card.go .eq-release-tag{ background: var(--green-bg); color: var(--green); }
+.eq-release-card.cgo .eq-release-tag{ background: var(--amber-bg); color: var(--amber); }
+.eq-release-card.stop .eq-release-tag{ background: var(--red-status-bg); color: var(--red-status); }
+.eq-release-card h4{ font-size:1.3rem; font-family:"IBM Plex Mono",monospace; }
+.eq-release-card p{ margin-top:10px; font-size:.86rem; color: var(--ink-soft); }
+.eq-warn-callout{ margin-top:24px; text-align:center; padding:14px 20px; border-radius:6px; background: var(--red-status-bg); color: var(--red-status); font-weight:700; font-size:.92rem; }
+.eq-blocker-box{ margin-top:22px; background: var(--surface); border:1px solid var(--rule); border-left:4px solid var(--red-status); border-radius:6px; padding:20px 24px; }
+.eq-blocker-box h4{ font-size:.86rem; text-transform:uppercase; letter-spacing:.04em; color: var(--red-status); }
+.eq-blocker-box .plist{ margin-top:14px; column-count:2; column-gap:24px; }
+@media (max-width:640px){ .eq-blocker-box .plist{ column-count:1; } }
+.eq-blocker-box .plist li::before{ background: var(--red-status); }
+
+/* ============ FLOW-KETTE (APPROVED SOURCE) ============ */
+.eq-flow{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:26px; }
+.eq-flow-node{ background: var(--surface); border:1px solid var(--rule); border-radius:20px; padding:9px 16px; font-size:.82rem; font-weight:700; color: var(--ink); white-space:nowrap; box-shadow: var(--shadow); }
+.eq-flow-node.hi{ background: var(--navy); color:#fff; border-color: var(--navy); }
+.eq-flow-arrow{ color: var(--red); font-weight:800; font-size:1rem; }
+.eq-meta-grid{ margin-top:24px; display:grid; grid-template-columns: repeat(4,1fr); gap:1px; background: var(--rule); border:1px solid var(--rule); border-radius:6px; overflow:hidden; }
+@media (max-width:880px){ .eq-meta-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:480px){ .eq-meta-grid{ grid-template-columns: 1fr; } }
+.eq-meta-item{ background: var(--surface); padding:14px 16px; }
+.eq-meta-item .k{ font-size:.68rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color: var(--ink-faint); }
+.eq-meta-item .v{ margin-top:4px; font-size:.86rem; font-weight:700; color: var(--ink); }
+
+/* ============ PROZESSKETTE (WIEDERVERWENDBAR) ============ */
+.eq-chain{ display:flex; align-items:flex-start; gap:0; flex-wrap:wrap; margin-top:30px; }
+.eq-chain-step{ display:flex; flex-direction:column; align-items:center; gap:10px; width:118px; text-align:center; }
+.eq-chain-num{ width:40px; height:40px; border-radius:50%; background: var(--surface); border:2px solid var(--red); color: var(--red); font-family:"IBM Plex Mono",monospace; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:.9rem; flex:none; }
+.eq-chain-label{ font-size:.77rem; font-weight:700; color: var(--ink); line-height:1.25; }
+.eq-chain-arrow{ flex:none; align-self:center; width:22px; color: var(--ink-faint); margin-top:20px; }
+.eq-chain-arrow svg{ width:100%; height:14px; display:block; }
+.eq-chain-arrow .flow{ stroke-dasharray:4 4; animation: eq-flow-anim 1.1s linear infinite; }
+@keyframes eq-flow-anim{ to{ stroke-dashoffset:-16; } }
+@media (max-width:880px){
+  .eq-chain{ flex-direction:column; align-items:flex-start; }
+  .eq-chain-step{ flex-direction:row; width:auto; text-align:left; gap:14px; }
+  .eq-chain-arrow{ width:14px; height:26px; margin:2px 0 2px 19px; transform:rotate(90deg); align-self:flex-start; }
+}
+.eq-callout{ margin-top:28px; text-align:center; padding:16px 22px; border-radius:6px; background: var(--red); color:#fff; font-weight:700; font-size:1rem; }
+
+/* ============ STRESS-TEST ============ */
+.eq-stress-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; margin-top:28px; }
+@media (max-width:880px){ .eq-stress-grid{ grid-template-columns:1fr; } }
+.eq-stress-card{ border-radius:8px; padding:22px 24px; border:1px solid var(--rule); background: var(--surface); border-top:4px solid transparent; box-shadow: var(--shadow); }
+.eq-stress-card.happy{ border-top-color: var(--green); }
+.eq-stress-card.edge{ border-top-color: var(--amber); }
+.eq-stress-card.adversarial{ border-top-color: var(--red-status); }
+.eq-stress-icon{ width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.2rem; margin-bottom:14px; }
+.eq-stress-card.happy .eq-stress-icon{ background: var(--green-bg); color: var(--green); }
+.eq-stress-card.edge .eq-stress-icon{ background: var(--amber-bg); color: var(--amber); }
+.eq-stress-card.adversarial .eq-stress-icon{ background: var(--red-status-bg); color: var(--red-status); }
+
+/* ============ TESTFÄLLE / SCORECARD / FREIGABE TABELLEN ============ */
+.eq-dk{ display:inline-block; padding:3px 9px; border-radius:20px; font-size:.72rem; font-weight:700; white-space:nowrap; }
+.eq-dk.green{ background: var(--green-bg); color: var(--green); }
+.eq-dk.amber{ background: var(--amber-bg); color: var(--amber); }
+.eq-dk.red{ background: var(--red-status-bg); color: var(--red-status); }
+.eq-detail-table th, .eq-detail-table td{ white-space:normal; }
+.eq-detail-table td.cmp-metric{ min-width:170px; }
+.eq-detail-table th:last-child, .eq-detail-table td:last-child{ white-space:nowrap; text-align:left; }
+.eq-protocol-table th.cmp-metric, .eq-protocol-table td.cmp-metric{ min-width:200px; }
+.eq-protocol-table td:last-child{ text-align:left; white-space:normal; }
+.eq-protocol-table tr.hi td{ background: var(--green-bg); font-weight:800; }
+.eq-protocol-table tr.hi td.cmp-metric{ background: var(--green-bg); }
+
+/* ============ HUMAN-IN-THE-LOOP ============ */
+.eq-role-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top:28px; }
+@media (max-width:880px){ .eq-role-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width:560px){ .eq-role-grid{ grid-template-columns: 1fr; } }
+.eq-role-card{ background: var(--surface); border:1px solid var(--rule); border-top:3px solid var(--navy); border-radius:6px; padding:18px 20px; box-shadow: var(--shadow); }
+.eq-role-card h4{ font-size:.92rem; }
+.eq-role-card p{ margin-top:8px; font-size:.82rem; color: var(--ink-soft); }
+.eq-humangate{ margin-top:30px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+.eq-hg-node{ background: var(--navy); color:#fff; border-radius:10px; padding:16px 26px; font-weight:800; font-size:.94rem; text-align:center; min-width:150px; }
+.eq-hg-node.mid{ background: var(--red); }
+.eq-hg-node.end{ background: var(--green); }
+.eq-hg-arrow{ color: var(--ink-faint); font-weight:800; font-size:1.3rem; }
+
+/* ============ BLUEPRINT-ARCHITEKTUR (VERTIKAL) ============ */
+.eq-vchain{ margin-top:30px; display:flex; flex-direction:column; align-items:center; max-width:520px; margin-left:auto; margin-right:auto; }
+.eq-vstep{ width:100%; text-align:center; background: var(--surface); border:1px solid var(--rule); border-radius:8px; padding:16px 20px; font-weight:700; font-size:.92rem; box-shadow: var(--shadow); }
+.eq-vstep.final{ background: var(--navy); color:#fff; border-color: var(--navy); font-size:.86rem; }
+.eq-vstep.decision{ display:flex; flex-direction:column; gap:10px; }
+.eq-vstep .go3{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; }
+.eq-vstep .go3 span{ font-size:.68rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:4px 10px; border-radius:20px; }
+.eq-vstep .go3 .g{ background: var(--green-bg); color: var(--green); }
+.eq-vstep .go3 .c{ background: var(--amber-bg); color: var(--amber); }
+.eq-vstep .go3 .s{ background: var(--red-status-bg); color: var(--red-status); }
+.eq-varrow{ display:flex; justify-content:center; padding:6px 0; color: var(--ink-faint); }
+.eq-varrow svg{ width:18px; height:20px; }
+
+.eq-navy-box{ margin-top:32px; border-radius:10px; padding:26px 26px 24px; background: var(--navy); color:#fff; }
+.eq-navy-box h3{ color:#fff; font-family:"Archivo",sans-serif; font-size:1.02rem; }
+.eq-navy-box .sub{ font-size:.82rem; color: rgba(255,255,255,.7); margin-top:3px; margin-bottom:16px; }
+.eq-navy-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
+@media (max-width:880px){ .eq-navy-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:480px){ .eq-navy-grid{ grid-template-columns: 1fr; } }
+.eq-navy-item{ background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:6px; padding:10px 12px; font-size:.8rem; font-weight:600; text-align:center; color:#fff; }
+
+/* ============ QUALITÄTSDREIECK & TREND ============ */
+.eq-triangle-svg{ width:100%; max-width:280px; margin:0 auto; display:block; }
+.eq-triangle-cap{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:18px; text-align:center; font-size:.8rem; color: var(--ink-soft); }
+@media (max-width:640px){ .eq-triangle-cap{ grid-template-columns:1fr; } }
+.eq-triangle-cap b{ display:block; color: var(--ink); font-size:.86rem; margin-bottom:4px; }
+
+/* ============ FAZIT ============ */
+.eq-final{ margin-top:10px; text-align:center; background: var(--surface); border:2px solid var(--red); border-radius:10px; padding:42px 32px; box-shadow: var(--shadow); }
+.eq-final .core{ font-family:"Archivo",sans-serif; font-weight:800; font-size:1.15rem; line-height:1.4; max-width:62ch; margin:0 auto; color: var(--ink); }
+.eq-final .lines{ margin-top:26px; font-weight:700; font-size:1rem; color: var(--red-deep); line-height:1.7; }
+
+/* ============ SCROLL-REVEAL ============ */
+.reveal{ opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-visible{ opacity:1; transform:none; }
+
+/* ============ DRUCKANSICHT (A4/PDF) ============ */
+@media print{
+  .eq-topline, .topbar, .eq-subnav{ display:none !important; }
+  .eq-hero{ background:none !important; color: var(--ink) !important; padding:16px 0 20px; }
+  .eq-hero::after{ display:none; }
+  .eq-hero h1, .eq-subhead, .eq-hero .lede{ color: var(--ink) !important; }
+  .eq-principle-card{ box-shadow:none !important; border:1px solid var(--rule); }
+  .eq-navy-box, .eq-vstep.final, .eq-hg-node{ background: var(--surface-2) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .eq-navy-item{ background: var(--surface) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .compare-wrap{ overflow-x: visible; }
+  .compare-table{ min-width:0; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  section.band{ padding:22px 0; }
+  .card, .eq-score-block, .eq-release-card, .eq-stress-card, .eq-role-card, .eq-final, .eq-dod, .eq-blocker-box{ break-inside: avoid; box-shadow:none !important; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  @page{ size:A4; margin:16mm; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HINWEISLEISTE: CORPORATE-DESIGN-KONZEPT -->
+<!-- ============================================================ -->
+<div class="eq-topline">
+  <div class="wrap">
+    <span class="eq-topline-mark" aria-hidden="true">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 8.5 L6 12 L13.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </span>
+    <span class="txt">Sparkassen Corporate Design – Konzeptdarstellung. Farben und Bildmarke sind angenähert und ersetzen keine offizielle Markenvorgabe.</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION -->
+<!-- ============================================================ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="annette-adler.html" class="brand" style="text-decoration:none; color:inherit;">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="10" fill="var(--red)"/>
+          <path d="M9 29 L18 19 L24 25 L35 11" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="35" cy="11" r="3.4" fill="#fff"/>
+        </svg>
+      </span>
+      <span>Sparkasse Fürstenfeldbruck<small>Nachhaltigkeit · interne Auswertung</small></span>
+    </a>
+    <nav class="jump">
+      <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
+      <a href="index.html">Nachhaltigkeitsbericht</a>
+      <a href="daten-dashboard.html">Daten-Dashboard</a>
+      <a href="cloud-strategie.html">Cloud-Strategie</a>
+      <a href="llm-ki-strategie.html">LLM- &amp; KI-Strategie</a>
+      <a href="evaluation-quality-assurance-blueprint.html" class="current">Eval &amp; QA</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UNTER-NAVIGATION -->
+<!-- ============================================================ -->
+<div class="eq-subnav">
+  <div class="eq-subnav-inner">
+    <span class="eq-subnav-label">Auf dieser Seite</span>
+    <div class="eq-subnav-links">
+      <a href="#qualitaet">Qualität</a>
+      <a href="#qa-score" class="highlight">QA Score</a>
+      <a href="#scoring">Scoring</a>
+      <a href="#qa-prozess">QA-Prozess</a>
+      <a href="#qa-gates">QA-Gates</a>
+      <a href="#stress-test">Stress-Test</a>
+      <a href="#human-in-the-loop">Human-in-the-Loop</a>
+      <a href="#blueprint">Blueprint</a>
+      <a href="#freigabe">Freigabe</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HERO -->
+<!-- ============================================================ -->
+<header class="eq-hero">
+  <div class="wrap">
+    <span class="kicker">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+      KI-Consulting Blueprint
+    </span>
+    <div class="eq-hero-grid">
+      <div>
+        <h1>Evaluation &amp; Quality Assurance</h1>
+        <p class="eq-subhead">Vom KI-Output zum prüfbaren Ergebnis</p>
+        <p class="lede">Evaluation- und Quality-Assurance-Blueprint für den KI-gestützten Nachhaltigkeitsbericht der Sparkasse Fürstenfeldbruck – mit messbaren Qualitätszielen, QA-Gates, Testfällen, Human-in-the-Loop, Scorecard und Freigabeprotokoll.</p>
+      </div>
+      <div class="eq-principle-card reveal">
+        <h3>Leitprinzip</h3>
+        <p class="lines">Evaluation prüft den Output.<br>Quality Assurance sichert den Prozess.</p>
+        <p class="txt">Ein hoher Score ersetzt keine funktionierende Kontrolle. Erst die Kombination aus geprüftem Output und geprüftem Prozess ergibt einen freigabefähigen Nachhaltigkeitsbericht.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- 1. QUALITÄTSZIELE -->
+<!-- ============================================================ -->
+<section class="band" id="qualitaet">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 4 6.5V11c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M9 12.3l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Qualitätsziele
+        </div>
+        <h2>Vier Kennzahlen, die über Freigabe entscheiden</h2>
+      </div>
+      <p class="note">Qualität ist hier kein Eindruck, sondern eine messbare Schwelle.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile flag reveal"><span class="label">Kritische Fakten-/Zahlenfehler</span><span class="value">0</span></div>
+      <div class="tile flag reveal"><span class="label">Quellenbeleg für wesentliche Aussagen</span><span class="value">100&nbsp;%</span></div>
+      <div class="tile flag reveal"><span class="label">QA-Gates bestanden</span><span class="value">6/6</span></div>
+      <div class="tile flag reveal"><span class="label">Release Score</span><span class="value">≥&nbsp;90/100</span></div>
+    </div>
+
+    <div class="eq-dod reveal">
+      <h3>Definition of Done</h3>
+      <ul class="plist">
+        <li>Score ≥ 90/100</li>
+        <li>0 Release-Blocker</li>
+        <li>100&nbsp;% Pflichtquellen belegt</li>
+        <li>6/6 QA-Gates bestanden</li>
+        <li>Stress-Test bestanden</li>
+        <li>Human Approval erteilt</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. EVALUATIONS- & QA-SCORE -->
+<!-- ============================================================ -->
+<section class="band tint" id="qa-score">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Evaluations- &amp; QA-Score
+        </div>
+        <h2>Der Gesamtscore vor Veröffentlichung</h2>
+      </div>
+      <p class="note">Beispielhafter Release-Stand für den aktuellen Berichtsentwurf.</p>
+    </div>
+
+    <div class="eq-score-top reveal">
+      <div class="eq-gauge-wrap">
+        <svg class="eq-gauge" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Score 94 von 100, Status GO">
+          <circle class="eq-gauge-track" cx="90" cy="90" r="75"/>
+          <circle class="eq-gauge-fill" cx="90" cy="90" r="75" stroke-dasharray="471.2" stroke-dashoffset="28.3" transform="rotate(-90 90 90)"/>
+        </svg>
+        <div class="eq-gauge-center">
+          <span class="eq-gauge-num">94</span>
+          <span class="eq-gauge-den">/ 100</span>
+        </div>
+      </div>
+      <div>
+        <span class="eq-go-badge">GO</span>
+        <p class="eq-formula-line">Evaluations- &amp; QA-Score = <b>Output Evaluation Score</b> + <b>QA Process Score</b></p>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:34px;">
+      <div class="eq-score-block">
+        <h3>Output Evaluation <span class="tot">66 / 70</span></h3>
+        <div class="eq-bar-list">
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Fakten &amp; Zahlen</span><span class="num">19 / 20</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:95%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Quellenbeleg</span><span class="num">14 / 15</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:93%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Regulatorik</span><span class="num">14 / 15</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:93%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Datenkonsistenz</span><span class="num">10 / 10</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:100%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Vollständigkeit</span><span class="num">5 / 5</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:100%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Plausibilität</span><span class="num">4 / 5</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:80%"></div></div></div>
+        </div>
+      </div>
+      <div class="eq-score-block">
+        <h3>QA Process <span class="tot">28 / 30</span></h3>
+        <div class="eq-bar-list">
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">QA-Gates</span><span class="num">10 / 10</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:100%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Stress-Test</span><span class="num">5 / 5</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:100%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Human-in-the-Loop</span><span class="num">5 / 5</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:100%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Versionierung &amp; Audit Trail</span><span class="num">4 / 5</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:80%"></div></div></div>
+          <div class="eq-bar-row"><div class="eq-bar-top"><span class="lbl">Rollen &amp; Verantwortlichkeiten</span><span class="num">4 / 5</span></div><div class="eq-bar-track"><div class="eq-bar-fill" style="width:80%"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eq-release-grid reveal">
+      <div class="eq-release-card go">
+        <span class="eq-release-tag">Go</span>
+        <h4>90–100 Punkte</h4>
+        <p>Freigabe möglich, sofern kein Release-Blocker besteht.</p>
+      </div>
+      <div class="eq-release-card cgo">
+        <span class="eq-release-tag">Conditional Go</span>
+        <h4>80–89 Punkte</h4>
+        <p>Korrektur und Retest erforderlich, bevor freigegeben werden kann.</p>
+      </div>
+      <div class="eq-release-card stop">
+        <span class="eq-release-tag">Stop</span>
+        <h4>&lt; 80 Punkte</h4>
+        <p>Oder sobald ein Release-Blocker besteht – unabhängig vom Score.</p>
+      </div>
+    </div>
+
+    <div class="eq-warn-callout reveal">Ein hoher Score darf niemals einen kritischen Fehler kompensieren.</div>
+
+    <div class="eq-blocker-box reveal">
+      <h4>Release-Blocker – jeder Einzelne verhindert ein GO</h4>
+      <ul class="plist">
+        <li>Falsche Zahl</li>
+        <li>Falsche Einheit</li>
+        <li>Kritischer Faktenfehler</li>
+        <li>Fehlende wesentliche Quelle</li>
+        <li>Veraltete Regulatorik</li>
+        <li>Datenschutzverletzung</li>
+        <li>Ungeklärter Widerspruch</li>
+        <li>Fehlende Pflichtfreigabe</li>
+        <li>Nicht nachvollziehbare Datenherkunft</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. APPROVED SOURCE LAYER -->
+<!-- ============================================================ -->
+<section class="band" id="approved-source">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.6"/></svg>
+          Approved Source Layer
+        </div>
+        <h2>Nur geprüfte Daten erreichen die KI</h2>
+      </div>
+      <p class="note">Jeder Datenwert trägt Herkunft, Version und Freigabestatus – bevor er überhaupt in ein Modell gelangt.</p>
+    </div>
+
+    <div class="eq-flow reveal">
+      <span class="eq-flow-node">Interne Quellen + externe Regulatorik</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node">Datenkatalog</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node">Data Dictionary</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node">Qualitätsregeln</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node">Versionierung</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node hi">RAG / API</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node hi">KI</span>
+      <span class="eq-flow-arrow">→</span>
+      <span class="eq-flow-node">Prüfbarer Output</span>
+    </div>
+
+    <p class="note" style="margin-top:26px;"><b>Beispiel-Datensatz</b> – jeder Wert im Datenkatalog trägt diese acht Merkmale:</p>
+    <div class="eq-meta-grid reveal">
+      <div class="eq-meta-item"><div class="k">Wert</div><div class="v">12.480 t CO₂e</div></div>
+      <div class="eq-meta-item"><div class="k">Einheit</div><div class="v">t CO₂e</div></div>
+      <div class="eq-meta-item"><div class="k">Berichtsperiode</div><div class="v">2025</div></div>
+      <div class="eq-meta-item"><div class="k">Quelle</div><div class="v">ESG-Datenkatalog · Scope-1</div></div>
+      <div class="eq-meta-item"><div class="k">Owner</div><div class="v">Sustainability Owner</div></div>
+      <div class="eq-meta-item"><div class="k">Aktualisierungsdatum</div><div class="v">2026-08-31</div></div>
+      <div class="eq-meta-item"><div class="k">Version</div><div class="v">v1.3</div></div>
+      <div class="eq-meta-item"><div class="k">Freigabestatus</div><div class="v">Freigegeben</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. EVALUATION SCORECARD -->
+<!-- ============================================================ -->
+<section class="band tint" id="scoring">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M9 4v16" stroke="currentColor" stroke-width="1.6"/></svg>
+          Evaluation Scorecard
+        </div>
+        <h2>Neun Kriterien für jeden Berichtsentwurf</h2>
+      </div>
+      <p class="note">Jedes Kriterium wird einzeln geprüft – ein PASS in Summe ersetzt keine einzelne Prüfung.</p>
+    </div>
+
+    <div class="compare-wrap reveal">
+      <table class="compare-table eq-detail-table">
+        <thead><tr><th class="cmp-metric">Kriterium</th><th style="text-align:left;">Prüffrage</th><th style="text-align:left;">Methode</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="cmp-metric">Fakten-/Zahlenrichtigkeit</td><td style="text-align:left;">Stimmen alle Zahlen und Fakten mit der Quelle überein?</td><td style="text-align:left;">Abgleich mit Datenkatalog &amp; Primärquelle</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Quellenbeleg</td><td style="text-align:left;">Ist jede wesentliche Aussage nachvollziehbar belegt?</td><td style="text-align:left;">Quellenverifikation je Aussage</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Regulatorische Konformität</td><td style="text-align:left;">Entsprechen Begriffe und Kennzahlen ESRS/CSRD/EU-Taxonomie?</td><td style="text-align:left;">Abgleich mit Regulatory Snapshot</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Datenkonsistenz</td><td style="text-align:left;">Sind Zahlen über Kapitel und Vorjahresvergleiche widerspruchsfrei?</td><td style="text-align:left;">Cross-Check zwischen Berichtsteilen</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Vollständigkeit</td><td style="text-align:left;">Fehlen Pflichtangaben, Zeiträume oder Kennzahlen?</td><td style="text-align:left;">Vollständigkeitscheck gegen Berichtsstruktur</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Plausibilität</td><td style="text-align:left;">Sind Werte im Kontext von Vorjahren und Branche plausibel?</td><td style="text-align:left;">Plausibilitäts- &amp; Ausreißerprüfung</td><td><span class="eq-dk green">PASS*</span></td></tr>
+          <tr><td class="cmp-metric">Datenschutz &amp; Governance</td><td style="text-align:left;">Enthält der Output unzulässig verarbeitete Daten?</td><td style="text-align:left;">Datenschutz-Review</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Neutralität / Bias</td><td style="text-align:left;">Ist die Darstellung neutral und ausgewogen?</td><td style="text-align:left;">Redaktionelle Zweitprüfung</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Format &amp; Verständlichkeit</td><td style="text-align:left;">Ist der Output verständlich und zielgruppengerecht formatiert?</td><td style="text-align:left;">Redaktions- &amp; Lesbarkeitsprüfung</td><td><span class="eq-dk green">PASS</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:12px;">* Plausibilitätshinweis in Kapitel „Klimabilanz" wurde vor Freigabe korrigiert und erneut getestet (siehe Freigabeprotokoll).</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. QA-PROZESS -->
+<!-- ============================================================ -->
+<section class="band" id="qa-prozess">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 21h4v-4h4v-4h4v-4h4V5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          QA-Prozess
+        </div>
+        <h2>Zehn Schritte von der Datenbereitstellung bis zum Audit Trail</h2>
+      </div>
+      <p class="note">Jeder Schritt ist dokumentiert und nachvollziehbar – kein Sprung wird ausgelassen.</p>
+    </div>
+
+    <div class="eq-chain reveal">
+      <div class="eq-chain-step"><span class="eq-chain-num">1</span><span class="eq-chain-label">Daten bereitstellen</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">2</span><span class="eq-chain-label">KI-Entwurf</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">3</span><span class="eq-chain-label">Automatisierte Checks</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">4</span><span class="eq-chain-label">Evaluation Scorecard</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">5</span><span class="eq-chain-label">Stress-Test</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">6</span><span class="eq-chain-label">Human Review</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">7</span><span class="eq-chain-label">Korrektur</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">8</span><span class="eq-chain-label">Retest</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">9</span><span class="eq-chain-label">Freigabe</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">10</span><span class="eq-chain-label">Audit Trail</span></div>
+    </div>
+
+    <div class="eq-callout reveal">Die KI darf niemals direkt vom Entwurf zur Veröffentlichung springen.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. SECHS QA-GATES -->
+<!-- ============================================================ -->
+<section class="band tint" id="qa-gates">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          QA-Gates
+        </div>
+        <h2>Sechs Pflicht-Prüfschritte vor jeder Freigabe</h2>
+      </div>
+      <p class="note">Dieselben Gates wie im LLM- &amp; KI-Strategie- und Cloud-Strategie-Blueprint – konsistent über das gesamte Berichtssystem.</p>
+    </div>
+
+    <div class="eq-chain reveal">
+      <div class="eq-chain-step"><span class="eq-chain-num">1</span><span class="eq-chain-label">Datenprüfung</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">2</span><span class="eq-chain-label">Quellenprüfung</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">3</span><span class="eq-chain-label">Regulatorikprüfung</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">4</span><span class="eq-chain-label">Plausibilitätsprüfung</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">5</span><span class="eq-chain-label">Fachliche Freigabe</span></div>
+      <span class="eq-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="eq-chain-step"><span class="eq-chain-num">6</span><span class="eq-chain-label">Finale Freigabe</span></div>
+    </div>
+
+    <div class="eq-callout reveal">Ohne PASS aller Pflicht-Gates kein Release.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. STRESS-TEST -->
+<!-- ============================================================ -->
+<section class="band" id="stress-test">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 21 11l-9 9-9-9V4a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Stress-Test
+        </div>
+        <h2>Drei Belastungsstufen vor jeder Freigabe</h2>
+      </div>
+      <p class="note">Nicht nur der Normalfall wird geprüft, sondern gezielt Grenzfälle und Manipulationsversuche.</p>
+    </div>
+
+    <div class="eq-stress-grid reveal">
+      <div class="eq-stress-card happy">
+        <div class="eq-stress-icon">✅</div>
+        <h3>Happy Path</h3>
+        <p class="sub">Normalfall – vollständige, korrekte und eindeutige Daten.</p>
+        <ul class="plist"><li>Richtige CO₂-Zahl korrekt übernommen</li></ul>
+      </div>
+      <div class="eq-stress-card edge">
+        <div class="eq-stress-icon">⚠</div>
+        <h3>Edge Case</h3>
+        <p class="sub">Grenzfall – unvollständige, widersprüchliche oder veraltete Daten.</p>
+        <ul class="plist">
+          <li>Fehlender Monat in der Datenreihe</li>
+          <li>Widersprüchliche Quellen</li>
+          <li>Falsche Einheit (z.&nbsp;B. kg statt t)</li>
+          <li>Veraltete Regulatorik</li>
+        </ul>
+      </div>
+      <div class="eq-stress-card adversarial">
+        <div class="eq-stress-icon">✕</div>
+        <h3>Adversarial</h3>
+        <p class="sub">Manipulation / Angriff – gezielte Versuche, die KI zu täuschen.</p>
+        <ul class="plist">
+          <li>Halluzination (erfundene Zahl/Quelle)</li>
+          <li>Datenschutzverletzung im Prompt/Output</li>
+          <li>Prompt Injection</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare-wrap reveal" style="margin-top:34px;">
+      <table class="compare-table eq-detail-table">
+        <thead><tr><th class="cmp-metric">Testfall</th><th style="text-align:left;">Kategorie</th><th style="text-align:left;">Erwartetes Verhalten</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="cmp-metric">Richtige CO₂-Zahl</td><td style="text-align:left;">Happy Path</td><td style="text-align:left;">Wert wird unverändert mit Quellenbeleg übernommen</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Fehlender Monat</td><td style="text-align:left;">Edge Case</td><td style="text-align:left;">Lücke wird markiert, keine unmarkierte Schätzung</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Widersprüchliche Quellen</td><td style="text-align:left;">Edge Case</td><td style="text-align:left;">Widerspruch wird gemeldet statt eigenständig aufgelöst</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Falsche Einheit</td><td style="text-align:left;">Edge Case</td><td style="text-align:left;">Einheitenfehler wird erkannt, keine stille Umrechnung</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Veraltete Regulatorik</td><td style="text-align:left;">Edge Case</td><td style="text-align:left;">Snapshot-Abweichung wird erkannt und gemeldet</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Halluzination</td><td style="text-align:left;">Adversarial</td><td style="text-align:left;">Output ohne Quellenbeleg wird durch QA-Gate 2 blockiert</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Datenschutz</td><td style="text-align:left;">Adversarial</td><td style="text-align:left;">Personenbezogene Daten werden vor Freigabe blockiert</td><td><span class="eq-dk green">PASS</span></td></tr>
+          <tr><td class="cmp-metric">Prompt Injection</td><td style="text-align:left;">Adversarial</td><td style="text-align:left;">Manipulative Anweisung im Input wird ignoriert</td><td><span class="eq-dk green">PASS</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. HUMAN-IN-THE-LOOP -->
+<!-- ============================================================ -->
+<section class="band tint" id="human-in-the-loop">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14.5 20c0-2.6-1.1-4.9-2.8-6.4 1-.6 2.1-.9 3.3-.9 3 0 5.5 2.5 5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Human-in-the-Loop
+        </div>
+        <h2>Sechs Rollen, eine gemeinsame Verantwortung</h2>
+      </div>
+      <p class="note">Jede Rolle prüft aus ihrer Perspektive – die finale Entscheidung bleibt beim Menschen.</p>
+    </div>
+
+    <div class="eq-role-grid reveal">
+      <div class="eq-role-card"><h4>AI / Process Owner</h4><p>Verantwortet den KI-gestützten Erstellungsprozess sowie Modell- und Prompt-Versionierung.</p></div>
+      <div class="eq-role-card"><h4>Data Owner</h4><p>Verantwortet Herkunft, Qualität und Freigabestatus der zugrunde liegenden Daten.</p></div>
+      <div class="eq-role-card"><h4>Sustainability Owner</h4><p>Verantwortet die fachliche Richtigkeit der Nachhaltigkeitsinhalte.</p></div>
+      <div class="eq-role-card"><h4>Compliance / Datenschutz</h4><p>Prüft Regulatorik, Datenschutz und rechtliche Zulässigkeit.</p></div>
+      <div class="eq-role-card"><h4>QA Reviewer</h4><p>Führt Evaluation, Stress-Test und die sechs QA-Gates durch.</p></div>
+      <div class="eq-role-card"><h4>Management / Report Owner</h4><p>Trifft die finale Freigabeentscheidung – GO, Conditional Go oder Stop.</p></div>
+    </div>
+
+    <div class="eq-humangate reveal">
+      <div class="eq-hg-node">KI</div>
+      <span class="eq-hg-arrow">→</span>
+      <div class="eq-hg-node mid">Human Review</div>
+      <span class="eq-hg-arrow">→</span>
+      <div class="eq-hg-node end">Freigabe</div>
+    </div>
+
+    <div class="eq-callout reveal">KI empfiehlt – Verantwortliche entscheiden.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9. BLUEPRINT-ARCHITEKTUR -->
+<!-- ============================================================ -->
+<section class="band" id="blueprint">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 3 8l9 5 9-5-9-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Blueprint-Architektur
+        </div>
+        <h2>Vom Rohdatensatz zum versionierten, prüfbaren Bericht</h2>
+      </div>
+      <p class="note">Acht Stufen, eine durchgängige Governance-Klammer.</p>
+    </div>
+
+    <div class="eq-vchain reveal">
+      <div class="eq-vstep">Daten &amp; Quellen</div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep">KI-Verarbeitung</div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep">Evaluation Engine</div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep">Stress-Test</div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep">Human-in-the-Loop</div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep">QA-Gates</div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep decision">
+        <span>Release-Entscheidung</span>
+        <div class="go3"><span class="g">GO</span><span class="c">Conditional Go</span><span class="s">Stop</span></div>
+      </div>
+      <div class="eq-varrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eq-vstep final">Versionierter, prüfbarer Nachhaltigkeitsbericht</div>
+    </div>
+
+    <div class="eq-navy-box reveal">
+      <h3>Governance-Klammer</h3>
+      <p class="sub">Umschließt alle acht Stufen durchgängig – von der Datenherkunft bis zur Freigabe</p>
+      <div class="eq-navy-grid">
+        <div class="eq-navy-item">Owner</div>
+        <div class="eq-navy-item">Logging</div>
+        <div class="eq-navy-item">Versionierung</div>
+        <div class="eq-navy-item">Audit Trail</div>
+        <div class="eq-navy-item">Eskalation</div>
+        <div class="eq-navy-item">Datenschutz</div>
+        <div class="eq-navy-item">Promptversion</div>
+        <div class="eq-navy-item">Modellversion</div>
+        <div class="eq-navy-item">Freigabestatus</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:44px; align-items:start;">
+      <div>
+        <h3 style="font-size:1rem; text-align:center;">Qualitätsdreieck</h3>
+        <svg class="eq-triangle-svg" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Qualitätsdreieck aus Evidenz, Tests und Freigabe">
+          <path d="M160 30 L280 220 L40 220 Z" fill="rgba(226,0,26,.06)" stroke="var(--red)" stroke-width="2"/>
+          <circle cx="160" cy="30" r="5" fill="var(--red)"/>
+          <circle cx="280" cy="220" r="5" fill="var(--red)"/>
+          <circle cx="40" cy="220" r="5" fill="var(--red)"/>
+          <text x="160" y="18" text-anchor="middle" fill="var(--ink)" font-family="Archivo, sans-serif" font-weight="800" font-size="15">Evidenz</text>
+          <text x="280" y="242" text-anchor="middle" fill="var(--ink)" font-family="Archivo, sans-serif" font-weight="800" font-size="15">Freigabe</text>
+          <text x="40" y="242" text-anchor="middle" fill="var(--ink)" font-family="Archivo, sans-serif" font-weight="800" font-size="15">Tests</text>
+        </svg>
+        <div class="eq-triangle-cap">
+          <div><b>Evidenz</b>Datenherkunft, Quellenbeleg, Nachvollziehbarkeit</div>
+          <div><b>Tests</b>Scorecard, Stress-Test, Testfälle</div>
+          <div><b>Freigabe</b>QA-Gates, Human-in-the-Loop, Audit Trail</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:1rem; text-align:center;">Qualitätstrend</h3>
+        <div class="chartwrap">
+          <svg class="chart-svg" viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Score-Entwicklung von 82 in Version 1.1 auf 94 in Version 1.3">
+            <g class="grid">
+              <line x1="40" y1="20" x2="40" y2="190"/>
+              <line x1="40" y1="190" x2="300" y2="190"/>
+            </g>
+            <line x1="40" y1="142" x2="170" y2="102" class="line" stroke="var(--ink-soft)"/>
+            <line x1="170" y1="102" x2="300" y2="52" class="line" stroke="var(--red-deep)"/>
+            <circle cx="40" cy="142" r="4.5" class="dot" stroke="var(--ink-soft)"/>
+            <circle cx="170" cy="102" r="4.5" class="dot" stroke="var(--ink-soft)"/>
+            <circle cx="300" cy="52" r="5.5" class="dot end" stroke="var(--red-deep)"/>
+            <text x="40" y="204" class="axis-label" text-anchor="middle">v1.1</text>
+            <text x="170" y="204" class="axis-label" text-anchor="middle">v1.2</text>
+            <text x="300" y="204" class="axis-label" text-anchor="middle">v1.3</text>
+            <text x="40" y="130" class="val-label" text-anchor="middle" fill="var(--ink-soft)">82</text>
+            <text x="170" y="90" class="val-label" text-anchor="middle" fill="var(--ink-soft)">88</text>
+            <text x="300" y="40" class="val-label" text-anchor="middle" fill="var(--red-deep)">94</text>
+          </svg>
+        </div>
+        <p class="legend-note" style="text-align:center;">Qualität wird iterativ verbessert.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. FREIGABEPROTOKOLL -->
+<!-- ============================================================ -->
+<section class="band tint" id="freigabe">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M8.5 15.5l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Freigabeprotokoll
+        </div>
+        <h2>Dokumentierte Freigabe für den aktuellen Berichtsentwurf</h2>
+      </div>
+      <p class="note">Jede Freigabe ist versioniert, datiert und nachvollziehbar – kein Release ohne Protokoll.</p>
+    </div>
+
+    <div class="compare-wrap reveal">
+      <table class="compare-table eq-protocol-table">
+        <thead><tr><th class="cmp-metric">Feld</th><th style="text-align:left;">Wert</th></tr></thead>
+        <tbody>
+          <tr><td class="cmp-metric">Berichtsteil</td><td>Kapitel „Klimabilanz &amp; Emissionen"</td></tr>
+          <tr><td class="cmp-metric">Version</td><td>v1.3</td></tr>
+          <tr><td class="cmp-metric">Modellversion</td><td>Beispiel: Frontier-Modell, Stand 2026-08 (Routing gemäß LLM- &amp; KI-Strategie)</td></tr>
+          <tr><td class="cmp-metric">Promptversion</td><td>prompt-esg-report-v1.3</td></tr>
+          <tr><td class="cmp-metric">Datenstand</td><td>2026-08-31</td></tr>
+          <tr><td class="cmp-metric">Regulatory Snapshot</td><td>ESRS / CSRD, Stand 2026-Q3</td></tr>
+          <tr><td class="cmp-metric">Output Evaluation Score</td><td><b>66 / 70</b></td></tr>
+          <tr><td class="cmp-metric">QA Process Score</td><td><b>28 / 30</b></td></tr>
+          <tr><td class="cmp-metric">Release-Blocker</td><td>0</td></tr>
+          <tr><td class="cmp-metric">Quellenbelegquote</td><td>100&nbsp;%</td></tr>
+          <tr><td class="cmp-metric">QA-Gates</td><td>6/6 PASS</td></tr>
+          <tr><td class="cmp-metric">Korrekturen</td><td>1 – Plausibilitätshinweis Kapitel „Klimabilanz", behoben und erneut getestet vor Freigabe</td></tr>
+          <tr><td class="cmp-metric">Fachfreigabe</td><td>Sustainability Owner, 2026-09-03</td></tr>
+          <tr><td class="cmp-metric">Finale Freigabe</td><td>Management / Report Owner, 2026-09-04</td></tr>
+          <tr class="hi"><td class="cmp-metric">Gesamtscore</td><td>94 / 100</td></tr>
+          <tr class="hi"><td class="cmp-metric">Releaseentscheidung</td><td><span class="eq-go-badge">GO</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 11. CONSULTING-FAZIT -->
+<!-- ============================================================ -->
+<section class="band" id="fazit">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Consulting-Fazit
+        </div>
+        <h2>Qualität entsteht durch Kontrolle, nicht durch Vertrauen</h2>
+      </div>
+    </div>
+
+    <div class="eq-final reveal">
+      <p class="core">Qualität bei KI entsteht nicht durch Vertrauen in ein Modell, sondern durch messbare Kriterien, kontrollierte Daten, systematische Tests, dokumentierte QA-Gates und klare menschliche Verantwortung.</p>
+      <p class="lines">Transparenz vor Perfektion.<br>Evidenz vor Bauchgefühl.<br>Verantwortung vor Automatik.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-motif" aria-hidden="true">
+      <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="18" y="34" width="9" height="28" fill="currentColor"/>
+        <rect x="133" y="34" width="9" height="28" fill="currentColor"/>
+        <circle cx="22.5" cy="28" r="6.5" fill="currentColor"/>
+        <circle cx="137.5" cy="28" r="6.5" fill="currentColor"/>
+        <path d="M58 62 V40 L80 21 L102 40 V62 Z" fill="currentColor"/>
+        <path d="M0 56 Q 20 46 40 56 T 80 56 T 120 56 T 160 56" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="cols">
+      <div>
+        <h4>Über diese Seite</h4>
+        <p>Dieser Blueprint ist eine konzeptionelle Ausarbeitung im Rahmen des KI-Consulting-Portfolios von Annette Adler. Er zeigt beispielhaft, wie Evaluation und Quality Assurance für einen KI-gestützten Nachhaltigkeitsbericht in einem regulierten Finanzinstitut organisiert werden können – Qualitätsziele, Score, Prozess, Gates, Stress-Test, Human-in-the-Loop und Freigabeprotokoll als eine zusammenhängende Entscheidung. Keine offizielle QA- oder Freigabeentscheidung der Sparkasse Fürstenfeldbruck.</p>
+      </div>
+      <div>
+        <h4>Hinweis zum Markenauftritt</h4>
+        <p>Das rote Symbol oben links ist ein generischer Platzhalter für das offizielle Sparkassen-Logo. Sparkassen-Rot ist hier mit einem gängigen Referenzwert angenähert (kein garantiert pixelgenauer Markenwert) – bei Bedarf bitte gegen die verbindliche Fassung aus dem internen Corporate-Design-Portal sowie das Original-Logo austauschen.</p>
+      </div>
+    </div>
+    <p class="fine">Arbeitsprobe: <a href="annette-adler.html" style="color:inherit;">KI &amp; Nachhaltigkeit</a> · <a href="index.html" style="color:inherit;">Nachhaltigkeitsbericht Sparkasse FFB</a> · <a href="daten-dashboard.html" style="color:inherit;">Daten-Dashboard</a> · <a href="cloud-strategie.html" style="color:inherit;">Cloud-Strategie</a> · <a href="llm-ki-strategie.html" style="color:inherit;">LLM- &amp; KI-Strategie</a>.</p>
+  </div>
+</footer>
+
+<script>
+/* Scroll-Reveal per IntersectionObserver */
+(function(){
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el){ obs.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* Scrollspy: aktiven Unter-Nav-Anker markieren */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.eq-subnav a[href^="#"]'));
+  var sections = navLinks
+    .map(function(a){ return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  function onScroll(){
+    var y = window.scrollY + 160;
+    var current = null;
+    sections.forEach(function(sec){ if (sec.offsetTop <= y) current = sec; });
+    navLinks.forEach(function(a){ a.classList.remove('current'); });
+    if (current){
+      var link = document.querySelector('.eq-subnav a[href="#' + current.id + '"]');
+      if (link) link.classList.add('current');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

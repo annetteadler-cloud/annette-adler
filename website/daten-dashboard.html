@@ -47,6 +47,26 @@
   --shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 *,*::before,*::after{ box-sizing:border-box; }
+.topbar{
+  position: sticky; top:0; z-index: 40;
+  background: var(--surface); border-bottom: 3px solid var(--red);
+}
+.topbar-inner{
+  display:flex; align-items:center; justify-content: space-between;
+  gap: 20px; padding: 12px 28px; max-width: 1200px; margin:0 auto;
+  flex-wrap: wrap; row-gap: 6px;
+}
+.brand{ display:flex; align-items:center; gap:11px; font-weight:700; font-size: 1rem; white-space: nowrap; }
+.brand-mark{ width:44px; height:44px; flex:none; border-radius: 10px; overflow:hidden; }
+.brand-mark svg{ display:block; width:100%; height:100%; }
+.brand small{ display:block; font-weight:500; font-size:.72rem; letter-spacing:.02em; color: var(--ink-soft); }
+nav.jump{ display:flex; flex-wrap:wrap; gap:2px; }
+nav.jump a{
+  text-decoration:none; font-size:.82rem; font-weight:700; color: var(--ink-soft);
+  padding: 8px 12px; border-radius: 6px; white-space:nowrap;
+}
+nav.jump a:hover{ color: var(--red); background: var(--surface-2); }
+nav.jump a.current{ color: var(--red); background: var(--surface-2); }
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family: ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
@@ -110,6 +130,35 @@ footer p + p{ margin-top:8px; }
 </style>
 </head>
 <body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="annette-adler.html" class="brand" style="text-decoration:none; color:inherit;">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="10" fill="var(--red)"/>
+          <path d="M9 29 L18 19 L24 25 L35 11" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="35" cy="11" r="3.4" fill="#fff"/>
+        </svg>
+      </span>
+      <span>Sparkasse Fürstenfeldbruck<small>Nachhaltigkeit · interne Auswertung</small></span>
+    </a>
+    <nav class="jump">
+      <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
+      <a href="index.html#institut">Institut</a>
+      <a href="index.html#wirtschaft">Wirtschaft</a>
+      <a href="index.html#klima">Klima</a>
+      <a href="index.html#team">Mitarbeitende</a>
+      <a href="index.html#region">Region</a>
+      <a href="index.html#governance">Governance</a>
+      <a href="index.html#vergleich">Vergleich</a>
+      <a href="daten-dashboard.html" class="current">Daten-Dashboard</a>
+      <a href="cloud-strategie.html">Cloud-Strategie</a>
+      <a href="llm-ki-strategie.html">LLM- &amp; KI-Strategie</a>
+      <a href="evaluation-quality-assurance-blueprint.html">Eval &amp; QA</a>
+    </nav>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap">

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM- & KI-Strategie für den KI-gestützten Nachhaltigkeitsbericht – Sparkasse Fürstenfeldbruck</title>
+<meta name="description" content="Modellstrategie für den KI-gestützten Nachhaltigkeitsbericht: Microsoft-first Enterprise-Basis, kontrolliertes Multi-Model-Routing, Datenklassifikation und Governance über den gesamten Modell-Lifecycle.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e2001a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ============================================================
+   LLM- & KI-STRATEGIE – seitenspezifische Ergänzungen zu styles.css
+   Alle Klassen mit Präfix "llm-" sind lokal zu dieser Seite.
+   ============================================================ */
+
+/* Ampel-Farbwerte + Navy-Akzent für Architektur/Consulting-Bereiche */
+:root{
+  --green: #1a7d3a; --green-bg: #e8f5ec;
+  --amber: #a3690a; --amber-bg: #fbf0dc;
+  --red-status: #b3261e; --red-status-bg: #fbe6e5;
+  --navy: #0f2035;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --green: #6fcf8f; --green-bg: #163223;
+    --amber: #e8b95c; --amber-bg: #332a15;
+    --red-status: #f3958f; --red-status-bg: #3a1d1c;
+    --navy: #1a3350;
+  }
+}
+:root[data-theme="dark"]{
+  --green: #6fcf8f; --green-bg: #163223;
+  --amber: #e8b95c; --amber-bg: #332a15;
+  --red-status: #f3958f; --red-status-bg: #3a1d1c;
+  --navy: #1a3350;
+}
+
+/* ============ KONZEPT-HINWEISLEISTE ============ */
+.llm-topline{ background: var(--surface-2); border-bottom: 1px solid var(--rule); padding: 8px 0; }
+.llm-topline .wrap{ display:flex; align-items:center; gap:10px; }
+.llm-topline-mark{ width:16px; height:16px; border-radius:3px; background: var(--red); flex:none; display:flex; align-items:center; justify-content:center; }
+.llm-topline-mark svg{ width:9px; height:9px; }
+.llm-topline span.txt{ font-size:.74rem; color: var(--ink-soft); letter-spacing:.01em; }
+
+/* ============ HERO (zweispaltig: Text + Empfehlungskarte) ============ */
+.llm-hero{ position:relative; overflow:hidden; padding: 92px 0 76px; background: linear-gradient(135deg, var(--ink) 0%, #12202f 55%, var(--navy) 145%); color:#fff; }
+.llm-hero::after{ content:""; position:absolute; inset:0; background: radial-gradient(circle at 85% 12%, rgba(226,0,26,.30), transparent 55%); pointer-events:none; }
+.llm-hero .wrap{ position:relative; z-index:1; }
+.llm-hero-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap:44px; align-items:start; margin-top:6px; }
+@media (max-width:880px){ .llm-hero-grid{ grid-template-columns:1fr; } }
+.llm-hero h1{ font-size: clamp(2.1rem, 4.4vw, 3.2rem); margin-top:20px; max-width:18ch; color:#fff; }
+.llm-subhead{ margin-top:14px; font-family:"Archivo",sans-serif; font-weight:700; font-size:1.12rem; color:#ffb3b3; }
+.llm-hero .lede{ margin-top:16px; max-width:52ch; font-size:1.02rem; color: rgba(255,255,255,.86); }
+.llm-reco-card{ background: rgba(255,255,255,.97); color: var(--ink); border-radius:10px; padding:26px 26px 24px; box-shadow: 0 10px 30px rgba(0,0,0,.35); margin-top:6px; }
+.llm-reco-card h3{ font-size:.82rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color: var(--red-deep); }
+.llm-reco-card .reco-lines{ margin-top:12px; font-family:"Archivo",sans-serif; font-weight:800; font-size:1.15rem; line-height:1.35; color: var(--ink); }
+.llm-reco-card p.reco-text{ margin-top:14px; font-size:.86rem; color: var(--ink-soft); line-height:1.55; }
+
+/* ============ NUMMERIERTE STRATEGIE-KARTEN ============ */
+.llm-num-badge{ display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background: var(--surface-2); color: var(--red); font-family:"IBM Plex Mono",monospace; font-weight:800; font-size:.86rem; margin-bottom:12px; }
+.llm-msg-line{ margin-top:16px; padding-top:12px; border-top:1px solid var(--rule); font-weight:800; color: var(--red-deep); font-size:.88rem; }
+
+/* ============ PROZESSKETTE (wiederverwendbar) ============ */
+.llm-chain{ display:flex; align-items:flex-start; gap:0; flex-wrap:wrap; margin-top:30px; }
+.llm-chain-step{ display:flex; flex-direction:column; align-items:center; gap:10px; width:120px; text-align:center; }
+.llm-chain-num{ width:40px; height:40px; border-radius:50%; background: var(--surface); border:2px solid var(--red); color: var(--red); font-family:"IBM Plex Mono",monospace; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:.92rem; flex:none; }
+.llm-chain-label{ font-size:.79rem; font-weight:700; color: var(--ink); line-height:1.25; }
+.llm-chain-arrow{ flex:none; align-self:center; width:26px; color: var(--ink-faint); margin-top:20px; }
+.llm-chain-arrow svg{ width:100%; height:14px; display:block; }
+.llm-chain-arrow .flow{ stroke-dasharray:4 4; animation: llm-flow 1.1s linear infinite; }
+@keyframes llm-flow{ to{ stroke-dashoffset:-16; } }
+@media (max-width:880px){
+  .llm-chain{ flex-direction:column; align-items:flex-start; }
+  .llm-chain-step{ flex-direction:row; width:auto; text-align:left; gap:14px; }
+  .llm-chain-arrow{ width:14px; height:26px; margin:2px 0 2px 19px; transform:rotate(90deg); align-self:flex-start; }
+}
+
+/* ============ AMPEL / DATENKLASSIFIKATION ============ */
+.llm-ampel-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+@media (max-width:880px){ .llm-ampel-grid{ grid-template-columns: 1fr; } }
+.llm-ampel-card{ border-radius:8px; padding:20px 22px; border:1px solid var(--rule); background: var(--surface); border-top:4px solid transparent; box-shadow: var(--shadow); }
+.llm-ampel-card.green{ border-top-color: var(--green); }
+.llm-ampel-card.amber{ border-top-color: var(--amber); }
+.llm-ampel-card.red{ border-top-color: var(--red-status); }
+.llm-ampel-head{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.llm-ampel-dot{ width:14px; height:14px; border-radius:50%; flex:none; }
+.llm-ampel-card.green .llm-ampel-dot{ background: var(--green); }
+.llm-ampel-card.amber .llm-ampel-dot{ background: var(--amber); }
+.llm-ampel-card.red .llm-ampel-dot{ background: var(--red-status); }
+.llm-ampel-card h3{ font-size:.94rem; }
+.llm-ampel-sub{ margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); font-size:.78rem; color: var(--ink-soft); }
+.llm-ampel-sub b{ color: var(--ink); }
+
+/* ============ ENTSCHEIDUNGSTABELLE ============ */
+/* .compare-table erzwingt white-space:nowrap (ausgelegt für kurze Zahlenwerte) –
+   diese Tabelle hat lange Fließtexte je Zelle, daher hier gezielt wieder erlauben. */
+.llm-decision-table th, .llm-decision-table td{ white-space:normal; }
+.llm-decision-table td.cmp-metric{ min-width:160px; }
+.llm-decision-table th:last-child, .llm-decision-table td:last-child{ text-align:left; white-space:nowrap; }
+
+.llm-dk{ display:inline-block; padding:3px 9px; border-radius:20px; font-size:.72rem; font-weight:700; white-space:nowrap; }
+.llm-dk.green{ background: var(--green-bg); color: var(--green); }
+.llm-dk.amber{ background: var(--amber-bg); color: var(--amber); }
+.llm-dk.red{ background: var(--red-status-bg); color: var(--red-status); }
+
+/* ============ MODELL-LANDSCHAFT ============ */
+.llm-model-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:18px; margin-top:28px; }
+.llm-model-card{ background: var(--surface); border:1px solid var(--rule); border-top:3px solid var(--red); border-radius:6px; padding:20px 22px; box-shadow: var(--shadow); }
+.llm-model-card h3{ font-size:1rem; }
+.llm-model-card .sub-block{ margin-top:14px; }
+.llm-model-card .sub-block h4{ font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-faint); margin-bottom:6px; }
+.llm-model-card .verdict{ margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); font-weight:800; color: var(--red-deep); font-size:.86rem; }
+.llm-mini-cols{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+@media (max-width:560px){ .llm-mini-cols{ grid-template-columns:1fr; } }
+.llm-model-card.wide{ grid-column: 1 / -1; }
+.llm-model-card.wide .sub{ max-width:70ch; }
+.llm-model-card.wide .llm-mini-cols{ gap:32px; margin-top:16px; max-width:640px; }
+
+/* ============ LONGDOC ============ */
+.llm-longdoc-note{ margin-top:26px; text-align:center; padding:16px 22px; border-radius:6px; background: var(--red); color:#fff; font-weight:700; font-size:.96rem; }
+
+/* ============ STUFENLOGIK (CHAT / RESEARCH / WORK / AGENT) ============ */
+.llm-level{ display:flex; flex-direction:column; margin-top:28px; }
+.llm-level-card{ border-radius:8px; padding:20px 24px; border:1px solid var(--rule); background: var(--surface); box-shadow: var(--shadow); }
+.llm-level-head{ display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+.llm-level-num{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Mono",monospace; font-weight:800; color:#fff; flex:none; font-size:.86rem; }
+.llm-level-card.l1 .llm-level-num{ background: var(--ink-faint); }
+.llm-level-card.l2 .llm-level-num{ background: var(--amber); }
+.llm-level-card.l3 .llm-level-num{ background: var(--red-deep); }
+.llm-level-card.l4 .llm-level-num{ background: var(--red); }
+.llm-level-head h3{ font-size:.98rem; }
+.llm-level-examples{ margin-top:12px; padding-top:10px; border-top:1px solid var(--rule); font-size:.8rem; color: var(--ink-soft); }
+.llm-level-examples b{ color: var(--ink); }
+.llm-level-arrow{ display:flex; justify-content:center; padding:6px 0; color: var(--ink-faint); }
+.llm-level-arrow svg{ width:18px; height:20px; }
+
+/* ============ ARCHITEKTURDIAGRAMM (3 EBENEN) ============ */
+.llm-arch{ margin-top:12px; display:flex; flex-direction:column; }
+.llm-arch-row{ border-radius:8px; padding:18px 22px; }
+.llm-arch-row.user{ background: var(--surface-2); border:1px solid var(--rule); }
+.llm-arch-label{ font-size:.68rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; margin-bottom:10px; display:block; color: var(--ink-soft); }
+.llm-pills{ display:flex; flex-wrap:wrap; gap:8px; }
+.llm-pill{ font-size:.79rem; font-weight:600; padding:6px 14px; border-radius:20px; white-space:nowrap; background: var(--surface); border:1px solid var(--rule); color: var(--ink-soft); }
+.llm-arch-arrow{ display:flex; justify-content:center; padding:8px 0; color: var(--ink-faint); }
+.llm-arch-arrow svg{ width:22px; height:26px; }
+
+.llm-navy-box{ border-radius:10px; padding:26px 26px 24px; background: var(--navy); color:#fff; }
+.llm-navy-box .llm-arch-label{ color: rgba(255,255,255,.6); }
+.llm-navy-box h3{ color:#fff; font-family:"Archivo",sans-serif; font-size:1.05rem; }
+.llm-navy-box .sub{ font-size:.82rem; color: rgba(255,255,255,.7); margin-top:3px; margin-bottom:16px; }
+.llm-navy-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:10px; }
+@media (max-width:880px){ .llm-navy-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:480px){ .llm-navy-grid{ grid-template-columns: 1fr; } }
+.llm-navy-item{ background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:6px; padding:10px 12px; font-size:.8rem; font-weight:600; text-align:center; color:#fff; }
+.llm-routing{ margin-top:20px; display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+.llm-routing-node{ background: rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); border-radius:20px; padding:8px 16px; font-size:.82rem; font-weight:700; color:#fff; }
+.llm-routing-arrow{ color: rgba(255,255,255,.55); font-weight:700; }
+
+.llm-arch-split3{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+@media (max-width:880px){ .llm-arch-split3{ grid-template-columns: 1fr; } }
+.llm-split-box{ border-radius:8px; padding:20px 22px; border:1px solid var(--rule); background: var(--surface); box-shadow: var(--shadow); }
+.llm-split-box h4{ font-size:.84rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+.llm-split-box .plist{ margin-top:12px; }
+
+/* ============ GOVERNANCE ============ */
+.llm-callout{ margin-top:28px; text-align:center; padding:16px 22px; border-radius:6px; background: var(--red); color:#fff; font-weight:700; font-size:1rem; }
+.llm-gov-grid{ margin-top:26px; display:grid; grid-template-columns: repeat(5,1fr); gap:14px; }
+@media (max-width:1000px){ .llm-gov-grid{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width:640px){ .llm-gov-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width:420px){ .llm-gov-grid{ grid-template-columns: 1fr; } }
+.llm-gov-card{ background: var(--surface); border:1px solid var(--rule); border-radius:6px; padding:12px 12px 11px; box-shadow: var(--shadow); font-size:.82rem; font-weight:700; text-align:center; }
+
+/* ============ PREISE ============ */
+.llm-price-tag{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background: var(--surface-2); color: var(--ink-soft); padding:6px 12px; border-radius:4px; margin-bottom:8px; border:1px solid var(--rule); }
+.llm-price-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:16px; margin-top:20px; }
+.llm-price-card{ background: var(--surface); border:1px solid var(--rule); border-radius:6px; padding:18px 20px; box-shadow: var(--shadow); }
+.llm-price-card h3{ font-size:.92rem; }
+.llm-price-card .value{ margin-top:8px; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:.98rem; color: var(--red-deep); }
+.llm-price-card .rows{ margin-top:10px; display:flex; flex-direction:column; gap:6px; font-size:.82rem; color: var(--ink-soft); }
+.llm-price-card .rows b{ color: var(--ink); }
+
+/* ============ KOSTENSTRATEGIE ============ */
+.llm-cost-stat{ margin-top:8px; text-align:center; padding:30px 24px; border-radius:8px; background: var(--ink); color:#fff; }
+.llm-cost-stat .label{ font-size:.76rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: rgba(255,255,255,.6); }
+.llm-cost-stat p{ margin-top:10px; font-family:"Archivo",sans-serif; font-weight:800; font-size:1.4rem; }
+.llm-routing-strip{ margin-top:26px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+.llm-routing-step{ background: var(--surface); border:1px solid var(--rule); border-radius:8px; padding:14px 18px; text-align:center; box-shadow: var(--shadow); min-width:160px; }
+.llm-routing-step .task{ font-size:.78rem; color: var(--ink-soft); }
+.llm-routing-step .model{ margin-top:4px; font-weight:800; font-size:.9rem; color: var(--red-deep); }
+.llm-routing-strip-arrow{ color: var(--red); font-weight:800; font-size:1.1rem; }
+
+/* ============ LIVING MODEL STRATEGY / ROADMAP ============ */
+.llm-cadence-badge{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.71rem; font-weight:700; color: var(--red); background: var(--surface-2); border-radius:4px; padding:4px 9px; margin-bottom:10px; }
+
+/* ============ FAZIT ============ */
+.llm-final{ margin-top:10px; text-align:center; background: var(--surface); border:2px solid var(--red); border-radius:10px; padding:42px 32px; box-shadow: var(--shadow); }
+.llm-formula{ display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:24px 0 4px; }
+.llm-formula span.term{ background: var(--surface-2); border-radius:6px; padding:12px 18px; font-weight:700; font-size:.9rem; }
+.llm-formula span.term.main{ background: var(--red); color:#fff; }
+.llm-formula span.plus{ color: var(--red); font-weight:800; font-size:1.2rem; }
+.llm-final .explain{ max-width:64ch; margin:20px auto 0; color: var(--ink-soft); font-size:.96rem; }
+
+/* ============ SCROLL-REVEAL ============ */
+.reveal{ opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-visible{ opacity:1; transform:none; }
+
+/* ============ DRUCKANSICHT (A4/PDF) ============ */
+@media print{
+  .llm-topline, .topbar{ display:none !important; }
+  .llm-hero{ background:none !important; color: var(--ink) !important; padding:16px 0 20px; }
+  .llm-hero::after{ display:none; }
+  .llm-hero h1, .llm-subhead, .llm-hero .lede{ color: var(--ink) !important; }
+  .llm-reco-card{ box-shadow:none !important; border:1px solid var(--rule); }
+  .llm-navy-box{ background: var(--surface-2) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .llm-navy-box h3, .llm-navy-box .llm-arch-label, .llm-navy-box .sub{ color: var(--ink) !important; }
+  .llm-navy-item{ background: var(--surface) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .llm-routing-node{ background: var(--surface) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .llm-cost-stat{ background: var(--surface-2) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .llm-cost-stat .label{ color: var(--ink-soft) !important; }
+  .compare-wrap{ overflow-x: visible; }
+  .compare-table{ min-width:0; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  section.band{ padding:22px 0; }
+  .card, .llm-model-card, .llm-level-card, .llm-price-card, .llm-ampel-card, .llm-gov-card, .llm-final, .llm-arch-row, .llm-split-box, .llm-routing-step{ break-inside: avoid; box-shadow:none !important; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  @page{ size:A4; margin:16mm; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HINWEISLEISTE: CORPORATE-DESIGN-KONZEPT -->
+<!-- ============================================================ -->
+<div class="llm-topline">
+  <div class="wrap">
+    <span class="llm-topline-mark" aria-hidden="true">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 8.5 L6 12 L13.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </span>
+    <span class="txt">Sparkassen Corporate Design – Konzeptdarstellung. Farben und Bildmarke sind angenähert und ersetzen keine offizielle Markenvorgabe.</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION -->
+<!-- ============================================================ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="annette-adler.html" class="brand" style="text-decoration:none; color:inherit;">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="10" fill="var(--red)"/>
+          <path d="M9 29 L18 19 L24 25 L35 11" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="35" cy="11" r="3.4" fill="#fff"/>
+        </svg>
+      </span>
+      <span>Sparkasse Fürstenfeldbruck<small>Nachhaltigkeit · interne Auswertung</small></span>
+    </a>
+    <nav class="jump">
+      <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
+      <a href="#modellstrategie">Modellstrategie</a>
+      <a href="#datenklassifikation">Datenklassifikation</a>
+      <a href="#modell-landschaft">Modell-Landschaft</a>
+      <a href="#architektur">Architektur</a>
+      <a href="#governance">Governance</a>
+      <a href="#qa-gates">QA-Gates</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#fazit">Fazit</a>
+      <a href="index.html">Nachhaltigkeitsbericht</a>
+      <a href="daten-dashboard.html">Daten-Dashboard</a>
+      <a href="cloud-strategie.html">Cloud-Strategie</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HERO -->
+<!-- ============================================================ -->
+<header class="llm-hero">
+  <div class="wrap">
+    <span class="kicker">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 L12 22 M2 12 L22 12" stroke="currentColor" stroke-width="2"/></svg>
+      KI-Consulting Blueprint
+    </span>
+    <div class="llm-hero-grid">
+      <div>
+        <h1>LLM- &amp; KI-Strategie</h1>
+        <p class="llm-subhead">Die richtige KI. Für die richtige Aufgabe. Im richtigen Kontext.</p>
+        <p class="lede">Modellstrategie für den KI-gestützten Nachhaltigkeitsbericht der Sparkasse Fürstenfeldbruck: Microsoft-first in der Arbeitsoberfläche, Multi-Model in der Qualitätssicherung und Governance über den gesamten Daten- und Modell-Lifecycle.</p>
+      </div>
+      <div class="llm-reco-card reveal">
+        <h3>Management-Empfehlung</h3>
+        <p class="reco-lines">Microsoft-first Governance.<br>Multi-Model für Qualität.<br>Routing statt Einheitsmodell.</p>
+        <p class="reco-text">Copilot und Teams bilden die sichere Enterprise-Arbeitsoberfläche. Ein Managed-AI-Layer steuert RAG, Agenten, Modellrouting und Qualität. Spezialmodelle werden nur dort eingesetzt, wo sie einen messbaren Mehrwert schaffen.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- 1. EMPFOHLENE MODELLSTRATEGIE -->
+<!-- ============================================================ -->
+<section class="band" id="modellstrategie">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="7" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Empfohlene Modellstrategie
+        </div>
+        <h2>Drei Schichten statt eines Einheitsmodells</h2>
+      </div>
+      <p class="note">Jede Schicht hat eine klar abgegrenzte Rolle – vom Arbeitsalltag bis zur Datensouveränität.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card neutral reveal">
+        <span class="llm-num-badge">01</span>
+        <h3>Microsoft als Enterprise-Basis</h3>
+        <ul class="plist">
+          <li>Microsoft Teams</li>
+          <li>Word</li>
+          <li>Excel</li>
+          <li>PowerPoint</li>
+          <li>SharePoint</li>
+          <li>OneDrive</li>
+          <li>Microsoft 365 Copilot</li>
+          <li>Copilot Studio</li>
+        </ul>
+        <p class="llm-msg-line">Microsoft bildet die primäre Arbeits- und Integrationsoberfläche.</p>
+      </div>
+      <div class="card neutral reveal">
+        <span class="llm-num-badge">02</span>
+        <h3>Frontier-Modelle gezielt ergänzen</h3>
+        <p class="cs-label" style="margin-top:0;">Modelle</p>
+        <p class="sub">OpenAI GPT · Claude · Gemini</p>
+        <p class="cs-label">Einsatz</p>
+        <ul class="plist">
+          <li>Deep Research</li>
+          <li>Long Documents</li>
+          <li>Komplexe Analyse</li>
+          <li>Redaktionsqualität</li>
+          <li>Coding</li>
+          <li>Qualitätssicherung</li>
+          <li>Cross-Checks</li>
+        </ul>
+        <p class="llm-msg-line">Nicht jeder Nutzer benötigt jedes Modell. Spezialmodelle werden gezielt eingesetzt.</p>
+      </div>
+      <div class="card neutral reveal">
+        <span class="llm-num-badge">03</span>
+        <h3>Open-Weight als strategische Option</h3>
+        <p class="cs-label" style="margin-top:0;">Einbeziehen</p>
+        <p class="sub">Mistral · Llama · Qwen · DeepSeek · Kimi · GLM</p>
+        <p class="cs-label">Einsatz</p>
+        <ul class="plist">
+          <li>Private Verarbeitung</li>
+          <li>Self-Hosting</li>
+          <li>Kostenoptimierung</li>
+          <li>Modellvergleich</li>
+          <li>Spezielle Use Cases</li>
+        </ul>
+        <p class="llm-msg-line">Mehr Datensouveränität bedeutet gleichzeitig mehr Betriebs- und Governance-Verantwortung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. DATENKLASSIFIKATION -->
+<!-- ============================================================ -->
+<section class="band tint" id="datenklassifikation">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="2" width="6" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="6.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="17.5" r="1.3" fill="currentColor"/></svg>
+          Datenklassifikation
+        </div>
+        <h2>Welche Daten dürfen wohin?</h2>
+      </div>
+      <p class="note">Die Ampel entscheidet, welche Modelle und Umgebungen für eine Information zulässig sind.</p>
+    </div>
+
+    <div class="llm-ampel-grid">
+      <div class="llm-ampel-card green reveal">
+        <div class="llm-ampel-head"><span class="llm-ampel-dot"></span><h3>Grün – öffentlich / freigegeben</h3></div>
+        <ul class="plist">
+          <li>Veröffentlichte Nachhaltigkeitsberichte</li>
+          <li>Homepage-Inhalte</li>
+          <li>Öffentliche regulatorische Quellen</li>
+          <li>ESRS · CSRD · EU-Taxonomie</li>
+          <li>Freigegebene aggregierte Kennzahlen</li>
+        </ul>
+        <div class="llm-ampel-sub"><b>Geeignet für:</b> Enterprise Research, ChatGPT, Claude, Gemini, Perplexity, mehrere Modelle zum Cross-Check</div>
+      </div>
+      <div class="llm-ampel-card amber reveal">
+        <div class="llm-ampel-head"><span class="llm-ampel-dot"></span><h3>Gelb – intern / kontrolliert</h3></div>
+        <ul class="plist">
+          <li>Berichtsentwürfe</li>
+          <li>Interne ESG-KPIs</li>
+          <li>Prozessinformationen</li>
+          <li>Unveröffentlichte Tabellen</li>
+          <li>Interne Dokumente</li>
+        </ul>
+        <div class="llm-ampel-sub"><b>Nur verwenden mit:</b> Business-/Enterprise-Umgebungen, Rollen- &amp; Rechtekonzept, Logging, Verschlüsselung, Datenresidenz, freigegebenen Providern</div>
+      </div>
+      <div class="llm-ampel-card red reveal">
+        <div class="llm-ampel-head"><span class="llm-ampel-dot"></span><h3>Rot – sensibel / kritisch</h3></div>
+        <ul class="plist">
+          <li>Kundendaten</li>
+          <li>Personenbezogene Rohdaten</li>
+          <li>Credentials</li>
+          <li>Geschäftsgeheimnisse</li>
+          <li>Sensible Risikodaten</li>
+        </ul>
+        <div class="llm-ampel-sub"><b>Keine ungeprüfte Verarbeitung über externe Consumer-KI.</b> Nur: interne Systeme, Private Cloud, genehmigte Enterprise-Architektur, ggf. Open-Weight/Self-Hosting.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. MODELL-LANDSCHAFT -->
+<!-- ============================================================ -->
+<section class="band" id="modell-landschaft">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="4" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/></svg>
+          Modell-Landschaft
+        </div>
+        <h2>Sieben Systeme, sieben klar abgegrenzte Rollen</h2>
+      </div>
+      <p class="note">Von der Arbeitsoberfläche bis zum Multi-Model-Router – jedes System hat eine definierte Aufgabe im Gesamtbild.</p>
+    </div>
+
+    <div class="llm-model-grid">
+      <div class="llm-model-card reveal">
+        <h3>Microsoft 365 Copilot</h3>
+        <div class="sub-block">
+          <h4>Oberflächen</h4>
+          <p class="sub">Teams · Word · Excel · Outlook · PowerPoint · SharePoint · Copilot Studio</p>
+        </div>
+        <div class="sub-block">
+          <h4>Geeignet für</h4>
+          <ul class="plist">
+            <li>Meetings &amp; interne Zusammenarbeit</li>
+            <li>Office-Dokumente &amp; Tabellen</li>
+            <li>Wissenszugriff, interne Agenten</li>
+          </ul>
+        </div>
+        <p class="verdict">Enterprise-Arbeitsoberfläche für den Kunden.</p>
+      </div>
+
+      <div class="llm-model-card reveal">
+        <h3>OpenAI</h3>
+        <div class="sub-block">
+          <h4>Produkte</h4>
+          <p class="sub">ChatGPT · ChatGPT Work · Codex · API</p>
+        </div>
+        <div class="sub-block">
+          <h4>Modelle &amp; Routing</h4>
+          <ul class="plist">
+            <li><b>Sol</b> – komplexe Analyse, Strategie, QA, schwierige Reasoning-Aufgaben</li>
+            <li><b>Terra</b> – produktiver Default, Standard-Wissensarbeit, Agenten</li>
+            <li><b>Luna</b> – Extraktion, Klassifizierung, große Mengen, kostengünstiges Routing</li>
+            <li><b>Codex</b> – HTML/CSS/JS, Website-Erstellung, Codeprüfung, Refactoring</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="llm-model-card reveal">
+        <h3>Anthropic Claude</h3>
+        <div class="sub-block">
+          <h4>Produkte</h4>
+          <p class="sub">Claude · Projects · Claude Code · Skills · MCP</p>
+        </div>
+        <div class="sub-block">
+          <h4>Beste Einsatzfelder</h4>
+          <ul class="plist">
+            <li>Lange Dokumente, hochwertige Texte</li>
+            <li>Konzepte &amp; Strategie, Redaktionsqualität</li>
+            <li>Zweitmodell-Review, agentisches Coding</li>
+          </ul>
+        </div>
+        <p class="verdict">Sehr stark für Long-form Content und strukturierte Wissensarbeit.</p>
+      </div>
+
+      <div class="llm-model-card reveal">
+        <h3>Google Gemini</h3>
+        <div class="sub-block">
+          <h4>Produkte</h4>
+          <p class="sub">Gemini · AI Studio · Deep Research</p>
+        </div>
+        <div class="sub-block">
+          <h4>Stärken</h4>
+          <ul class="plist">
+            <li>Sehr große Kontexte, viele Dokumente</li>
+            <li>Multimodalität: Audio, Video, Bilder</li>
+            <li>Große Wissensbestände</li>
+          </ul>
+        </div>
+        <p class="verdict">Spezial- und Benchmark-Modell, nicht primäre Arbeitsplattform.</p>
+      </div>
+
+      <div class="llm-model-card reveal">
+        <h3>Perplexity / Research-Layer</h3>
+        <div class="sub-block">
+          <h4>Geeignet für</h4>
+          <ul class="plist">
+            <li>Aktuelle Webrecherche</li>
+            <li>Quellen &amp; Grounding</li>
+            <li>Regulatorisches Monitoring</li>
+            <li>Gegenprüfung</li>
+          </ul>
+        </div>
+        <p class="verdict">Regel: Rechercheergebnisse nie ungeprüft als fachliche Wahrheit übernehmen. Quellen, Datum und Abruf müssen dokumentiert werden.</p>
+      </div>
+
+      <div class="llm-model-card reveal">
+        <h3>OpenRouter</h3>
+        <p class="sub" style="margin-top:6px;">Multi-Model-Router für Test, Benchmarking und A/B-Vergleiche</p>
+        <div class="sub-block">
+          <h4>Geeignet für</h4>
+          <ul class="plist">
+            <li>Modell- &amp; Preisvergleich</li>
+            <li>Fallback-Strategien</li>
+            <li>Identische Testprompts über mehrere Modelle</li>
+            <li>Evaluation</li>
+          </ul>
+        </div>
+        <p class="verdict">Für Bankproduktion nur nach Prüfung von: Provider, Datenregion, Logging, Datenschutz, DPA, Subprozessoren, DORA, Informationssicherheit.</p>
+      </div>
+
+      <div class="llm-model-card wide reveal">
+        <h3>Open-Weight / Open Source</h3>
+        <p class="sub" style="margin-top:6px;">Mistral · Llama · Qwen · DeepSeek · Kimi · GLM</p>
+        <p class="sub" style="margin-top:8px;">Open Weight ist nicht automatisch vollständig Open Source.</p>
+        <div class="llm-mini-cols">
+          <div>
+            <h4 style="font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:6px;">Vorteile</h4>
+            <ul class="plist">
+              <li>Kontrolle, Self-Hosting</li>
+              <li>Anpassbarkeit</li>
+              <li>Datensouveränität</li>
+              <li>Geringere Vendor-Abhängigkeit</li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:6px;">Nachteile</h4>
+            <ul class="plist">
+              <li>Eigener Betrieb &amp; Infrastruktur</li>
+              <li>Security &amp; Monitoring</li>
+              <li>Updates &amp; Modell-Evaluation</li>
+              <li>Höhere technische Verantwortung</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. LONGDOC / LONG-CONTEXT -->
+<!-- ============================================================ -->
+<section class="band tint" id="longdoc">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2h9l3 3v17H6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 9h6M9 13h6M9 17h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          LongDoc-Strategie
+        </div>
+        <h2>Große Dokumentmengen brauchen eine Strategie, keine Einzelentscheidung</h2>
+      </div>
+      <p class="note">LongDoc ist keine einzelne Plattform, sondern eine Verarbeitungsstrategie – z. B. für ESRS, CSRD, Richtlinien, Nachhaltigkeitsberichte, Policies, Prüfberichte, Verträge, große PDF-Sammlungen.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card neutral reveal">
+        <h3>Long Context</h3>
+        <p class="sub">Dokumente direkt in ein Modell mit großem Kontext geben.</p>
+        <p class="cs-label">Geeignet für</p>
+        <ul class="plist">
+          <li>Einmalige Analyse</li>
+          <li>Exploration</li>
+          <li>Schnelle Zusammenfassungen</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <h3>RAG</h3>
+        <p class="sub">Dokumente indexieren und nur relevante Textstellen abrufen.</p>
+        <p class="cs-label">Geeignet für</p>
+        <ul class="plist">
+          <li>Produktive Unternehmenssysteme</li>
+          <li>Nachvollziehbare Quellen</li>
+          <li>Wiederkehrende Nutzung, große Wissensbestände</li>
+          <li>Reporting-Agenten</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="llm-longdoc-note reveal">Für den Nachhaltigkeitsbericht langfristig RAG mit Quellenbeleg verwenden.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. ENTSCHEIDUNGSTABELLE -->
+<!-- ============================================================ -->
+<section class="band" id="entscheidungstabelle">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M9 4v16" stroke="currentColor" stroke-width="1.6"/></svg>
+          Entscheidungstabelle
+        </div>
+        <h2>Wann nutze ich welches Programm?</h2>
+      </div>
+      <p class="note">Die zehn häufigsten Aufgaben im Berichtsprozess, jeweils mit Primärlösung, Alternative und Datenklasse.</p>
+    </div>
+
+    <div class="compare-wrap reveal">
+      <table class="compare-table llm-decision-table">
+        <thead><tr><th class="cmp-metric">Aufgabe</th><th style="text-align:left;">Primärlösung</th><th style="text-align:left;">Alternative</th><th style="text-align:left;">Warum</th><th>Datenklasse</th></tr></thead>
+        <tbody>
+          <tr><td class="cmp-metric">Teams / Meetings / Zusammenarbeit</td><td style="text-align:left;">Microsoft 365 Copilot</td><td style="text-align:left;">–</td><td style="text-align:left;">Native Integration ins Arbeitsumfeld</td><td><span class="llm-dk amber">Gelb</span></td></tr>
+          <tr><td class="cmp-metric">Word- und PowerPoint-Bericht</td><td style="text-align:left;">Copilot + ChatGPT Work</td><td style="text-align:left;">Claude für Redaktions-QA</td><td style="text-align:left;">Officenahe Erstellung, hochwertige Zweitmeinung</td><td><span class="llm-dk amber">Gelb</span></td></tr>
+          <tr><td class="cmp-metric">ESRS / CSRD / Taxonomie Research</td><td style="text-align:left;">Deep Research / Perplexity / ChatGPT Research</td><td style="text-align:left;">Gemini / Claude</td><td style="text-align:left;">Aktuelle, breite Quellenlage</td><td><span class="llm-dk green">Grün</span></td></tr>
+          <tr><td class="cmp-metric">Große PDF-Mengen</td><td style="text-align:left;">Gemini oder Claude</td><td style="text-align:left;">RAG + GPT/Claude/Gemini (Produktion)</td><td style="text-align:left;">Großer Kontext bzw. nachvollziehbare Produktion</td><td><span class="llm-dk amber">Gelb</span></td></tr>
+          <tr><td class="cmp-metric">ESG-Daten extrahieren</td><td style="text-align:left;">Günstige Modelle (Luna-/Flash-/Haiku-Klasse)</td><td style="text-align:left;">–</td><td style="text-align:left;">Hohes Volumen, geringe Komplexität</td><td><span class="llm-dk amber">Gelb</span></td></tr>
+          <tr><td class="cmp-metric">Komplexe Plausibilitätsprüfung</td><td style="text-align:left;">GPT Sol / Claude Opus-Klasse</td><td style="text-align:left;">Gemini Pro (Cross-Check)</td><td style="text-align:left;">Höchste Reasoning-Tiefe nötig</td><td><span class="llm-dk amber">Gelb</span> / <span class="llm-dk red">Rot</span></td></tr>
+          <tr><td class="cmp-metric">Agenten</td><td style="text-align:left;">Copilot Studio / freigegebene Managed-AI-Plattform</td><td style="text-align:left;">OpenAI Agents, Claude Skills</td><td style="text-align:left;">Governance &amp; Logging integriert</td><td><span class="llm-dk amber">Gelb</span></td></tr>
+          <tr><td class="cmp-metric">Website / HTML / Coding</td><td style="text-align:left;">Codex</td><td style="text-align:left;">Claude Code, Gemini CLI</td><td style="text-align:left;">Spezialisiert auf Codequalität</td><td><span class="llm-dk green">Grün</span></td></tr>
+          <tr><td class="cmp-metric">Modellvergleich</td><td style="text-align:left;">OpenRouter + eigenes Eval-Set</td><td style="text-align:left;">Hugging Face</td><td style="text-align:left;">Neutraler Multi-Provider-Vergleich</td><td><span class="llm-dk green">Grün</span></td></tr>
+          <tr><td class="cmp-metric">Höchste Datensouveränität</td><td style="text-align:left;">Private Open-Weight-Modelle</td><td style="text-align:left;">–</td><td style="text-align:left;">Volle Kontrolle über Infrastruktur &amp; Daten</td><td><span class="llm-dk red">Rot</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. CHAT / RESEARCH / WORK / AGENT -->
+<!-- ============================================================ -->
+<section class="band tint" id="stufenlogik">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 21h4v-4h4v-4h4v-4h4V5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Chat, Research, Work oder Agent?
+        </div>
+        <h2>Vier Stufen steigender Autonomie – und steigender Governance-Anforderung</h2>
+      </div>
+      <p class="note">Je höher die Stufe, desto mehr Kontrolle, Logging und Freigabe sind erforderlich.</p>
+    </div>
+
+    <div class="llm-level">
+      <div class="llm-level-card l1 reveal">
+        <div class="llm-level-head"><span class="llm-level-num">1</span><h3>Chat</h3></div>
+        <ul class="plist">
+          <li>Fragen beantworten, Brainstorming</li>
+          <li>Texte, E-Mails</li>
+          <li>Kurze Analysen, Ideen</li>
+        </ul>
+        <div class="llm-level-examples"><b>Beispiele:</b> ChatGPT, Claude, Gemini, Copilot Chat</div>
+      </div>
+      <div class="llm-level-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="llm-level-card l2 reveal">
+        <div class="llm-level-head"><span class="llm-level-num">2</span><h3>Research</h3></div>
+        <ul class="plist">
+          <li>Komplexe Recherche, mehrere Quellen</li>
+          <li>Marktanalysen, Regulatorik</li>
+          <li>Vergleich, Strategie</li>
+        </ul>
+        <div class="llm-level-examples"><b>Beispiele:</b> ChatGPT Deep Research, Claude Research, Gemini Deep Research, Perplexity</div>
+      </div>
+      <div class="llm-level-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="llm-level-card l3 reveal">
+        <div class="llm-level-head"><span class="llm-level-num">3</span><h3>Work</h3></div>
+        <ul class="plist">
+          <li>Mehrstufige Wissensarbeit</li>
+          <li>Dokumenterstellung, Präsentationen</li>
+          <li>Längere, wiederkehrende Aufgaben</li>
+        </ul>
+        <div class="llm-level-examples"><b>Beispiele:</b> ChatGPT Work, Claude Cowork, Microsoft Copilot</div>
+      </div>
+      <div class="llm-level-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="llm-level-card l4 reveal">
+        <div class="llm-level-head"><span class="llm-level-num">4</span><h3>Agent</h3></div>
+        <ul class="plist">
+          <li>Wiederkehrende Prozesse, Tool-Nutzung</li>
+          <li>Automatisierte Arbeitsschritte, Datenabfragen</li>
+          <li>Workflows, Reporting-Prozesse</li>
+        </ul>
+        <div class="llm-level-examples"><b>Beispiele:</b> Copilot Studio, OpenAI Agents, Claude Skills, Enterprise-Agent-Plattformen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. EMPFOHLENE ZIELARCHITEKTUR -->
+<!-- ============================================================ -->
+<section class="band" id="architektur">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 3 8l9 5 9-5-9-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Empfohlene Zielarchitektur
+        </div>
+        <h2>Drei Ebenen von der Arbeitsoberfläche bis zu Daten &amp; Modellen</h2>
+      </div>
+      <p class="note">Ein Managed-AI-Layer steuert das Routing zwischen günstigen, Standard- und Frontier-Modellen.</p>
+    </div>
+
+    <div class="llm-arch">
+      <div class="llm-arch-row user reveal">
+        <span class="llm-arch-label">Ebene 1 · Nutzer &amp; Arbeitsoberfläche</span>
+        <div class="llm-pills">
+          <span class="llm-pill">Teams</span><span class="llm-pill">Word</span><span class="llm-pill">Excel</span><span class="llm-pill">PowerPoint</span><span class="llm-pill">Microsoft 365 Copilot</span><span class="llm-pill">SharePoint / OneDrive</span>
+        </div>
+      </div>
+      <div class="llm-arch-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="llm-navy-box reveal">
+        <span class="llm-arch-label">Ebene 2 · Managed AI &amp; Orchestrierung</span>
+        <h3>Copilot Studio / freigegebene Enterprise AI Platform</h3>
+        <p class="sub">Zentrale Steuerungsschicht für RAG, Agenten, Routing, Guardrails und Freigaben</p>
+        <div class="llm-navy-grid">
+          <div class="llm-navy-item">RAG</div>
+          <div class="llm-navy-item">Agenten</div>
+          <div class="llm-navy-item">Prompt Management</div>
+          <div class="llm-navy-item">Modell-Routing</div>
+          <div class="llm-navy-item">Guardrails</div>
+          <div class="llm-navy-item">Evaluation</div>
+          <div class="llm-navy-item">Logging</div>
+          <div class="llm-navy-item">Monitoring</div>
+          <div class="llm-navy-item">API Gateway</div>
+          <div class="llm-navy-item">Human-in-the-Loop</div>
+        </div>
+        <div class="llm-routing">
+          <span class="llm-routing-node">günstiges Modell</span>
+          <span class="llm-routing-arrow">→</span>
+          <span class="llm-routing-node">Standardmodell</span>
+          <span class="llm-routing-arrow">→</span>
+          <span class="llm-routing-node">Frontier-Modell</span>
+        </div>
+      </div>
+      <div class="llm-arch-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="llm-arch-split3">
+        <div class="llm-split-box reveal">
+          <h4>Interne Daten</h4>
+          <ul class="plist">
+            <li>ESG</li><li>Finance</li><li>Gebäude</li><li>Einkauf</li><li>HR</li><li>Risiko</li><li>Reporting</li>
+          </ul>
+        </div>
+        <div class="llm-split-box reveal">
+          <h4>Öffentliche Quellen</h4>
+          <ul class="plist">
+            <li>ESRS</li><li>CSRD</li><li>EU-Taxonomie</li><li>Regulatorische Webseiten</li><li>Nachhaltigkeitsberichte</li>
+          </ul>
+        </div>
+        <div class="llm-split-box reveal">
+          <h4>Modelle</h4>
+          <ul class="plist">
+            <li>OpenAI</li><li>Claude</li><li>Gemini</li><li>Microsoft</li><li>Open-Weight bei Bedarf</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. GOVERNANCE -->
+<!-- ============================================================ -->
+<section class="band tint" id="governance">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 4 6.5V11c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6.5Z" stroke="currentColor" stroke-width="1.6"/></svg>
+          Governance
+        </div>
+        <h2>Ein Governance-Layer für den gesamten Modell-Lifecycle</h2>
+      </div>
+      <p class="note">Von DSGVO und DORA bis zur Exit-Strategie – 18 Kontrollpunkte, die die Modellstrategie absichern.</p>
+    </div>
+
+    <div class="llm-gov-grid">
+      <div class="llm-gov-card reveal">DSGVO</div>
+      <div class="llm-gov-card reveal">DORA</div>
+      <div class="llm-gov-card reveal">EU AI Act</div>
+      <div class="llm-gov-card reveal">Datenschutz</div>
+      <div class="llm-gov-card reveal">Informationssicherheit</div>
+      <div class="llm-gov-card reveal">IAM</div>
+      <div class="llm-gov-card reveal">Rollen &amp; Rechte</div>
+      <div class="llm-gov-card reveal">Datenklassifikation</div>
+      <div class="llm-gov-card reveal">Provider Management</div>
+      <div class="llm-gov-card reveal">Audit-Rechte</div>
+      <div class="llm-gov-card reveal">Datenresidenz</div>
+      <div class="llm-gov-card reveal">Unterauftragnehmer</div>
+      <div class="llm-gov-card reveal">Logging</div>
+      <div class="llm-gov-card reveal">Modellversionierung</div>
+      <div class="llm-gov-card reveal">Promptversionierung</div>
+      <div class="llm-gov-card reveal">Exit-Strategie</div>
+      <div class="llm-gov-card reveal">Business Continuity</div>
+      <div class="llm-gov-card reveal">Kostenkontrolle</div>
+    </div>
+
+    <div class="llm-callout reveal">Die Verantwortung bleibt bei der Sparkasse.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9. QA-GATES -->
+<!-- ============================================================ -->
+<section class="band" id="qa-gates">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          QA-Gates
+        </div>
+        <h2>Sechs Prüfschritte zwischen Modellausgabe und Veröffentlichung</h2>
+      </div>
+      <p class="note">Dieselben Pflicht-Gates wie im Cloud-Strategie-Blueprint – konsistent über das gesamte Berichtssystem.</p>
+    </div>
+
+    <div class="llm-chain reveal">
+      <div class="llm-chain-step"><span class="llm-chain-num">1</span><span class="llm-chain-label">Datenprüfung</span></div>
+      <span class="llm-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="llm-chain-step"><span class="llm-chain-num">2</span><span class="llm-chain-label">Quellenprüfung</span></div>
+      <span class="llm-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="llm-chain-step"><span class="llm-chain-num">3</span><span class="llm-chain-label">Regulatorikprüfung</span></div>
+      <span class="llm-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="llm-chain-step"><span class="llm-chain-num">4</span><span class="llm-chain-label">Plausibilitätsprüfung</span></div>
+      <span class="llm-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="llm-chain-step"><span class="llm-chain-num">5</span><span class="llm-chain-label">Fachliche Freigabe</span></div>
+      <span class="llm-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="llm-chain-step"><span class="llm-chain-num">6</span><span class="llm-chain-label">Finale Freigabe</span></div>
+    </div>
+
+    <div class="llm-callout reveal">Kein autonomes Veröffentlichen des Nachhaltigkeitsberichts.</div>
+    <p class="note" style="text-align:center; margin-top:12px;">Human-in-the-Loop ist verpflichtend.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. PREISSTRUKTUR -->
+<!-- ============================================================ -->
+<section class="band tint" id="preise">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 21 11l-9 9-9-9V4a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+          Preisstruktur
+        </div>
+        <h2>Kostenrichtwerte für die wichtigsten Bausteine</h2>
+      </div>
+      <p class="note">Preise ändern sich häufig – vor jeder Beschaffung gegenprüfen.</p>
+    </div>
+
+    <span class="llm-price-tag">Richtwerte – Stand September 2026</span>
+
+    <div class="llm-price-grid">
+      <div class="llm-price-card reveal">
+        <h3>Microsoft 365 Copilot</h3>
+        <p class="value">ca. 26 € / Nutzer / Monat</p>
+        <p class="sub">bei jährlicher Abrechnung, abhängig vom Vertrag</p>
+      </div>
+      <div class="llm-price-card reveal">
+        <h3>OpenAI API – Routing-Beispiel</h3>
+        <div class="rows">
+          <span><b>Luna:</b> ca. $0,20 Input / $1,20 Output pro 1 Mio. Tokens</span>
+          <span><b>Terra:</b> ca. $2 / $12 pro 1 Mio. Tokens</span>
+          <span><b>Sol:</b> ca. $4 / $20 pro 1 Mio. Tokens</span>
+        </div>
+      </div>
+      <div class="llm-price-card reveal">
+        <h3>Copilot Studio</h3>
+        <p class="value">verbrauchs- / creditbasiert</p>
+      </div>
+      <div class="llm-price-card reveal">
+        <h3>OpenRouter</h3>
+        <p class="value">Pay-as-you-go</p>
+      </div>
+      <div class="llm-price-card reveal">
+        <h3>Hugging Face</h3>
+        <p class="value">Provider Routing / dedizierte Inference-Endpunkte</p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:18px; max-width:70ch;">Für Claude, Gemini, Mistral, DeepSeek, Qwen u. a.: keine starren Preise, solange sie nicht aktuell verifiziert sind. Stattdessen gilt: <b>aktuellen Listenpreis vor Beschaffung prüfen.</b></p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 11. KOSTENSTRATEGIE -->
+<!-- ============================================================ -->
+<section class="band" id="kostenstrategie">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v10M9 9.5c0-1.4 1.3-2.5 3-2.5s3 1 3 2.2c0 3-6 1.3-6 4.2 0 1.3 1.3 2.3 3 2.3s3-1 3-2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Kostenstrategie
+        </div>
+        <h2>Nicht der günstigste Tokenpreis zählt</h2>
+      </div>
+      <p class="note">Tokenkosten, Arbeitszeit, Retry-Kosten, Nachbearbeitung, Fehler, Qualität, First-Pass-Freigabe, Quellenqualität und Geschwindigkeit fließen gemeinsam in die Bewertung ein.</p>
+    </div>
+
+    <div class="llm-cost-stat reveal">
+      <span class="label">Die wichtigste Kennzahl</span>
+      <p>Kosten pro erfolgreich erledigter Aufgabe</p>
+    </div>
+
+    <div class="llm-routing-strip reveal">
+      <div class="llm-routing-step"><div class="task">Einfache Aufgaben</div><div class="model">→ günstige Modelle</div></div>
+      <span class="llm-routing-strip-arrow">→</span>
+      <div class="llm-routing-step"><div class="task">Standardaufgaben</div><div class="model">→ Workhorse-Modelle</div></div>
+      <span class="llm-routing-strip-arrow">→</span>
+      <div class="llm-routing-step"><div class="task">Komplexe/kritische Aufgaben</div><div class="model">→ Frontier-Modelle</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 12. LIVING MODEL STRATEGY -->
+<!-- ============================================================ -->
+<section class="band tint" id="living-strategy">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4v6h6M20 20v-6h-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 15a8 8 0 0 0 14-4M19 9A8 8 0 0 0 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Living Model Strategy
+        </div>
+        <h2>Die Strategie wird regelmäßig aktualisiert, nicht einmal festgelegt</h2>
+      </div>
+      <p class="note">Modelle, Preise und Regulatorik verändern sich schneller als klassische IT-Strategien – drei feste Prüfrhythmen fangen das ab.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card neutral reveal">
+        <span class="llm-cadence-badge">monatlich</span>
+        <h3>Kurzfristig prüfen</h3>
+        <ul class="plist">
+          <li>Modellneuheiten</li>
+          <li>Preise</li>
+          <li>Retirements</li>
+          <li>Sicherheitsänderungen</li>
+          <li>Provideränderungen</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <span class="llm-cadence-badge">quartalsweise</span>
+        <h3>Benchmark durchführen</h3>
+        <p class="sub">Mit identischen Testaufgaben</p>
+        <ul class="plist">
+          <li>Qualität</li>
+          <li>Kosten</li>
+          <li>Geschwindigkeit</li>
+          <li>Quellen</li>
+          <li>Halluzinationen</li>
+          <li>Fehlerquote</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <span class="llm-cadence-badge">jährlich</span>
+        <h3>Strategisch prüfen</h3>
+        <ul class="plist">
+          <li>Zielarchitektur</li>
+          <li>Vendor Lock-in</li>
+          <li>Microsoft-Abhängigkeit</li>
+          <li>Multi-Model-Optionen</li>
+          <li>Open-Weight / Self-Hosting</li>
+          <li>Providerstrategie</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 13. 30–60–90-TAGE-ROADMAP -->
+<!-- ============================================================ -->
+<section class="band" id="roadmap">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 21V4M5 4h11l-3 4 3 4H5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          30–60–90-Tage-Roadmap
+        </div>
+        <h2>Kontrollierter Einstieg in die Modellstrategie</h2>
+      </div>
+      <p class="note">Drei Phasen, klar messbar, mit definierter Entscheidung am Ende.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card neutral reveal">
+        <span class="llm-cadence-badge">0–30 Tage</span>
+        <h3>Vorbereitung</h3>
+        <ul class="plist">
+          <li>Use Case finalisieren</li>
+          <li>Pilotkapitel wählen</li>
+          <li>Daten klassifizieren</li>
+          <li>Microsoft-Landschaft analysieren</li>
+          <li>Provider-Kriterien festlegen</li>
+          <li>Governance prüfen</li>
+          <li>Eval-Testset aufbauen</li>
+          <li>Kostenhypothese erstellen</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <span class="llm-cadence-badge">31–60 Tage</span>
+        <h3>Aufbau</h3>
+        <ul class="plist">
+          <li>Copilot-/M365-Workflow testen</li>
+          <li>RAG-MVP aufbauen</li>
+          <li>2–3 Modelle benchmarken</li>
+          <li>Agent testen</li>
+          <li>QA-Gates implementieren</li>
+          <li>Rollen &amp; Logging einrichten</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <span class="llm-cadence-badge">61–90 Tage</span>
+        <h3>Messung &amp; Entscheidung</h3>
+        <ul class="plist">
+          <li>Qualität, Zeitersparnis messen</li>
+          <li>Quellenbelegquote prüfen</li>
+          <li>Nacharbeit &amp; Fehler analysieren</li>
+          <li>Kosten bewerten</li>
+          <li>Nutzerakzeptanz einholen</li>
+          <li>Governance-Risiken prüfen</li>
+        </ul>
+        <p class="llm-msg-line">GO / ADJUST / STOP</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 14. CONSULTING-FAZIT -->
+<!-- ============================================================ -->
+<section class="band tint" id="fazit">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Consulting-Fazit
+        </div>
+        <h2>Die empfohlene Strategie im Überblick</h2>
+      </div>
+    </div>
+
+    <div class="llm-final reveal">
+      <h3>Empfohlene Strategie</h3>
+      <div class="llm-formula">
+        <span class="term main">Microsoft-first Enterprise Experience</span>
+        <span class="plus">+</span>
+        <span class="term main">Managed AI Platform</span>
+        <span class="plus">+</span>
+        <span class="term main">Controlled Multi-Model Routing</span>
+        <span class="plus">+</span>
+        <span class="term">RAG</span>
+        <span class="plus">+</span>
+        <span class="term">Human-in-the-Loop</span>
+        <span class="plus">+</span>
+        <span class="term">Governance</span>
+      </div>
+      <p class="explain">Für den KI-gestützten Nachhaltigkeitsbericht empfiehlt sich kein Winner-takes-all-Modell. Die robuste Lösung ist eine Microsoft-first Enterprise-Arbeitsoberfläche mit kontrollierter Multi-Model-Strategie, RAG und Quellenbeleg, kostenbasiertem Routing sowie klaren Human- und Governance-Gates.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-motif" aria-hidden="true">
+      <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="18" y="34" width="9" height="28" fill="currentColor"/>
+        <rect x="133" y="34" width="9" height="28" fill="currentColor"/>
+        <circle cx="22.5" cy="28" r="6.5" fill="currentColor"/>
+        <circle cx="137.5" cy="28" r="6.5" fill="currentColor"/>
+        <path d="M58 62 V40 L80 21 L102 40 V62 Z" fill="currentColor"/>
+        <path d="M0 56 Q 20 46 40 56 T 80 56 T 120 56 T 160 56" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="cols">
+      <div>
+        <h4>Über diese Seite</h4>
+        <p>Dieser Blueprint ist eine konzeptionelle Ausarbeitung im Rahmen des KI-Consulting-Portfolios von Annette Adler. Er zeigt beispielhaft, wie eine LLM- und KI-Strategie für einen Nachhaltigkeitsbericht in einem regulierten Finanzinstitut entwickelt werden kann – Modellstrategie, Datenklassifikation, Architektur, Governance und Kostenstrategie als eine zusammenhängende Entscheidung. Keine offizielle IT- oder KI-Entscheidung der Sparkasse Fürstenfeldbruck.</p>
+      </div>
+      <div>
+        <h4>Hinweis zum Markenauftritt</h4>
+        <p>Das rote Symbol oben links ist ein generischer Platzhalter für das offizielle Sparkassen-Logo. Sparkassen-Rot ist hier mit einem gängigen Referenzwert angenähert (kein garantiert pixelgenauer Markenwert) – bei Bedarf bitte gegen die verbindliche Fassung aus dem internen Corporate-Design-Portal sowie das Original-Logo austauschen.</p>
+      </div>
+    </div>
+    <p class="fine">Arbeitsprobe: <a href="annette-adler.html" style="color:inherit;">KI &amp; Nachhaltigkeit</a> · <a href="index.html" style="color:inherit;">Nachhaltigkeitsbericht Sparkasse FFB</a> · <a href="daten-dashboard.html" style="color:inherit;">Daten-Dashboard</a> · <a href="cloud-strategie.html" style="color:inherit;">Cloud-Strategie</a>.</p>
+  </div>
+</footer>
+
+<script>
+/* Scroll-Reveal per IntersectionObserver */
+(function(){
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el){ obs.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* Scrollspy: aktiven Nav-Anker markieren */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.jump a[href^="#"]'));
+  var sections = navLinks
+    .map(function(a){ return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  function onScroll(){
+    var y = window.scrollY + 140;
+    var current = null;
+    sections.forEach(function(sec){ if (sec.offsetTop <= y) current = sec; });
+    navLinks.forEach(function(a){ a.classList.remove('current'); });
+    if (current){
+      var link = document.querySelector('nav.jump a[href="#' + current.id + '"]');
+      if (link) link.classList.add('current');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

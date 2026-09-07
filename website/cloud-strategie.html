@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud-Strategie für den KI-gestützten Nachhaltigkeitsbericht – Sparkasse Fürstenfeldbruck</title>
+<meta name="description" content="Blueprint einer sicheren, prüfbaren und skalierbaren Cloud-Architektur für den KI-gestützten Nachhaltigkeitsbericht: Private Data, Managed AI Platform und Controlled SaaS mit Governance und Human-in-the-Loop.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e2001a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ============================================================
+   CLOUD-STRATEGIE – seitenspezifische Ergänzungen zu styles.css
+   Alle Klassen mit Präfix "cs-" sind lokal zu dieser Seite.
+   ============================================================ */
+
+/* Ampel-Farbwerte (grün/gelb/rot), analog daten-dashboard.html */
+:root{
+  --green: #1a7d3a; --green-bg: #e8f5ec;
+  --amber: #a3690a; --amber-bg: #fbf0dc;
+  --red-status: #b3261e; --red-status-bg: #fbe6e5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --green: #6fcf8f; --green-bg: #163223;
+    --amber: #e8b95c; --amber-bg: #332a15;
+    --red-status: #f3958f; --red-status-bg: #3a1d1c;
+  }
+}
+:root[data-theme="dark"]{
+  --green: #6fcf8f; --green-bg: #163223;
+  --amber: #e8b95c; --amber-bg: #332a15;
+  --red-status: #f3958f; --red-status-bg: #3a1d1c;
+}
+
+/* ============ KONZEPT-HINWEISLEISTE ============ */
+.cs-topline{ background: var(--surface-2); border-bottom: 1px solid var(--rule); padding: 8px 0; }
+.cs-topline .wrap{ display:flex; align-items:center; gap:10px; }
+.cs-topline-mark{ width:16px; height:16px; border-radius:3px; background: var(--red); flex:none; display:flex; align-items:center; justify-content:center; }
+.cs-topline-mark svg{ width:9px; height:9px; }
+.cs-topline span.txt{ font-size:.74rem; color: var(--ink-soft); letter-spacing:.01em; }
+
+/* ============ HERO (eigener Verlauf, kein Foto) ============ */
+.cs-hero{ position:relative; overflow:hidden; padding: 100px 0 84px; background: linear-gradient(135deg, var(--ink) 0%, #3a1218 55%, var(--red-deep) 145%); color:#fff; }
+.cs-hero::after{ content:""; position:absolute; inset:0; background: radial-gradient(circle at 82% 15%, rgba(226,0,26,.38), transparent 55%); pointer-events:none; }
+.cs-hero .wrap{ position:relative; z-index:1; }
+.cs-hero h1{ font-size: clamp(2.15rem, 4.6vw, 3.35rem); margin-top:22px; max-width:21ch; color:#fff; }
+.cs-subhead{ margin-top:14px; font-family:"Archivo",sans-serif; font-weight:700; font-size:1.18rem; color:#ffb3b3; }
+.cs-hero .lede{ margin-top:18px; max-width:62ch; font-size:1.06rem; color: rgba(255,255,255,.86); }
+.cs-badge{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:.74rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#fff; background: rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.28); border-radius:20px; padding:9px 18px; margin-top:28px; }
+.cs-badge b{ opacity:.5; font-weight:400; }
+.cs-btn{ display:inline-flex; align-items:center; gap:8px; background:#fff; color: var(--red-deep); font-weight:700; font-size:.92rem; padding:13px 26px; border-radius:6px; text-decoration:none; margin-top:32px; box-shadow: 0 4px 14px rgba(0,0,0,.25); transition: transform .15s ease, box-shadow .15s ease; }
+.cs-btn:hover{ transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.32); }
+.cs-btn svg{ width:15px; height:15px; }
+
+/* ============ PROZESSKETTE (wiederverwendbar) ============ */
+.cs-chain{ display:flex; align-items:flex-start; gap:0; flex-wrap:wrap; margin-top:30px; }
+.cs-chain-step{ display:flex; flex-direction:column; align-items:center; gap:10px; width:120px; text-align:center; }
+.cs-chain-num{ width:40px; height:40px; border-radius:50%; background: var(--surface); border:2px solid var(--red); color: var(--red); font-family:"IBM Plex Mono",monospace; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:.92rem; flex:none; }
+.cs-chain-label{ font-size:.79rem; font-weight:700; color: var(--ink); line-height:1.25; }
+.cs-chain-arrow{ flex:none; align-self:center; width:26px; color: var(--ink-faint); margin-top:20px; }
+.cs-chain-arrow svg{ width:100%; height:14px; display:block; }
+.cs-chain-arrow .flow{ stroke-dasharray:4 4; animation: cs-flow 1.1s linear infinite; }
+@keyframes cs-flow{ to{ stroke-dashoffset:-16; } }
+.cs-chain.compact .cs-chain-step{ width:96px; }
+.cs-chain.compact .cs-chain-num{ width:34px; height:34px; font-size:.8rem; }
+.cs-chain.compact .cs-chain-label{ font-size:.74rem; }
+@media (max-width:880px){
+  .cs-chain{ flex-direction:column; align-items:flex-start; }
+  .cs-chain-step{ flex-direction:row; width:auto; text-align:left; gap:14px; }
+  .cs-chain-arrow{ width:14px; height:26px; margin:2px 0 2px 19px; transform:rotate(90deg); align-self:flex-start; }
+}
+.cs-chain-note{ margin-top:16px; font-family:"Archivo",sans-serif; font-weight:700; font-size:1.02rem; color: var(--red-deep); }
+
+/* ============ VERGLEICHSKARTEN (Cloud-Optionen) ============ */
+.card.cs-featured{ outline:2px solid var(--red); outline-offset:-1px; box-shadow: 0 8px 22px rgba(226,0,26,.16); position:relative; }
+.cs-ribbon{ position:absolute; top:-12px; left:18px; background: var(--red); color:#fff; font-size:.64rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; padding:5px 10px; border-radius:4px; box-shadow: var(--shadow); }
+.cs-label{ font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color: var(--ink-faint); margin-top:14px; }
+.cs-label + p{ font-size:.85rem; margin-top:3px; color: var(--ink-soft); }
+
+/* ============ ARCHITEKTUR-DIAGRAMM ============ */
+.cs-arch{ margin-top:12px; display:flex; flex-direction:column; }
+.cs-arch-row{ border-radius:8px; padding:16px 22px; }
+.cs-arch-row.mgmt{ background: var(--ink); color:#fff; }
+.cs-arch-row.hitl{ background: var(--surface); border:2px dashed var(--red); }
+.cs-arch-row.systems{ background: var(--surface-2); border:1px solid var(--rule); }
+.cs-arch-label{ font-size:.68rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; margin-bottom:10px; display:block; }
+.cs-arch-row.mgmt .cs-arch-label{ color:#ffb3b3; }
+.cs-arch-row.hitl .cs-arch-label{ color: var(--red); }
+.cs-arch-row.systems .cs-arch-label{ color: var(--ink-soft); }
+.cs-pills{ display:flex; flex-wrap:wrap; gap:8px; }
+.cs-pill{ font-size:.79rem; font-weight:600; padding:6px 14px; border-radius:20px; white-space:nowrap; }
+.cs-arch-row.mgmt .cs-pill{ background: rgba(255,255,255,.13); color:#fff; }
+.cs-arch-row.hitl .cs-pill{ background: var(--surface-2); color: var(--red-deep); }
+.cs-arch-row.systems .cs-pill{ background: var(--surface); color: var(--ink-soft); border:1px solid var(--rule); }
+.cs-arch-arrow{ display:flex; justify-content:center; padding:8px 0; color: var(--ink-faint); }
+.cs-arch-arrow svg{ width:22px; height:26px; }
+
+.cs-paas-box{ border:2px solid var(--red); border-radius:10px; padding:24px 26px 22px; background: linear-gradient(180deg, rgba(226,0,26,.06), transparent 60%); }
+.cs-paas-box h3{ font-family:"Archivo",sans-serif; font-size:1.08rem; color: var(--red-deep); }
+.cs-paas-sub{ font-size:.8rem; color: var(--ink-soft); margin-top:3px; margin-bottom:18px; }
+.cs-paas-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
+.cs-paas-item{ background: var(--surface); border:1px solid var(--rule); border-radius:6px; padding:11px 12px; font-size:.81rem; font-weight:600; text-align:center; box-shadow: var(--shadow); }
+@media (max-width:780px){ .cs-paas-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:480px){ .cs-paas-grid{ grid-template-columns: 1fr; } }
+
+.cs-arch-split{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:780px){ .cs-arch-split{ grid-template-columns:1fr; } }
+.cs-split-box{ border-radius:8px; padding:20px 22px; border:1px solid var(--rule); background: var(--surface); box-shadow: var(--shadow); }
+.cs-split-box.private{ border-top:3px solid var(--ink); }
+.cs-split-box.saas{ border-top:3px solid var(--rule-strong); }
+.cs-split-box h4{ font-size:.86rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+.cs-split-box .plist{ margin-top:12px; }
+
+.cs-mantra{ margin-top:28px; text-align:center; padding:26px 24px; border-radius:8px; background: var(--ink); color:#fff; }
+.cs-mantra p{ font-family:"Archivo",sans-serif; font-weight:700; font-style:italic; font-size:1.14rem; max-width:54ch; margin:0 auto; }
+
+/* ============ DATENKLASSIFIZIERUNG (AMPEL) ============ */
+.cs-ampel-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+@media (max-width:880px){ .cs-ampel-grid{ grid-template-columns: 1fr; } }
+.cs-ampel-card{ border-radius:8px; padding:20px 22px; border:1px solid var(--rule); background: var(--surface); border-top:4px solid transparent; box-shadow: var(--shadow); }
+.cs-ampel-card.green{ border-top-color: var(--green); }
+.cs-ampel-card.amber{ border-top-color: var(--amber); }
+.cs-ampel-card.red{ border-top-color: var(--red-status); }
+.cs-ampel-head{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.cs-ampel-dot{ width:14px; height:14px; border-radius:50%; flex:none; }
+.cs-ampel-card.green .cs-ampel-dot{ background: var(--green); }
+.cs-ampel-card.amber .cs-ampel-dot{ background: var(--amber); }
+.cs-ampel-card.red .cs-ampel-dot{ background: var(--red-status); }
+.cs-ampel-card h3{ font-size:.94rem; }
+.cs-ampel-req{ margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); font-size:.78rem; color: var(--ink-soft); }
+.cs-ampel-req b{ color: var(--ink); }
+
+/* ============ GOVERNANCE ============ */
+.cs-callout{ margin-top:28px; text-align:center; padding:16px 22px; border-radius:6px; background: var(--red); color:#fff; font-weight:700; font-size:1rem; }
+.cs-gov-grid{ margin-top:30px; display:grid; grid-template-columns: repeat(5,1fr); gap:14px; }
+@media (max-width:1000px){ .cs-gov-grid{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width:640px){ .cs-gov-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width:420px){ .cs-gov-grid{ grid-template-columns: 1fr; } }
+.cs-gov-card{ background: var(--surface); border:1px solid var(--rule); border-radius:6px; padding:14px 14px 12px; box-shadow: var(--shadow); }
+.cs-gov-card h4{ font-size:.8rem; font-weight:800; margin-bottom:5px; }
+.cs-gov-card p{ font-size:.75rem; color: var(--ink-soft); line-height:1.4; }
+
+/* ============ PILOT-BLUEPRINT ============ */
+.cs-flow{ display:flex; align-items:stretch; gap:0; margin-top:30px; flex-wrap:wrap; }
+.cs-flow-col{ flex:1 1 200px; display:flex; }
+.cs-flow-col .card{ width:100%; }
+.cs-flow-arrow{ display:flex; align-items:center; justify-content:center; flex:0 0 38px; color: var(--ink-faint); }
+.cs-flow-arrow svg{ width:22px; height:14px; }
+@media (max-width:880px){
+  .cs-flow{ flex-direction:column; }
+  .cs-flow-arrow{ flex:none; width:100%; height:28px; transform:rotate(90deg); }
+}
+.cs-approval{ margin-top:24px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:.92rem; color: var(--ink); }
+.cs-approval .arrow{ color: var(--red); }
+
+/* ============ ROADMAP ============ */
+.cs-phase-badge{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.71rem; font-weight:700; color: var(--red); background: var(--surface-2); border-radius:4px; padding:4px 9px; margin-bottom:10px; }
+
+/* ============ POSITIONIERUNG ============ */
+.cs-position{ margin-top:10px; background: var(--surface-2); border-left:4px solid var(--red); border-radius:0 8px 8px 0; padding:32px 34px; }
+.cs-position h3{ font-size:1.08rem; margin-bottom:16px; }
+.cs-position q{ font-family:"Archivo",serif; font-style:italic; font-weight:600; font-size:1.18rem; quotes:none; color: var(--ink); }
+.cs-position .cs-chain{ margin-top:28px; }
+
+/* ============ ABSCHLUSSEMPFEHLUNG ============ */
+.cs-final{ margin-top:10px; text-align:center; background: var(--surface); border:2px solid var(--red); border-radius:10px; padding:42px 32px; box-shadow: var(--shadow); }
+.cs-formula{ display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:24px 0 4px; }
+.cs-formula span.term{ background: var(--surface-2); border-radius:6px; padding:12px 18px; font-weight:700; font-size:.9rem; }
+.cs-formula span.term.main{ background: var(--red); color:#fff; }
+.cs-formula span.plus{ color: var(--red); font-weight:800; font-size:1.2rem; }
+.cs-final .explain{ max-width:60ch; margin:20px auto 0; color: var(--ink-soft); font-size:.96rem; }
+.cs-final-cta{ margin-top:26px; font-family:"Archivo",sans-serif; font-weight:800; font-size:1.15rem; color: var(--red-deep); }
+
+/* ============ CONTROLLED HYBRID ARCHITECTURE – ZUSATZBAUSTEINE ============ */
+.cs-arch-subtitle{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: var(--red-deep); background: var(--surface-2); border:1px solid var(--rule); border-radius:4px; padding:5px 10px; margin-top:10px; }
+.cs-zone-badge{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background: var(--red); color:#fff; font-family:"IBM Plex Mono",monospace; font-weight:800; font-size:.72rem; margin-right:8px; flex:none; vertical-align:middle; }
+
+.cs-pattern-check{ margin-top:18px; display:flex; flex-direction:column; gap:10px; }
+.cs-pattern-row{ display:flex; align-items:center; gap:12px; padding:12px 18px; border-radius:6px; font-size:.88rem; font-weight:600; }
+.cs-pattern-row.good{ background: var(--green-bg); color: var(--green); }
+.cs-pattern-row.bad{ background: var(--red-status-bg); color: var(--red-status); }
+.cs-pattern-row .ico{ flex:none; width:20px; height:20px; }
+.cs-pattern-row b{ font-weight:800; }
+
+/* ============ 8-SCHRITTE-BESCHREIBUNGSKARTEN ============ */
+.cs-reg-subtitle{ margin-top:34px; margin-bottom:6px; font-size:1.02rem; font-weight:800; color: var(--ink); }
+.cs-desc-grid{ margin-top:20px; display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
+@media (max-width:1000px){ .cs-desc-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:560px){ .cs-desc-grid{ grid-template-columns: 1fr; } }
+.cs-desc-card{ background: var(--surface); border:1px solid var(--rule); border-radius:6px; padding:16px 16px 14px; box-shadow: var(--shadow); }
+.cs-desc-card .num{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:700; color: var(--red); }
+.cs-desc-card h4{ font-size:.86rem; font-weight:800; margin-top:4px; margin-bottom:6px; }
+.cs-desc-card p{ font-size:.79rem; color: var(--ink-soft); line-height:1.45; }
+.cs-desc-card.cs-gap-note{ border-top:3px solid var(--amber); }
+.cs-desc-card.cs-gap-note .gap{ margin-top:10px; padding-top:8px; border-top:1px solid var(--rule); font-size:.76rem; color: var(--amber); font-weight:700; }
+
+/* ============ ENTSCHEIDUNGSMATRIX (STERNE) ============ */
+.cs-matrix-wrap{ margin-top:26px; overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--rule); border-radius:6px; }
+.cs-matrix-table{ width:100%; min-width:760px; border-collapse:collapse; font-size:.84rem; }
+.cs-matrix-table th, .cs-matrix-table td{ padding:11px 14px; text-align:center; border-bottom:1px solid var(--rule); white-space:nowrap; }
+.cs-matrix-table thead th{ background: var(--surface-2); color: var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:.78rem; }
+.cs-matrix-table td.crit{ text-align:left; font-weight:600; white-space:normal; min-width:190px; }
+.cs-matrix-table td.rec{ text-align:left; font-size:.78rem; color: var(--red-deep); font-weight:700; white-space:normal; }
+.cs-matrix-table tbody tr:hover td{ background: var(--surface-2); }
+.cs-star{ color: var(--rule-strong); letter-spacing:1px; }
+.cs-star .filled{ color: var(--red); }
+
+/* ============ BEGRÜNDUNGSBLÖCKE JE BETRIEBSMODELL ============ */
+.cs-verdict-grid{ margin-top:24px; display:flex; flex-direction:column; gap:16px; }
+.cs-verdict{ background: var(--surface); border:1px solid var(--rule); border-top:3px solid var(--red); border-radius:6px; padding:22px 24px; box-shadow: var(--shadow); }
+.cs-verdict.neutral{ border-top-color: var(--rule-strong); }
+.cs-verdict h3{ font-size:1rem; }
+.cs-verdict .lead-line{ font-size:.86rem; color: var(--ink-soft); margin-top:4px; }
+.cs-verdict .plist{ margin-top:14px; }
+.cs-verdict .verdict-line{ margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); font-weight:800; color: var(--red-deep); font-size:.9rem; }
+
+/* ============ REGULATORIK-FLIESSTEXT ============ */
+.cs-reg-note{ margin-top:6px; }
+.cs-reg-note p{ font-size:.92rem; color: var(--ink-soft); line-height:1.6; max-width:78ch; }
+.cs-reg-note p + p{ margin-top:12px; }
+.cs-reg-note b{ color: var(--ink); }
+
+.cs-lead-recommendation{ font-size:1.05rem; color: var(--ink); max-width:70ch; margin:0 auto 6px; text-align:center; line-height:1.6; }
+
+/* ============ SCROLL-REVEAL ============ */
+.reveal{ opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-visible{ opacity:1; transform:none; }
+
+/* ============ DRUCKANSICHT (A4/PDF) ============ */
+@media print{
+  .cs-topline, .topbar, .cs-btn{ display:none !important; }
+  .cs-hero{ background:none !important; color: var(--ink) !important; padding:16px 0 20px; }
+  .cs-hero::after{ display:none; }
+  .cs-hero h1, .cs-subhead, .cs-hero .lede{ color: var(--ink) !important; }
+  .cs-badge{ background:none; border-color: var(--rule); color: var(--ink); }
+  .cs-arch-row.mgmt{ background: var(--surface-2) !important; color: var(--ink) !important; }
+  .cs-arch-row.mgmt .cs-arch-label{ color: var(--ink-soft) !important; }
+  .cs-arch-row.mgmt .cs-pill{ background: var(--surface) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  .cs-mantra{ background: var(--surface-2) !important; color: var(--ink) !important; border:1px solid var(--rule); }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  section.band{ padding:22px 0; }
+  .card, .cs-arch-row, .cs-paas-box, .cs-split-box, .cs-ampel-card, .cs-gov-card, .cs-position, .cs-final, .cs-arch, .cs-verdict, .cs-desc-card, .cs-pattern-row{ break-inside: avoid; box-shadow:none !important; }
+  .cs-matrix-wrap{ overflow-x: visible; }
+  .cs-matrix-table{ min-width:0; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  @page{ size:A4; margin:16mm; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HINWEISLEISTE: CORPORATE-DESIGN-KONZEPT -->
+<!-- ============================================================ -->
+<div class="cs-topline">
+  <div class="wrap">
+    <span class="cs-topline-mark" aria-hidden="true">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 8.5 L6 12 L13.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </span>
+    <span class="txt">Sparkassen Corporate Design – Konzeptdarstellung. Farben und Bildmarke sind angenähert und ersetzen keine offizielle Markenvorgabe.</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION -->
+<!-- ============================================================ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="annette-adler.html" class="brand" style="text-decoration:none; color:inherit;">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="10" fill="var(--red)"/>
+          <path d="M9 29 L18 19 L24 25 L35 11" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="35" cy="11" r="3.4" fill="#fff"/>
+        </svg>
+      </span>
+      <span>Sparkasse Fürstenfeldbruck<small>Nachhaltigkeit · interne Auswertung</small></span>
+    </a>
+    <nav class="jump">
+      <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
+      <a href="#ausgangslage">Ausgangslage</a>
+      <a href="#strategie">Strategie</a>
+      <a href="#cloud-optionen">Cloud-Optionen</a>
+      <a href="#architektur">Architektur</a>
+      <a href="#daten">Daten</a>
+      <a href="#governance">Governance</a>
+      <a href="#pilot">Pilot</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#empfehlung">Empfehlung</a>
+      <a href="index.html">Nachhaltigkeitsbericht</a>
+      <a href="daten-dashboard.html">Daten-Dashboard</a>
+      <a href="llm-ki-strategie.html">LLM- &amp; KI-Strategie</a>
+      <a href="evaluation-quality-assurance-blueprint.html">Eval &amp; QA</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HERO -->
+<!-- ============================================================ -->
+<header class="cs-hero">
+  <div class="wrap">
+    <span class="kicker">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 L12 22 M2 12 L22 12" stroke="currentColor" stroke-width="2"/></svg>
+      KI-Consulting Blueprint
+    </span>
+    <h1>Cloud-Strategie für den KI-gestützten Nachhaltigkeitsbericht</h1>
+    <p class="cs-subhead">Private Data + Managed AI Platform + Controlled SaaS</p>
+    <p class="lede">Eine kontrollierte Hybridarchitektur verbindet sensible Unternehmensdaten, moderne KI-Dienste, regulatorische Anforderungen und menschliche Verantwortung.</p>
+    <span class="cs-badge">KI-Consulting Blueprint <b>|</b> Sustainability Reporting <b>|</b> Cloud Architecture</span>
+    <div>
+      <a href="#architektur" class="cs-btn">
+        Architektur entdecken
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- 1. AUSGANGSLAGE -->
+<!-- ============================================================ -->
+<section class="band" id="ausgangslage">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.6" stroke="currentColor" stroke-width="1.6"/></svg>
+          Ausgangslage
+        </div>
+        <h2>Vom fragmentierten Prozess zur kontrollierten KI-Lösung</h2>
+      </div>
+      <p class="note">Kein Selbstzweck Cloud – sondern eine Antwort auf ein konkretes Geschäftsproblem im Berichtsprozess.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card neutral reveal">
+        <h3>Problem</h3>
+        <ul class="plist">
+          <li>Datensilos zwischen Fachbereichen</li>
+          <li>Medienbrüche zwischen Quelle und Bericht</li>
+          <li>Hoher manueller Abstimmungsaufwand</li>
+          <li>Verteilte, uneinheitliche Quellen</li>
+          <li>Regulatorische Veränderungen (CSRD, ESRS, EU-Taxonomie)</li>
+          <li>Steigender Prüf- und Nachweisaufwand</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <h3>Ziel</h3>
+        <p class="sub">Ein KI-gestützter Nachhaltigkeitsbericht, der …</p>
+        <ul class="plist">
+          <li>Daten aus internen Systemen übernimmt</li>
+          <li>regulatorische Quellen kontrolliert einbindet</li>
+          <li>Berichtsentwürfe erzeugt</li>
+          <li>Quellen nachvollziehbar dokumentiert</li>
+          <li>QA-Gates durchläuft</li>
+          <li>erst nach menschlicher Freigabe verwendet wird</li>
+        </ul>
+      </div>
+      <div class="card cs-featured reveal">
+        <span class="cs-ribbon">Leitprinzip</span>
+        <h3 style="margin-top:6px;">Der rote Faden dieser Strategie</h3>
+        <p style="margin-top:16px; font-family:'Archivo',sans-serif; font-weight:800; font-size:1.3rem; color:var(--red-deep); line-height:1.3;">KI unterstützt – Menschen entscheiden.</p>
+        <p class="sub" style="margin-top:12px;">Jede Architekturentscheidung in diesem Blueprint ordnet sich diesem Prinzip unter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. CONSULTING-STRATEGIE -->
+<!-- ============================================================ -->
+<section class="band tint" id="strategie">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Consulting-Strategie
+        </div>
+        <h2>Der methodische Weg zur Architekturentscheidung</h2>
+      </div>
+      <p class="note">Acht Schritte von der Analyse bis zur Skalierung – keiner davon beginnt mit der Technologie.</p>
+    </div>
+
+    <div class="cs-chain reveal">
+      <div class="cs-chain-step"><span class="cs-chain-num">1</span><span class="cs-chain-label">Verstehen</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">2</span><span class="cs-chain-label">Daten strukturieren</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">3</span><span class="cs-chain-label">Use Case priorisieren</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">4</span><span class="cs-chain-label">Architektur entscheiden</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">5</span><span class="cs-chain-label">KI integrieren</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">6</span><span class="cs-chain-label">Qualität prüfen</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">7</span><span class="cs-chain-label">Pilotieren</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">8</span><span class="cs-chain-label">Skalieren</span></div>
+    </div>
+    <p class="cs-chain-note">Vom Geschäftsproblem zur kontrollierten KI-Lösung.</p>
+
+    <h3 class="cs-reg-subtitle">Wie Consulting-Strategie und Cloud-Strategie zusammenpassen</h3>
+    <p class="note" style="max-width:70ch;">Die Cloud-Strategie ergänzt die bestehende Methodik um eine Frage: Wo läuft welcher Teil dieses Prozesses?</p>
+    <div class="cs-desc-grid">
+      <div class="cs-desc-card reveal"><span class="num">01</span><h4>Business &amp; Scope</h4><p>Welchen Berichtsteil wollen wir verbessern?</p></div>
+      <div class="cs-desc-card cs-gap-note reveal"><span class="num">02</span><h4>Data Readiness</h4><p>Welche Daten, Quellen, Verantwortlichkeiten und Schutzklassen gibt es?</p><div class="gap">Größte aktuelle Lücke: Es fehlt noch ein verbindlicher Datenkatalog mit Ownern, Aktualisierungszyklen, Qualitätsregeln und nachvollziehbarer Herkunft.</div></div>
+      <div class="cs-desc-card reveal"><span class="num">03</span><h4>Cloud Classification</h4><p>Für jede Daten- und Prozessklasse: SaaS, PaaS, IaaS oder Self-hosted?</p></div>
+      <div class="cs-desc-card reveal"><span class="num">04</span><h4>Architecture</h4><p>Systeme, Daten, Wissensbasis, Modelle und Agenten verbinden.</p></div>
+      <div class="cs-desc-card reveal"><span class="num">05</span><h4>Governance</h4><p>IAM, Datenschutz, Audit, Rollen, Freigaben.</p></div>
+      <div class="cs-desc-card reveal"><span class="num">06</span><h4>Pilot</h4><p>Ein abgegrenztes Kapitel.</p></div>
+      <div class="cs-desc-card reveal"><span class="num">07</span><h4>Evaluation</h4><p>Zeit, Qualität, Quellenbeleg, Fehler, Audit-Trail.</p></div>
+      <div class="cs-desc-card reveal"><span class="num">08</span><h4>Scale</h4><p>Erst bei positivem Pilot auf weitere Kapitel und Systeme erweitern.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. CLOUD-ENTSCHEIDUNGSARCHITEKTUR -->
+<!-- ============================================================ -->
+<section class="band" id="cloud-optionen">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="4" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.6"/></svg>
+          Cloud-Entscheidungsarchitektur
+        </div>
+        <h2>Vier Betriebsmodelle – klar nach Zweck getrennt</h2>
+      </div>
+      <p class="note">Nicht jede Komponente gehört in dieselbe Umgebung. Die Wahl folgt dem Schutzbedarf, nicht der Trendlage.</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="card neutral reveal">
+        <h3>SaaS</h3>
+        <p class="cs-label">Geeignet für</p>
+        <ul class="plist">
+          <li>Standard-KI-Funktionen</li>
+          <li>Kollaboration</li>
+          <li>Allgemeine Recherche</li>
+          <li>Schulung</li>
+          <li>Risikoarme Assistenz</li>
+        </ul>
+        <p class="cs-label">Vorteil</p><p>Schneller Einstieg</p>
+        <p class="cs-label">Grenze</p><p>Weniger Kontrolle und Anpassbarkeit</p>
+      </div>
+
+      <div class="card cs-featured reveal">
+        <span class="cs-ribbon">Empfohlenes KI-Herzstück</span>
+        <h3 style="margin-top:6px;">PaaS</h3>
+        <p class="cs-label">Geeignet für</p>
+        <ul class="plist">
+          <li>Agenten</li>
+          <li>RAG</li>
+          <li>APIs</li>
+          <li>Prompt-Management</li>
+          <li>Modellzugriff</li>
+          <li>Guardrails</li>
+          <li>Evaluation</li>
+          <li>Monitoring</li>
+          <li>Orchestrierung</li>
+        </ul>
+      </div>
+
+      <div class="card neutral reveal">
+        <h3>IaaS</h3>
+        <p class="cs-label">Geeignet für</p>
+        <ul class="plist">
+          <li>Spezialkomponenten</li>
+          <li>Besondere Integrationen</li>
+          <li>Eigene technische Komponenten</li>
+        </ul>
+        <p class="cs-label">Hinweis</p><p>Höherer Betriebsaufwand</p>
+      </div>
+
+      <div class="card neutral reveal">
+        <h3>Self-Hosting / Private</h3>
+        <p class="cs-label">Geeignet für</p>
+        <ul class="plist">
+          <li>Hochsensible Daten</li>
+          <li>Interne Datenkataloge</li>
+          <li>Secrets</li>
+          <li>Kritische Datenbanken</li>
+          <li>Besonders schützenswerte Komponenten</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="cs-reg-subtitle">Die Entscheidungsarchitektur im Detail</h3>
+    <div class="cs-matrix-wrap reveal">
+      <table class="cs-matrix-table">
+        <thead><tr><th style="text-align:left;">Anforderung</th><th>SaaS</th><th>PaaS</th><th>IaaS</th><th>Self-hosted</th><th style="text-align:left;">Empfehlung</th></tr></thead>
+        <tbody>
+          <tr><td class="crit">Schneller Einstieg</td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★</span>★</span></td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★</span>★★★★</span></td><td class="rec">SaaS / PaaS</td></tr>
+          <tr><td class="crit">Individuelle Workflows</td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">PaaS</td></tr>
+          <tr><td class="crit">Integration Bankensysteme</td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">PaaS + intern</td></tr>
+          <tr><td class="crit">Datenkontrolle</td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★★★★</span>★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">Hybrid</td></tr>
+          <tr><td class="crit">Agenten / RAG</td><td><span class="cs-star"><span class="filled">★★★</span>★★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">PaaS</td></tr>
+          <tr><td class="crit">Betriebsaufwand (niedrig = gut)</td><td><span class="cs-star"><span class="filled">★</span>★★★★</span></td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★★★★</span>★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">PaaS bevorzugen</td></tr>
+          <tr><td class="crit">Modellwechsel</td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★★★★</span>★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">PaaS</td></tr>
+          <tr><td class="crit">Governance / Logging</td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">PaaS</td></tr>
+          <tr><td class="crit">Kosten Pilot (niedrig = gut)</td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★</span>★★</span></td><td><span class="cs-star"><span class="filled">★</span>★★★★</span></td><td><span class="cs-star"><span class="filled">★</span>★★★★</span></td><td class="rec">SaaS / PaaS</td></tr>
+          <tr><td class="crit">Skalierbarkeit</td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★</span>★★★</span></td><td class="rec">PaaS</td></tr>
+          <tr><td class="crit">Maximale Individualisierung</td><td><span class="cs-star"><span class="filled">★</span>★★★★</span></td><td><span class="cs-star"><span class="filled">★★★★</span>★</span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td><span class="cs-star"><span class="filled">★★★★★</span></span></td><td class="rec">Nur wo nötig</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:10px;">Bewertung 1–5 Sterne je Kriterium, Sparkassenrot = ausgeprägt. Betriebsaufwand und Kosten Pilot sind so gepolt, dass mehr Sterne = günstiger/geringer bedeutet.</p>
+
+    <h3 class="cs-reg-subtitle">Meine Architekturentscheidung</h3>
+    <div class="cs-verdict-grid">
+      <div class="cs-verdict neutral reveal">
+        <h3>SaaS: Ja – aber nicht als Kernplattform</h3>
+        <p class="lead-line">SaaS eignet sich für Standardfunktionen mit geringem Schutzbedarf:</p>
+        <ul class="plist">
+          <li>Mitarbeitendenassistenz</li>
+          <li>Allgemeine Recherche</li>
+          <li>Meeting-Zusammenfassungen</li>
+          <li>Schulung / Enablement</li>
+          <li>Nicht vertrauliche Dokumentenunterstützung</li>
+          <li>Präsentation und Kollaboration</li>
+        </ul>
+        <p class="verdict-line">Vorteil: schneller Einstieg — für den prüfsicheren Nachhaltigkeitsbericht selbst wäre reines SaaS zu wenig kontrollierbar.</p>
+      </div>
+      <div class="cs-verdict reveal">
+        <h3>PaaS: das Herzstück</h3>
+        <p class="lead-line">Das Projekt benötigt mehrere Modelle bzw. Modellwechsel, RAG auf verifizierten Quellen, Agenten, APIs, Schnittstellen zu Unternehmenssystemen, Prompt- und Wissensarchitektur, Guardrails, Logging, Evaluation, Monitoring sowie Rollen-/Rechtekonzepte — genau dafür ist eine verwaltete KI-Plattform gebaut.</p>
+        <p class="verdict-line">PaaS = KI- und Orchestrierungszentrum des Nachhaltigkeitsberichts.</p>
+      </div>
+      <div class="cs-verdict neutral reveal">
+        <h3>IaaS: nur gezielt</h3>
+        <p class="lead-line">Eine vollständige IaaS-Lösung ist kein Standard — beim Shared-Responsibility-Modell bleibt hier wesentlich mehr Verantwortung (VMs, Container, Netzwerk, Patchmanagement, Skalierung, Monitoring) beim Institut bzw. IT-Partner.</p>
+        <ul class="plist">
+          <li>Eigener Vektorstore</li>
+          <li>Spezialsoftware</li>
+          <li>Besondere Netzwerkkomponente</li>
+          <li>Legacy-Integration</li>
+          <li>Spezielle Datenverarbeitung</li>
+        </ul>
+        <p class="verdict-line">IaaS als Ergänzung – nicht als primäre KI-Strategie.</p>
+      </div>
+      <div class="cs-verdict neutral reveal">
+        <h3>Self-Hosting: nur für besonders sensible Komponenten</h3>
+        <p class="lead-line">Maximale Kontrolle bedeutet auch hohen Aufwand für Betrieb, Sicherheit, Updates und Fachkompetenz — deshalb begrenzt auf Komponenten, bei denen der Schutzbedarf dies rechtfertigt:</p>
+        <ul class="plist">
+          <li>Besonders vertrauliche Rohdaten</li>
+          <li>Interne Datenkataloge</li>
+          <li>Schlüssel / Secrets</li>
+          <li>Besonders sensible Vektordatenbanken</li>
+          <li>Interne Retrieval-Komponenten</li>
+          <li>Audit- / Nachweisarchive</li>
+        </ul>
+        <p class="verdict-line">Nicht sinnvoll: allein aus Sicherheitsgefühl sämtliche Modelle selbst betreiben.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. EMPFOHLENE HYBRIDARCHITEKTUR -->
+<!-- ============================================================ -->
+<section class="band tint" id="architektur">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 3 8l9 5 9-5-9-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Empfohlene Hybridarchitektur
+        </div>
+        <h2>Governance oben, kontrollierte Plattform in der Mitte, Systeme unten</h2>
+        <span class="cs-arch-subtitle">Controlled Hybrid AI Reporting Architecture</span>
+      </div>
+      <p class="note">Eine einzige, durchgängige Struktur von der Vorstandsverantwortung bis zu den Bestandssystemen.</p>
+    </div>
+
+    <div class="cs-arch">
+      <div class="cs-arch-row mgmt reveal">
+        <span class="cs-arch-label">Management &amp; Governance</span>
+        <div class="cs-pills">
+          <span class="cs-pill">Vorstand</span><span class="cs-pill">Nachhaltigkeit</span><span class="cs-pill">Compliance</span><span class="cs-pill">Datenschutz</span><span class="cs-pill">IT</span>
+        </div>
+      </div>
+      <div class="cs-arch-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="cs-arch-row hitl reveal">
+        <span class="cs-arch-label">Human-in-the-Loop</span>
+        <div class="cs-pills">
+          <span class="cs-pill">Freigabe</span><span class="cs-pill">Eskalation</span><span class="cs-pill">Verantwortung</span><span class="cs-pill">QA</span>
+        </div>
+      </div>
+      <div class="cs-arch-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="cs-paas-box reveal">
+        <h3><span class="cs-zone-badge">3</span>Zone 3 · KI-Plattformzone — PaaS als Kern</h3>
+        <p class="cs-paas-sub">Das kontrollierte Herzstück der gesamten Lösung</p>
+        <div class="cs-paas-grid">
+          <div class="cs-paas-item">Agenten-Orchestrierung</div>
+          <div class="cs-paas-item">RAG / Wissensabruf</div>
+          <div class="cs-paas-item">Prompt- &amp; Regelmanagement</div>
+          <div class="cs-paas-item">Modellzugriff</div>
+          <div class="cs-paas-item">Guardrails</div>
+          <div class="cs-paas-item">Evaluation</div>
+          <div class="cs-paas-item">Logging</div>
+          <div class="cs-paas-item">Monitoring</div>
+          <div class="cs-paas-item">API Gateway</div>
+        </div>
+      </div>
+      <div class="cs-arch-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="cs-arch-split">
+        <div class="cs-split-box private reveal">
+          <h4><span class="cs-zone-badge">2</span>Zone 2 · Private Integrations- &amp; Datenzone</h4>
+          <ul class="plist">
+            <li>ESG-Daten</li>
+            <li>Finanzdaten</li>
+            <li>Interne Dokumente</li>
+            <li>Datenkatalog</li>
+            <li>Berechtigungen</li>
+            <li>Audit Trail</li>
+            <li>Vertrauliche Informationen</li>
+          </ul>
+        </div>
+        <div class="cs-split-box saas reveal">
+          <h4><span class="cs-zone-badge">4</span>Zone 4 · SaaS-Zone — Freigegebene Standardaufgaben</h4>
+          <ul class="plist">
+            <li>Office-Assistenz</li>
+            <li>Kollaboration</li>
+            <li>Allgemeine Recherche</li>
+            <li>Training</li>
+            <li>Präsentation</li>
+            <li>Risikoarme KI-Funktionen</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-arch-arrow"><svg viewBox="0 0 22 26" fill="none"><line x1="11" y1="0" x2="11" y2="18" stroke="currentColor" stroke-width="2"/><path d="M4 14 L11 22 L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="cs-arch-row systems reveal">
+        <span class="cs-arch-label"><span class="cs-zone-badge">1</span>Zone 1 · Interne Datenzone — Bestehende Unternehmenssysteme</span>
+        <div class="cs-pills">
+          <span class="cs-pill">Finance</span><span class="cs-pill">HR</span><span class="cs-pill">Gebäude</span><span class="cs-pill">Einkauf</span><span class="cs-pill">Risiko</span><span class="cs-pill">Reporting</span><span class="cs-pill">weitere Fachsysteme</span>
+        </div>
+      </div>
+
+      <div class="cs-mantra reveal">
+        <p>Move Intelligence to the Data – not uncontrolled Data to the Intelligence.</p>
+      </div>
+
+      <div class="cs-pattern-check reveal">
+        <div class="cs-pattern-row good">
+          <svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".15"/><path d="M7 12.5l3 3 7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Richtig:</b> Intern / Private → PaaS-KI-Kern → kontrollierte SaaS-Nutzung</span>
+        </div>
+        <div class="cs-pattern-row bad">
+          <svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".15"/><path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span><b>Falsch:</b> alle Daten direkt und ungefiltert in ein SaaS-KI-Tool laden</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. DATENKLASSIFIZIERUNG -->
+<!-- ============================================================ -->
+<section class="band" id="daten">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="2" width="6" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="6.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="17.5" r="1.3" fill="currentColor"/></svg>
+          Datenklassifizierung
+        </div>
+        <h2>Jede Datenart hat ihren Platz – nicht jede Umgebung ist für jede Datenart geeignet</h2>
+      </div>
+      <p class="note">Die Ampel entscheidet, wo eine Information verarbeitet werden darf.</p>
+    </div>
+
+    <div class="cs-ampel-grid">
+      <div class="cs-ampel-card green reveal">
+        <div class="cs-ampel-head"><span class="cs-ampel-dot"></span><h3>Grün – SaaS-fähig</h3></div>
+        <ul class="plist">
+          <li>Öffentliche Informationen</li>
+          <li>Veröffentlichte Berichte</li>
+          <li>Allgemeine Regulatorik</li>
+          <li>Schulungsdaten</li>
+        </ul>
+      </div>
+      <div class="cs-ampel-card amber reveal">
+        <div class="cs-ampel-head"><span class="cs-ampel-dot"></span><h3>Gelb – kontrollierte PaaS-Verarbeitung</h3></div>
+        <ul class="plist">
+          <li>Aggregierte ESG-Daten</li>
+          <li>Interne Berichtsentwürfe</li>
+          <li>Freigegebene Kennzahlen</li>
+          <li>Interne Prozessinformationen</li>
+        </ul>
+        <div class="cs-ampel-req"><b>Voraussetzungen:</b> IAM · Logging · Verschlüsselung · Datenresidenz · freigegebene Modelle · definierte Speicherdauer</div>
+      </div>
+      <div class="cs-ampel-card red reveal">
+        <div class="cs-ampel-head"><span class="cs-ampel-dot"></span><h3>Rot – Private / Self-hosted</h3></div>
+        <ul class="plist">
+          <li>Personenbezogene Rohdaten</li>
+          <li>Kundeninformationen</li>
+          <li>Geschäftsgeheimnisse</li>
+          <li>Credentials</li>
+          <li>Besonders kritische Daten</li>
+        </ul>
+        <div class="cs-ampel-req">Diese Daten werden entweder gar nicht an externe Modelle gegeben oder vorher kontrolliert anonymisiert bzw. aggregiert.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. GOVERNANCE & QUALITÄT -->
+<!-- ============================================================ -->
+<section class="band tint" id="governance">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 4 6.5V11c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6.5Z" stroke="currentColor" stroke-width="1.6"/></svg>
+          Governance &amp; Qualität
+        </div>
+        <h2>Sechs Prüfschritte zwischen Entwurf und Freigabe</h2>
+      </div>
+      <p class="note">Kein Berichtsteil verlässt die Plattform ohne vollständigen Gate-Durchlauf.</p>
+    </div>
+
+    <div class="cs-chain compact reveal">
+      <div class="cs-chain-step"><span class="cs-chain-num">1</span><span class="cs-chain-label">Datenprüfung</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">2</span><span class="cs-chain-label">Quellenprüfung</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">3</span><span class="cs-chain-label">Regulatorikprüfung</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">4</span><span class="cs-chain-label">Plausibilitätsprüfung</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">5</span><span class="cs-chain-label">Fachliche Freigabe</span></div>
+      <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="cs-chain-step"><span class="cs-chain-num">6</span><span class="cs-chain-label">Finale Freigabe</span></div>
+    </div>
+
+    <div class="cs-callout reveal">Ohne PASS der Pflicht-Gates kein Release.</div>
+
+    <div class="cs-gov-grid">
+      <div class="cs-gov-card reveal"><h4>Datenschutz</h4><p>DSGVO-konforme Verarbeitung personenbezogener Daten</p></div>
+      <div class="cs-gov-card reveal"><h4>Informationssicherheit</h4><p>Schutz vor unautorisiertem Zugriff, Verschlüsselung, Monitoring</p></div>
+      <div class="cs-gov-card reveal"><h4>Rollen &amp; Rechte</h4><p>Klare IAM-Struktur nach dem Least-Privilege-Prinzip</p></div>
+      <div class="cs-gov-card reveal"><h4>Provider Management</h4><p>Bewertung, Vertragsprüfung, Exit-Klauseln je Anbieter</p></div>
+      <div class="cs-gov-card reveal"><h4>Audit Trail</h4><p>Lückenlose Nachvollziehbarkeit aller KI-Entscheidungen</p></div>
+      <div class="cs-gov-card reveal"><h4>Modell- &amp; Promptversionierung</h4><p>Nachvollziehbarkeit jeder Modell- und Prompt-Änderung</p></div>
+      <div class="cs-gov-card reveal"><h4>Exit-Strategie</h4><p>Unabhängigkeit von einzelnen Anbietern sicherstellen</p></div>
+      <div class="cs-gov-card reveal"><h4>Business Continuity</h4><p>Notfallpläne bei Ausfall kritischer Dienste</p></div>
+      <div class="cs-gov-card reveal"><h4>Kostenkontrolle</h4><p>Transparente Nutzungs- und Budgetsteuerung</p></div>
+      <div class="cs-gov-card reveal"><h4>Human-in-the-Loop</h4><p>Menschliche Freigabe vor jeder Veröffentlichung</p></div>
+    </div>
+
+    <h3 class="cs-reg-subtitle">Regulatorische Architektur</h3>
+    <div class="cs-reg-note reveal">
+      <p>Für eine Bank ist die Cloud-Entscheidung zugleich eine Governance-Entscheidung. <b>DORA</b> verlangt, dass Finanzunternehmen Risiken aus IKT-Drittdienstleistern als Teil des eigenen IKT-Risikomanagements steuern. Auch bei ausgelagerten Diensten bleibt das Institut selbst verantwortlich. Zudem ist ein Register der vertraglichen IKT-Dienstleister erforderlich.</p>
+      <p>Vor Abschluss eines Vertrages müssen bei relevanten IKT-Diensten unter anderem Kritikalität, Risiken, Eignung des Dienstleisters und Informationssicherheitsstandards geprüft werden. Das entspricht auch der <b>BaFin-/MaRisk-Logik</b>, bei Auslagerungen u. a. Leistungsort, Datenspeicherort, Service Levels und Notfallanforderungen vertraglich sauber festzulegen.</p>
+    </div>
+
+    <p class="note" style="margin-top:22px; max-width:70ch;">Deshalb braucht die Architektur zusätzlich einen eigenen <b>Cloud Governance Layer</b>:</p>
+    <div class="cs-gov-grid">
+      <div class="cs-gov-card reveal"><h4>Provider-Risikobewertung</h4><p>Kritikalität und Eignung vor Vertragsschluss prüfen</p></div>
+      <div class="cs-gov-card reveal"><h4>Datenschutzprüfung</h4><p>DSGVO-Konformität je Anbieter und Verarbeitung</p></div>
+      <div class="cs-gov-card reveal"><h4>DORA-Klassifikation</h4><p>Einstufung als IKT-Drittdienstleister im Risikoregister</p></div>
+      <div class="cs-gov-card reveal"><h4>Datenresidenz</h4><p>Speicherort vertraglich festgelegt</p></div>
+      <div class="cs-gov-card reveal"><h4>IAM</h4><p>Zugriffssteuerung nach Least-Privilege</p></div>
+      <div class="cs-gov-card reveal"><h4>Verschlüsselung</h4><p>Ruhende und übertragene Daten durchgängig geschützt</p></div>
+      <div class="cs-gov-card reveal"><h4>Audit-Rechte</h4><p>Vertragliches Prüfrecht gegenüber dem Anbieter</p></div>
+      <div class="cs-gov-card reveal"><h4>SLA</h4><p>Service Levels und Notfallanforderungen definiert</p></div>
+      <div class="cs-gov-card reveal"><h4>Exit-Strategie</h4><p>Geordneter Wechsel ohne Betriebsunterbrechung</p></div>
+      <div class="cs-gov-card reveal"><h4>Portabilität</h4><p>Daten und Modelle bleiben übertragbar</p></div>
+      <div class="cs-gov-card reveal"><h4>Subdienstleister</h4><p>Kette weiterer Auslagerungen transparent gemacht</p></div>
+      <div class="cs-gov-card reveal"><h4>Business Continuity</h4><p>Notfallpläne bei Ausfall des Anbieters</p></div>
+      <div class="cs-gov-card reveal"><h4>Kosten-/Tokenmonitoring</h4><p>Laufende Nutzungs- und Budgetkontrolle</p></div>
+      <div class="cs-gov-card reveal"><h4>Modell- &amp; Promptversionierung</h4><p>Jede Änderung nachvollziehbar dokumentiert</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. PILOT-BLUEPRINT -->
+<!-- ============================================================ -->
+<section class="band" id="pilot">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4l14 8-14 8V4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Pilot-Blueprint
+        </div>
+        <h2>Vom Konzept zum kontrollierten MVP</h2>
+      </div>
+      <p class="note"><b>Pilot:</b> Abgegrenzter Berichtsteil – z. B. Geschäftsbetrieb &amp; CO₂-Emissionen</p>
+    </div>
+
+    <div class="cs-flow">
+      <div class="cs-flow-col">
+        <div class="card neutral reveal">
+          <h3>Input</h3>
+          <ul class="plist">
+            <li>Freigegebene Daten</li>
+            <li>Vorjahresinformationen</li>
+            <li>Definierte regulatorische Quellen</li>
+            <li>Berichtsvorlage</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-flow-arrow"><svg viewBox="0 0 22 14" fill="none"><line x1="0" y1="7" x2="16" y2="7" stroke="currentColor" stroke-width="2"/><path d="M11 2 L18 7 L11 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="cs-flow-col">
+        <div class="card cs-featured reveal">
+          <h3>KI-Plattform</h3>
+          <ul class="plist">
+            <li>RAG</li>
+            <li>Agent</li>
+            <li>Regelwerk</li>
+            <li>Prompt-Logik</li>
+            <li>Evaluation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-flow-arrow"><svg viewBox="0 0 22 14" fill="none"><line x1="0" y1="7" x2="16" y2="7" stroke="currentColor" stroke-width="2"/><path d="M11 2 L18 7 L11 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="cs-flow-col">
+        <div class="card neutral reveal">
+          <h3>Output</h3>
+          <ul class="plist">
+            <li>Berichtsentwurf</li>
+            <li>Verwendete Daten</li>
+            <li>Quellen</li>
+            <li>Unsicherheiten</li>
+            <li>Offene Prüfhinweise</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-approval reveal">
+      <span>Fachbereich</span><span class="arrow">→</span><span>QA</span><span class="arrow">→</span><span>Management</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. 30–60–90-TAGE-ROADMAP -->
+<!-- ============================================================ -->
+<section class="band tint" id="roadmap">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 21V4M5 4h11l-3 4 3 4H5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          30–60–90-Tage-Roadmap
+        </div>
+        <h2>Kontrollierter Einstieg statt Big-Bang-Rollout</h2>
+      </div>
+      <p class="note">Drei Phasen, klar messbar, mit definierter Entscheidung am Ende.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card neutral reveal">
+        <span class="cs-phase-badge">0–30 Tage</span>
+        <h3>Architektur</h3>
+        <ul class="plist">
+          <li>Pilot auswählen</li>
+          <li>Daten inventarisieren</li>
+          <li>Schutzbedarf klassifizieren</li>
+          <li>Provider-Kriterien definieren</li>
+          <li>Zielarchitektur festlegen</li>
+          <li>KPIs bestimmen</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <span class="cs-phase-badge">31–60 Tage</span>
+        <h3>MVP</h3>
+        <ul class="plist">
+          <li>PaaS konfigurieren</li>
+          <li>RAG und Agent aufbauen</li>
+          <li>Schnittstellen testen</li>
+          <li>QA-Gates implementieren</li>
+          <li>Logging und IAM einrichten</li>
+          <li>Team befähigen</li>
+        </ul>
+      </div>
+      <div class="card neutral reveal">
+        <span class="cs-phase-badge">61–90 Tage</span>
+        <h3>Evaluation</h3>
+        <ul class="plist">
+          <li>Qualität messen</li>
+          <li>Zeitersparnis messen</li>
+          <li>Quellenbelegquote prüfen</li>
+          <li>Risiken analysieren</li>
+          <li>Kosten bewerten</li>
+          <li>Nutzerfeedback einholen</li>
+          <li>Go / Adjust / Stop entscheiden</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9. CONSULTING-POSITIONIERUNG -->
+<!-- ============================================================ -->
+<section class="band" id="positionierung">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Consulting-Positionierung
+        </div>
+        <h2>Meine Rolle als KI-Consultant</h2>
+      </div>
+    </div>
+
+    <div class="cs-position reveal">
+      <q>Ich verbinde Strategie, Nachhaltigkeitsmanagement, Regulatorik, Daten, Cloud-Technologie und Menschen – von der Analyse des Geschäftsproblems bis zur sicheren Skalierung.</q>
+      <div class="cs-chain compact">
+        <div class="cs-chain-step"><span class="cs-chain-num">1</span><span class="cs-chain-label">Business</span></div>
+        <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="cs-chain-step"><span class="cs-chain-num">2</span><span class="cs-chain-label">Data</span></div>
+        <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="cs-chain-step"><span class="cs-chain-num">3</span><span class="cs-chain-label">Cloud</span></div>
+        <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="cs-chain-step"><span class="cs-chain-num">4</span><span class="cs-chain-label">AI</span></div>
+        <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="cs-chain-step"><span class="cs-chain-num">5</span><span class="cs-chain-label">Governance</span></div>
+        <span class="cs-chain-arrow"><svg viewBox="0 0 30 14"><line x1="0" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="2" class="flow"/><path d="M20 2 L27 7 L20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="cs-chain-step"><span class="cs-chain-num">6</span><span class="cs-chain-label">Impact</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. MANAGEMENT-EMPFEHLUNG -->
+<!-- ============================================================ -->
+<section class="band tint" id="empfehlung">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Management-Empfehlung
+        </div>
+        <h2>Die empfohlene Zielarchitektur im Überblick</h2>
+      </div>
+    </div>
+
+    <p class="cs-lead-recommendation">Für den KI-gestützten Nachhaltigkeitsbericht der Sparkasse empfiehlt sich eine Hybridarchitektur mit interner/privater Datenhaltung, PaaS als kontrollierter KI- und Agentenplattform, selektivem Enterprise-SaaS für risikoarme Standardaufgaben und IaaS/Self-Hosting nur dort, wo Schutzbedarf oder technische Sonderanforderungen es tatsächlich rechtfertigen.</p>
+    <div class="cs-final reveal">
+      <h3>Empfohlene Zielarchitektur</h3>
+      <div class="cs-formula">
+        <span class="term main">Private Data</span>
+        <span class="plus">+</span>
+        <span class="term main">PaaS als Managed AI Platform</span>
+        <span class="plus">+</span>
+        <span class="term main">Controlled Enterprise SaaS</span>
+        <span class="plus">+</span>
+        <span class="term">IaaS / Self-Hosting nur bei begründetem Bedarf</span>
+      </div>
+      <p class="explain">Nicht die technisch komplexeste Architektur ist die beste, sondern diejenige, die Geschäftsnutzen, Schutzbedarf, Integration, Prüfbarkeit und Betriebsfähigkeit optimal verbindet.</p>
+      <p class="cs-final-cta">Mit einem klar abgegrenzten Berichtsteil starten – Qualität messen – kontrolliert skalieren.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-motif" aria-hidden="true">
+      <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="18" y="34" width="9" height="28" fill="currentColor"/>
+        <rect x="133" y="34" width="9" height="28" fill="currentColor"/>
+        <circle cx="22.5" cy="28" r="6.5" fill="currentColor"/>
+        <circle cx="137.5" cy="28" r="6.5" fill="currentColor"/>
+        <path d="M58 62 V40 L80 21 L102 40 V62 Z" fill="currentColor"/>
+        <path d="M0 56 Q 20 46 40 56 T 80 56 T 120 56 T 160 56" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="cols">
+      <div>
+        <h4>Über diese Seite</h4>
+        <p>Dieser Blueprint ist eine konzeptionelle Ausarbeitung im Rahmen des KI-Consulting-Portfolios von Annette Adler. Er zeigt beispielhaft, wie eine Cloud- und KI-Strategie für einen Nachhaltigkeitsbericht in einem regulierten Finanzinstitut methodisch entwickelt werden kann – Consulting-Strategie, Datenstrategie, KI-Strategie, Cloud-Strategie und Governance als eine zusammenhängende Entscheidung. Keine offizielle IT- oder Cloud-Entscheidung der Sparkasse Fürstenfeldbruck.</p>
+      </div>
+      <div>
+        <h4>Hinweis zum Markenauftritt</h4>
+        <p>Das rote Symbol oben links ist ein generischer Platzhalter für das offizielle Sparkassen-Logo. Sparkassen-Rot ist hier mit einem gängigen Referenzwert angenähert (kein garantiert pixelgenauer Markenwert) – bei Bedarf bitte gegen die verbindliche Fassung aus dem internen Corporate-Design-Portal sowie das Original-Logo austauschen.</p>
+      </div>
+    </div>
+    <p class="fine">Sparkasse Fürstenfeldbruck · Hauptstraße 8 · 82256 Fürstenfeldbruck — Kontaktangabe laut Originalbericht.</p>
+  </div>
+</footer>
+
+<script>
+/* Scroll-Reveal per IntersectionObserver */
+(function(){
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el){ obs.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* Scrollspy: aktiven Nav-Anker markieren */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.jump a[href^="#"]'));
+  var sections = navLinks
+    .map(function(a){ return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  function onScroll(){
+    var y = window.scrollY + 140;
+    var current = null;
+    sections.forEach(function(sec){ if (sec.offsetTop <= y) current = sec; });
+    navLinks.forEach(function(a){ a.classList.remove('current'); });
+    if (current){
+      var link = document.querySelector('nav.jump a[href="#' + current.id + '"]');
+      if (link) link.classList.add('current');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
