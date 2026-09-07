@@ -1,2 +1,3 @@
 .claude/
-videos/
+videos/*
+!videos/ambient.mp4
