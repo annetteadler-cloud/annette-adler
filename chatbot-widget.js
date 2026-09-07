@@ -89,9 +89,13 @@
       '<style>' +
       ':host{all:initial;}' +
       '.pc-wrap{position:fixed;bottom:20px;right:20px;z-index:2147483000;font-family:"Public Sans",ui-sans-serif,system-ui,sans-serif;}' +
-      '.pc-button{width:56px;height:56px;border-radius:50%;background:#e2001a;color:#fff;border:none;box-shadow:0 4px 14px rgba(0,0,0,0.25);cursor:pointer;font-size:26px;display:flex;align-items:center;justify-content:center;}' +
-      '.pc-button:hover{background:#a8000f;}' +
-      '.pc-panel{display:none;flex-direction:column;position:fixed;bottom:88px;right:20px;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 120px);background:#ffffff;border:1px solid #dfe0e2;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.22);overflow:hidden;}' +
+      '.pc-avatar-btn{position:relative;height:170px;width:auto;background:none;border:none;padding:0;cursor:pointer;filter:drop-shadow(0 6px 14px rgba(0,0,0,0.3));transition:transform .15s ease;display:block;}' +
+      '.pc-avatar-btn:hover{transform:scale(1.04);}' +
+      '.pc-avatar-img{display:block;height:100%;width:auto;}' +
+      '.pc-avatar-badge{position:absolute;left:43%;top:6%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:#e2001a;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:17px;}' +
+      '@media (max-width:480px){.pc-avatar-btn{height:120px;}.pc-avatar-badge{width:26px;height:26px;font-size:13px;}}' +
+      '.pc-panel{display:none;flex-direction:column;position:fixed;bottom:200px;right:20px;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 232px);background:#ffffff;border:1px solid #dfe0e2;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.22);overflow:hidden;}' +
+      '@media (max-width:480px){.pc-panel{bottom:150px;max-height:calc(100vh - 182px);}}' +
       '.pc-panel.open{display:flex;}' +
       '.pc-header{background:#e2001a;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;}' +
       '.pc-close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;line-height:1;}' +
@@ -115,7 +119,10 @@
       '<button class="pc-send" id="sendBtn">Senden</button>' +
       "</div>" +
       "</div>" +
-      '<button class="pc-button" id="toggleBtn" aria-label="Chat öffnen">💬</button>' +
+      '<button class="pc-avatar-btn" id="toggleBtn" aria-label="Chat öffnen">' +
+      '<img class="pc-avatar-img" src="images/avatar-tourguide.png" alt="">' +
+      '<span class="pc-avatar-badge" aria-hidden="true">💬</span>' +
+      "</button>" +
       "</div>";
 
     var panel = root.getElementById("panel");
