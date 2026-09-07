@@ -1,3 +1,5 @@
 .claude/
 videos/*
 !videos/ambient.mp4
+!videos/vision.mp4
+!videos/nachhaltigkeitsbericht-2024.mp4
