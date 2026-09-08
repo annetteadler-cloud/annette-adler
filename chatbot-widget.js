@@ -15,7 +15,7 @@
     },
     "meine-beratungsstrategie.html": {
       title: "Meine Beratungsstrategie",
-      blurb: "Diese Seite zeigt Annettes Beratungsstrategie: Positionierung, ein sechsstufiger Blueprint, Human-in-the-loop-Prinzipien, das Beratungsangebot und ein 30-/60-/90-Tage-Plan."
+      blurb: "Diese Seite zeigt Annettes Beratungsstrategie: Positionierung, ein sechsstufiger Blueprint, Human-in-the-Loop-Prinzipien, das Beratungsangebot und ein 30-/60-/90-Tage-Plan."
     },
     "index.html": {
       title: "Nachhaltigkeitsbericht Sparkasse FFB",
