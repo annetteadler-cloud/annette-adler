@@ -13,6 +13,10 @@
       title: "Profil & Lebenslauf",
       blurb: "Du bist auf Annettes CV-/Profilseite: Werdegang, Ausbildung, Kompetenzmatrix und ein live aktualisierter Sustainability-News-Feed."
     },
+    "meine-beratungsstrategie.html": {
+      title: "Meine Beratungsstrategie",
+      blurb: "Diese Seite zeigt Annettes Beratungsstrategie: Positionierung, ein sechsstufiger Blueprint, Human-in-the-loop-Prinzipien, das Beratungsangebot und ein 30-/60-/90-Tage-Plan."
+    },
     "index.html": {
       title: "Nachhaltigkeitsbericht Sparkasse FFB",
       blurb: "Du siehst die Kern-Arbeitsprobe: einen interaktiven Nachhaltigkeitsbericht (2022–2025) mit rund 40 ESG-Kennzahlen und Diagrammen."
