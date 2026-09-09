@@ -226,6 +226,43 @@
         </div>
       </div>
     </div>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="cert-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openCertModal('de2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('de2');}">
+        <div class="cert-card-head">
+          <h4>Zertifikat</h4>
+          <span>Business Trends Academy</span>
+        </div>
+        <div class="cert-card-body">
+          <dl>
+            <dt>Name</dt><dd>Frau Annette Adler</dd>
+            <dt>Zeitraum</dt><dd>18.08.2026 – 14.09.2026</dd>
+            <dt>Programm</dt><dd></dd>
+            <dt>Umfang</dt><dd></dd>
+            <dt>Ausstellungsort</dt><dd>Berlin, 14.09.2026</dd>
+          </dl>
+          <p class="cert-sign">Unterschrieben von Cordula Stübing, Akademieleiterin</p>
+          <p class="sub" style="margin-top:10px; color:var(--red); font-weight:600;">Vollständiges Zertifikat anzeigen ↗</p>
+        </div>
+      </div>
+      <div class="cert-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openCertModal('en2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('en2');}">
+        <div class="cert-card-head">
+          <h4>Certificate</h4>
+          <span>Business Trends Academy</span>
+        </div>
+        <div class="cert-card-body">
+          <dl>
+            <dt>Name</dt><dd>Ms Annette Adler</dd>
+            <dt>Period</dt><dd>18th August 2026 – 14th September 2026</dd>
+            <dt>Program</dt><dd></dd>
+            <dt>Scope</dt><dd></dd>
+            <dt>Issued at</dt><dd>Berlin, 09/14/2026</dd>
+          </dl>
+          <p class="cert-sign">Signed by Cordula Stübing, Academy director</p>
+          <p class="sub" style="margin-top:10px; color:var(--red); font-weight:600;">Show full certificate ↗</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -631,6 +668,52 @@
       <div class="cert-modal-foot">
         <p class="cert-sign" style="margin:0; border:none; padding:0;">Berlin, 08/17/2026 · Signed by Cordula Stübing, Academy director</p>
         <a class="cert-modal-pdf-link" href="certificates/certificate-en.pdf" target="_blank" rel="noopener">Open PDF file (local) ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cert-modal-backdrop" id="cert-modal-de2" hidden onclick="if(event.target===this)closeCertModal('de2')">
+  <div class="cert-modal-box" role="dialog" aria-modal="true" aria-label="Zertifikat Business Trends Academy, Deutsch">
+    <div class="cert-card-head" style="border-radius:12px 12px 0 0;">
+      <h4>Zertifikat</h4>
+      <span>Business Trends Academy</span>
+    </div>
+    <button type="button" class="cert-modal-close" onclick="closeCertModal('de2')" aria-label="Schließen">✕</button>
+    <div class="cert-modal-body">
+      <dl style="display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0 0 14px; font-size:.88rem;">
+        <dt style="color:var(--ink-faint); font-weight:600;">Name</dt><dd style="margin:0;">Frau Annette Adler</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Zeitraum</dt><dd style="margin:0;">18.08.2026 – 14.09.2026</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Programm</dt><dd style="margin:0;"></dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Umfang</dt><dd style="margin:0;"></dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Ausstellungsort</dt><dd style="margin:0;">Berlin, 14.09.2026</dd>
+      </dl>
+      <div class="cert-modal-foot">
+        <p class="cert-sign" style="margin:0; border:none; padding:0;">Berlin, 14.09.2026 · Unterschrieben von Cordula Stübing, Akademieleiterin</p>
+        <a class="cert-modal-pdf-link" href="certificates/zertifikat-de-2.pdf" target="_blank" rel="noopener">PDF-Datei öffnen (lokal) ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cert-modal-backdrop" id="cert-modal-en2" hidden onclick="if(event.target===this)closeCertModal('en2')">
+  <div class="cert-modal-box" role="dialog" aria-modal="true" aria-label="Certificate Business Trends Academy, English">
+    <div class="cert-card-head" style="border-radius:12px 12px 0 0;">
+      <h4>Certificate</h4>
+      <span>Business Trends Academy</span>
+    </div>
+    <button type="button" class="cert-modal-close" onclick="closeCertModal('en2')" aria-label="Close">✕</button>
+    <div class="cert-modal-body">
+      <dl style="display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0 0 14px; font-size:.88rem;">
+        <dt style="color:var(--ink-faint); font-weight:600;">Name</dt><dd style="margin:0;">Ms Annette Adler</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Period</dt><dd style="margin:0;">18th August 2026 – 14th September 2026</dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Program</dt><dd style="margin:0;"></dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Scope</dt><dd style="margin:0;"></dd>
+        <dt style="color:var(--ink-faint); font-weight:600;">Issued at</dt><dd style="margin:0;">Berlin, 09/14/2026</dd>
+      </dl>
+      <div class="cert-modal-foot">
+        <p class="cert-sign" style="margin:0; border:none; padding:0;">Berlin, 09/14/2026 · Signed by Cordula Stübing, Academy director</p>
+        <a class="cert-modal-pdf-link" href="certificates/certificate-en-2.pdf" target="_blank" rel="noopener">Open PDF file (local) ↗</a>
       </div>
     </div>
   </div>
