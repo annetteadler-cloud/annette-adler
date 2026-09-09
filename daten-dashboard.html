@@ -67,6 +67,12 @@ nav.jump a{
 }
 nav.jump a:hover{ color: var(--red); background: var(--surface-2); }
 nav.jump a.current{ color: var(--red); background: var(--surface-2); }
+.dd-subnav{ position: sticky; top: 57px; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--rule); }
+.dd-subnav-inner{ max-width:1200px; margin:0 auto; padding:10px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.dd-subnav-label{ font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: var(--ink-faint); flex:none; }
+.dd-subnav-links{ display:flex; gap:2px; flex-wrap:wrap; }
+.dd-subnav-links a{ text-decoration:none; font-size:.8rem; font-weight:700; color: var(--ink-soft); padding:7px 12px; border-radius:20px; white-space:nowrap; }
+.dd-subnav-links a:hover{ color: var(--red); background: var(--surface-2); }
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family: ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
@@ -147,18 +153,25 @@ footer p + p{ margin-top:8px; }
       <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
       <a href="meine-beratungsstrategie.html">Meine Beratungsstrategie</a>
       <a href="nachhaltige-ki.html">Nachhaltige KI</a>
-      <a href="index.html#institut">Institut</a>
-      <a href="index.html#wirtschaft">Wirtschaft</a>
-      <a href="index.html#klima">Klima</a>
-      <a href="index.html#team">Mitarbeitende</a>
-      <a href="index.html#region">Region</a>
-      <a href="index.html#governance">Governance</a>
-      <a href="index.html#vergleich">Vergleich</a>
+      <a href="index.html">Projekt</a>
       <a href="daten-dashboard.html" class="current">Daten-Dashboard</a>
       <a href="cloud-strategie.html">Cloud-Strategie</a>
       <a href="llm-ki-strategie.html">LLM- &amp; KI-Strategie</a>
       <a href="evaluation-quality-assurance-blueprint.html">Eval &amp; QA</a>
+      <a href="annette-adler.html#kontakt">Kontakt</a>
     </nav>
+  </div>
+</div>
+
+<div class="dd-subnav">
+  <div class="dd-subnav-inner">
+    <span class="dd-subnav-label">Auf dieser Seite</span>
+    <div class="dd-subnav-links">
+      <a href="#inventar">Bestandsaufnahme</a>
+      <a href="#daten">Datengrundlage</a>
+      <a href="#fehler">Fehlerquellen</a>
+      <a href="#regulatorik">Regulatorik</a>
+    </div>
   </div>
 </div>
 

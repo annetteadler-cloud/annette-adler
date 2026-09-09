@@ -331,3 +331,10 @@
 #nk-page .nk-card-practice .nk-red-list{font-size:15px}
 #nk-page .nk-card-detail>summary{cursor:pointer}
 @media(max-width:720px){#nk-page .nk-practice-grid{grid-template-columns:1fr;gap:24px}#nk-page .nk-practice-grid>.nk-practice-group+.nk-practice-group{border-top:1px solid var(--line);padding-top:18px}}
+.nk-subnav{background:#fff;border-bottom:1px solid var(--line)}
+.nk-subnav-inner{max-width:1180px;margin:0 auto;padding:10px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.nk-subnav-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);flex:none}
+.nk-subnav-links{display:flex;gap:2px;flex-wrap:wrap}
+.nk-subnav-links a{text-decoration:none;font-size:.8rem;font-weight:700;color:var(--soft);padding:7px 12px;border-radius:20px;white-space:nowrap}
+.nk-subnav-links a:hover{color:var(--red);background:var(--pale)}
+@media(max-width:680px){.nk-subnav-inner{padding:10px 20px}}

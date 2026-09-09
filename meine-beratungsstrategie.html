@@ -32,18 +32,28 @@
       <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
       <a href="meine-beratungsstrategie.html" class="current">Meine Beratungsstrategie</a>
       <a href="nachhaltige-ki.html">Nachhaltige KI</a>
-      <a href="index.html#institut">Institut</a>
-      <a href="index.html#wirtschaft">Wirtschaft</a>
-      <a href="index.html#klima">Klima</a>
-      <a href="index.html#team">Mitarbeitende</a>
-      <a href="index.html#region">Region</a>
-      <a href="index.html#governance">Governance</a>
-      <a href="index.html#vergleich">Vergleich</a>
+      <a href="index.html">Projekt</a>
       <a href="daten-dashboard.html">Daten-Dashboard</a>
       <a href="cloud-strategie.html">Cloud-Strategie</a>
       <a href="llm-ki-strategie.html">LLM- &amp; KI-Strategie</a>
       <a href="evaluation-quality-assurance-blueprint.html">Eval &amp; QA</a>
+      <a href="annette-adler.html#kontakt">Kontakt</a>
     </nav>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UNTER-NAVIGATION -->
+<!-- ============================================================ -->
+<div class="av-subnav">
+  <div class="av-subnav-inner">
+    <span class="av-subnav-label">Auf dieser Seite</span>
+    <div class="av-subnav-links">
+      <a href="#blueprint">Blueprint</a>
+      <a href="#human-in-the-loop">Human-in-the-Loop</a>
+      <a href="#beratungsangebot">Beratungsangebot</a>
+      <a href="#eigene-strategie">Eigene Strategie</a>
+    </div>
   </div>
 </div>
 
@@ -51,6 +61,13 @@
 <!-- MEINE BERATUNGSSTRATEGIE -->
 <!-- ============================================================ -->
 <style>
+nav.jump a.current{ color: var(--red); background: var(--surface-2); }
+.av-subnav{ position: sticky; top: 57px; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--rule); }
+.av-subnav-inner{ max-width:1120px; margin:0 auto; padding:10px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.av-subnav-label{ font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: var(--ink-faint); flex:none; }
+.av-subnav-links{ display:flex; gap:2px; flex-wrap:wrap; }
+.av-subnav-links a{ text-decoration:none; font-size:.8rem; font-weight:700; color: var(--ink-soft); padding:7px 12px; border-radius:20px; white-space:nowrap; }
+.av-subnav-links a:hover{ color: var(--red); background: var(--surface-2); }
 #meine-beratungsstrategie{padding:0;background:#fff}
 #av-strategy{--av-red:#e2001a;--av-ink:#1c1e21;--av-soft:#585d64;--av-line:#dfe0e2;--av-tint:#f2f2f3;background:#fff;color:var(--av-ink);font:16px/1.6 'Public Sans',Arial,sans-serif}
 #av-strategy *{box-sizing:border-box}#av-strategy h2,#av-strategy h3,#av-strategy h4{font-family:Archivo,Arial,sans-serif;letter-spacing:-.02em;line-height:1.2;margin:0;color:var(--av-ink)}#av-strategy h2{font-size:clamp(1.6rem,3vw,2.05rem)}#av-strategy h3{font-size:clamp(1.3rem,2.5vw,1.7rem)}#av-strategy h4{font-size:1.08rem}#av-strategy p{margin:0}#av-strategy button{font:inherit;cursor:pointer}#av-strategy a{color:inherit;text-underline-offset:4px}#av-strategy :is(a,button,summary):focus-visible{outline:3px solid var(--av-red);outline-offset:4px}#av-strategy [hidden]{display:none!important}
@@ -78,7 +95,7 @@
       <article class="av-specialty"><span class="av-icon"><i data-lucide="messages-square" aria-hidden="true"></i></span><h4>Befähigung<br>&amp; Veränderung</h4><p>Teams beteiligen, gemeinsam erproben und Wissen weitergeben.</p></article>
     </div>
   </div>
-  <div class="av-band"><div class="av-wrap">
+  <div class="av-band" id="blueprint"><div class="av-wrap">
     <div class="av-kicker">Mein Blueprint</div><h3>Vom ersten Gespräch zur sicheren Übergabe.</h3><p class="av-section-note">Sechs Phasen – jede führt zu einem konkreten Ergebnis. Wähle einen Schritt.</p>
     <div class="av-route" role="group" aria-label="Sechs Phasen meiner Beratung">
       <button class="av-step" type="button" data-av-phase="0" aria-pressed="true" aria-controls="av-phase-detail"><span class="av-index">01</span><span><strong>Ziel klären</strong><small>Problem &amp; Wirkung</small></span></button>
@@ -91,7 +108,7 @@
     <div class="av-route-info" id="av-phase-detail" aria-live="polite"><h4 id="av-phase-title">01 · Ziel und Wirkung klären</h4><p id="av-phase-text">Wir machen das Problem greifbar und vereinbaren, woran eine Verbesserung erkennbar ist.</p><p id="av-phase-result"><strong>Ergebnis:</strong> Ein klarer Auftrag mit Zielgröße und Ausgangswert.</p><p class="av-gate" id="av-phase-gate">Menschliche Entscheidung: Sponsor und Fachbereich bestätigen das Ziel.</p></div>
     <div class="av-loop-note"><i data-lucide="refresh-cw" aria-hidden="true"></i><span>Gemeinsam testen, reflektieren und verbessern – in jeder Phase.</span></div>
   </div></div>
-  <div class="av-wrap">
+  <div class="av-wrap" id="human-in-the-loop">
     <div class="av-kicker">Human-in-the-Loop</div><h3>Die KI arbeitet zu. Die Verantwortung bleibt bei Menschen.</h3>
     <div class="av-responsibility">
       <article class="av-ai"><span class="av-icon"><i data-lucide="cpu" aria-hidden="true"></i></span><h4>KI unterstützt</h4><p>Strukturieren<br>Entwürfe vorbereiten<br>Auffälligkeiten markieren</p></article>
@@ -101,7 +118,7 @@
     <div class="av-gates" aria-label="Sechs Pflichtprüfungen"><span><b>1</b>Daten</span><span><b>2</b>Quellen</span><span><b>3</b>Regulatorik</span><span><b>4</b>Plausibilität</span><span><b>5</b>Fachliche Freigabe</span><span><b>6</b>Finale Freigabe</span></div>
     <p class="av-stop">Kritischer Fehler oder fehlende Pflichtfreigabe? Zurück zur Korrektur. Kein automatisches Veröffentlichen.</p>
   </div>
-  <div class="av-band"><div class="av-wrap">
+  <div class="av-band" id="beratungsangebot"><div class="av-wrap">
     <div class="av-kicker">Mein Beratungsangebot</div><h3>Klar beginnen. Im Kleinen belegen. Gemeinsam weitergehen.</h3>
     <div class="av-offers">
       <article class="av-offer"><span class="av-icon"><i data-lucide="scan-search" aria-hidden="true"></i></span><h4>Orientierung</h4><p>Wo entlastet KI wirklich? Wir betrachten Prozess, Daten und drei mögliche Anwendungsfälle.</p><div class="av-result"><b>Du erhältst</b>Eine begründete Pilotempfehlung.</div></article>
@@ -109,7 +126,7 @@
       <article class="av-offer"><span class="av-icon"><i data-lucide="handshake" aria-hidden="true"></i></span><h4>Einführung &amp; Befähigung</h4><p>Wir üben mit dem Team, dokumentieren den Ablauf und klären den laufenden Betrieb.</p><div class="av-result"><b>Du erhältst</b>Vorlagen, Anleitung und eine geordnete Übergabe.</div></article>
     </div>
   </div></div>
-  <div class="av-wrap">
+  <div class="av-wrap" id="eigene-strategie">
     <div class="av-kicker">Meine eigene Strategie</div><h3>Mit Fachpraxis starten. Über belegte Wirkung wachsen.</h3>
     <div class="av-roadmap"><article class="av-month"><div class="av-days">30 <small>Tage</small></div><h4>Profil &amp; Bedarf schärfen</h4><p>Arbeitsprobe vorstellen, Fachgespräche führen und das Einstiegsangebot prüfen.</p></article><article class="av-month"><div class="av-days">60 <small>Tage</small></div><h4>Einen Pilot vorbereiten</h4><p>Bei bestätigtem Bedarf Umfang, Daten, Ausgangswerte und Verantwortung vereinbaren.</p></article><article class="av-month"><div class="av-days">90 <small>Tage</small></div><h4>Wirkung auswerten</h4><p>Bei erteiltem Mandat Qualität und Gesamtaufwand vergleichen. Daraus das Angebot weiterentwickeln.</p></article></div>
     <div class="av-proof"><i data-lucide="folder-check" aria-hidden="true"></i><div><strong>Meine Arbeitsprobe zeigt die Methode.</strong><p>Reale Einsparungen und produktive Ergebnisse werden erst im Pilot nachgewiesen. Die QA-Beispielwerte sind keine Kundenergebnisse.</p></div></div>
