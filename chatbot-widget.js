@@ -36,6 +36,10 @@
     "evaluation-quality-assurance-blueprint.html": {
       title: "Evaluation & QA",
       blurb: "Das Kapstone-Dokument: ein messbares Scoring- und Freigabesystem für KI-generierte Inhalte, inklusive Stress-Tests und Human-in-the-Loop."
+    },
+    "nachhaltige-ki.html": {
+      title: "Nachhaltige KI",
+      blurb: "Diese Seite behandelt nachhaltige KI-Einführung im Unternehmen: Umweltbilanz und Rebound-Effekt, bewusstes Prompten inklusive Token-Rechner, ein sechsstufiges Einführungsmodell, Ethik & gesellschaftliche Verantwortung sowie der Transfer auf Annettes Arbeitsprobe."
     }
   };
 
