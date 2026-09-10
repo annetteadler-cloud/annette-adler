@@ -1,0 +1,62 @@
+#aa-persoenlicher-ansatz{--aap-red:#ed0020;--aap-ink:#1c1e21;--aap-muted:#585d64;--aap-line:#dfe0e2;--aap-tint:#f5f5f6;color:var(--aap-ink);background:#fff;font:400 16px/1.65 'Public Sans',Arial,sans-serif;border-top:2px solid var(--aap-red);border-bottom:1px solid var(--aap-line);padding:32px 24px;margin:24px 0;scroll-margin-top:100px;overflow-wrap:break-word;color-scheme:light}
+#aa-persoenlicher-ansatz *{box-sizing:border-box}
+#aa-persoenlicher-ansatz h2,#aa-persoenlicher-ansatz h3,#aa-persoenlicher-ansatz h4{font-family:Archivo,Arial,sans-serif;font-weight:700;color:var(--aap-ink);letter-spacing:-.02em;line-height:1.25;margin:0}
+#aa-persoenlicher-ansatz h2{font-size:1.6rem}
+#aa-persoenlicher-ansatz h2 span{color:var(--aap-red)}
+#aa-persoenlicher-ansatz h3{font-size:1.3rem;margin-bottom:22px}
+#aa-persoenlicher-ansatz h4{font-size:1.1rem;margin:12px 0}
+#aa-persoenlicher-ansatz p{margin:0 0 16px}
+#aa-persoenlicher-ansatz strong{font-weight:600}
+#aa-persoenlicher-ansatz .aap-topline{font-size:.85rem;color:var(--aap-red);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:30px}
+#aa-persoenlicher-ansatz .aap-intro{display:grid;grid-template-columns:1.12fr 1fr;gap:30px;align-items:center}
+#aa-persoenlicher-ansatz .aap-intro>div,#aa-persoenlicher-ansatz .aap-photo{min-width:0}
+#aa-persoenlicher-ansatz .aap-name{color:var(--aap-ink);font-family:Archivo,Arial,sans-serif;font-size:1.6rem;font-weight:700;margin:26px 0 6px}
+#aa-persoenlicher-ansatz .aap-role{color:#45484e;margin-top:4px;font-weight:400}
+#aa-persoenlicher-ansatz .aap-promise{font-weight:600;margin-top:24px}
+#aa-persoenlicher-ansatz .aap-photo{margin:0}
+#aa-persoenlicher-ansatz .aap-photo img{width:100%;height:auto;display:block;border-radius:6px}
+#aa-persoenlicher-ansatz figcaption{font-size:.8rem;color:var(--aap-muted);margin-top:8px}
+#aa-persoenlicher-ansatz .aap-principles{margin-top:36px;padding-top:30px;border-top:1px solid var(--aap-line)}
+#aa-persoenlicher-ansatz .aap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px}
+#aa-persoenlicher-ansatz .aap-grid article{background:var(--aap-tint);border-radius:6px;padding:20px}
+#aa-persoenlicher-ansatz .aap-icon{display:block;color:var(--aap-red);height:26px}
+#aa-persoenlicher-ansatz .aap-icon svg{width:26px;height:26px;stroke:currentColor}
+#aa-persoenlicher-ansatz .aap-red{color:var(--aap-red)}
+#aa-persoenlicher-ansatz .aap-signature{border-left:3px solid var(--aap-red);background:#fff7f8;padding:26px 28px;margin:36px 0}
+#aa-persoenlicher-ansatz .aap-signature h3{font-size:clamp(1.25rem,2.2vw,1.65rem);margin-bottom:16px}
+#aa-persoenlicher-ansatz .aap-signature ul{margin:0 0 20px;padding-left:20px}
+#aa-persoenlicher-ansatz .aap-signature li{padding-left:3px;margin:6px 0}
+#aa-persoenlicher-ansatz .aap-signature li::marker{color:var(--aap-red)}
+#aa-persoenlicher-ansatz .aap-signature p{font-weight:600;margin:0}
+#aa-persoenlicher-ansatz .aap-flow{display:grid;grid-template-columns:1fr auto 1.3fr auto 1fr;gap:16px;align-items:center}
+#aa-persoenlicher-ansatz .aap-flow>div{padding:18px 0;min-width:0}
+#aa-persoenlicher-ansatz .aap-flow strong{display:block;font-size:1rem}
+#aa-persoenlicher-ansatz .aap-flow div span{display:block;color:var(--aap-muted);font-size:.875rem;margin-top:6px}
+#aa-persoenlicher-ansatz .aap-flow .aap-bridge{padding:18px;background:var(--aap-tint);border-top:2px solid var(--aap-red)}
+#aa-persoenlicher-ansatz .aap-bridge strong,#aa-persoenlicher-ansatz .aap-arrow{color:var(--aap-red)}
+#aa-persoenlicher-ansatz .aap-arrow{font-size:1.5rem}
+#aa-persoenlicher-ansatz .aap-values{color:var(--aap-red);margin:22px 0 0;font-weight:600;text-align:center}
+#aa-persoenlicher-ansatz .aap-values span{padding:0 8px}
+@media(max-width:760px){#aa-persoenlicher-ansatz .aap-intro{grid-template-columns:1fr;gap:20px}#aa-persoenlicher-ansatz .aap-photo{max-width:560px}#aa-persoenlicher-ansatz .aap-flow{grid-template-columns:1fr;gap:0}#aa-persoenlicher-ansatz .aap-arrow{transform:rotate(90deg);justify-self:center}#aa-persoenlicher-ansatz .aap-flow>div{width:100%;text-align:center}}
+@media(max-width:520px){#aa-persoenlicher-ansatz{padding:24px 16px}#aa-persoenlicher-ansatz .aap-grid{grid-template-columns:1fr;gap:24px}#aa-persoenlicher-ansatz .aap-signature{padding:22px 18px}#aa-persoenlicher-ansatz .aap-values span{padding:0 3px}}
+#aa-persoenlicher-ansatz .aap-label{color:var(--aap-red);font-size:1.125rem;font-weight:600;line-height:1.45;margin-bottom:6px}
+#aa-persoenlicher-ansatz .aap-intro h2{margin-bottom:26px}
+#aa-persoenlicher-ansatz .aap-grid article p{margin-bottom:0}
+@media(min-width:1000px){#aa-persoenlicher-ansatz .aap-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}#aa-persoenlicher-ansatz .aap-grid article{padding:18px}#aa-persoenlicher-ansatz .aap-grid h4{min-height:2.5em}}
+/* Bild-Text-Abschnitt nach der freigegebenen Screenshot-Vorlage. */
+#aa-persoenlicher-ansatz .aap-signature{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;align-items:start;background:#f2f2f3;border-left:4px solid var(--aap-red);padding:24px 26px}
+#aa-persoenlicher-ansatz .aap-signature-photo{margin:0;min-width:0}
+#aa-persoenlicher-ansatz .aap-signature-photo img{display:block;width:100%;height:auto;border-radius:5px}
+#aa-persoenlicher-ansatz .aap-signature-photo figcaption{font-size:.75rem;line-height:1.4;margin-top:6px;color:var(--aap-muted)}
+#aa-persoenlicher-ansatz .aap-signature h3{font-size:1.15rem;line-height:1.4;margin:0 0 12px}
+#aa-persoenlicher-ansatz .aap-signature ul{list-style:disc outside;padding-left:20px;margin:0 0 14px}
+#aa-persoenlicher-ansatz .aap-signature li{display:list-item;margin:5px 0;padding-left:3px}
+#aa-persoenlicher-ansatz .aap-signature li::marker{color:var(--aap-red);font-size:1.15em}
+#aa-persoenlicher-ansatz .aap-signature p{font-size:.95rem}
+@media(max-width:600px){#aa-persoenlicher-ansatz .aap-signature{grid-template-columns:1fr;padding:22px 18px;gap:18px}#aa-persoenlicher-ansatz .aap-signature-photo{max-width:220px}}
+#aa-persoenlicher-ansatz .aap-list-intro{margin-bottom:6px}
+#aa-persoenlicher-ansatz .aap-translation-list{list-style:disc outside;margin:0 0 18px;padding-left:23px}
+#aa-persoenlicher-ansatz .aap-translation-list li{display:list-item;margin:4px 0;padding-left:3px}
+#aa-persoenlicher-ansatz .aap-translation-list li::marker{color:var(--aap-red);font-size:1.15em}
+#aa-persoenlicher-ansatz .aap-signature .aap-handwriting{margin:14px 0 0;max-width:450px}
+#aa-persoenlicher-ansatz .aap-handwriting img{display:block;width:100%;height:auto;filter:brightness(1.08);mix-blend-mode:multiply}
