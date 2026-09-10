@@ -40,6 +40,10 @@
     "nachhaltige-ki.html": {
       title: "Nachhaltige KI",
       blurb: "Diese Seite behandelt nachhaltige KI-Einführung im Unternehmen: Umweltbilanz und Rebound-Effekt, bewusstes Prompten inklusive Token-Rechner, ein sechsstufiges Einführungsmodell, Ethik & gesellschaftliche Verantwortung sowie der Transfer auf Annettes Arbeitsprobe."
+    },
+    "datentransfer.html": {
+      title: "Datentransfer",
+      blurb: "Diese Seite behandelt Datensicherung, kontrollierten Datentransfer und getesteten Wiederanlauf: was in ein Sicherungspaket gehört, Transferwege mit Prüfpunkten, ein sechsstufiges Beratungsvorgehen mit Human-in-the-Loop, drei Praxis-Situationen aus Annettes Projekt sowie RPO/RTO als Freigabekriterien."
     }
   };
 
