@@ -44,6 +44,10 @@
     "datentransfer.html": {
       title: "Datentransfer",
       blurb: "Diese Seite behandelt Datensicherung, kontrollierten Datentransfer und getesteten Wiederanlauf: was in ein Sicherungspaket gehört, Transferwege mit Prüfpunkten, ein sechsstufiges Beratungsvorgehen mit Human-in-the-Loop, drei Praxis-Situationen aus Annettes Projekt sowie RPO/RTO als Freigabekriterien."
+    },
+    "hinter-den-kulissen.html": {
+      title: "Hinter den Kulissen",
+      blurb: "Diese Seite erklärt transparent, wie das mehrseitige Website-Projekt entstanden ist: eingesetzte KIs und Werkzeuge (ChatGPT, Claude, Gemini, VS Code, GitHub, n8n u.a.), der Tagesschau-Nachrichtenworkflow mit n8n und Gemini, die Abgrenzung zwischen Workflow, Agent und menschlicher Steuerung sowie Qualität und Human-in-the-Loop."
     }
   };
 

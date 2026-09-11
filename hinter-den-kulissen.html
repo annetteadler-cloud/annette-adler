@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hinter den Kulissen – Annette Adler, KI-Consultant &amp; Beraterin Nachhaltigkeitsmanagement</title>
+<meta name="description" content="Transparent erklärt: wie das mehrseitige Website-Projekt von Annette Adler entstanden ist, welche KIs und Werkzeuge eingesetzt wurden und wie Human-in-the-Loop umgesetzt wird.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e2001a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+nav.jump a.current{ color: var(--red); background: var(--surface-2); }
+.hdk-num{ font-family:"Archivo",sans-serif; font-weight:800; font-size:1.9rem; color: var(--red); line-height:1; margin-bottom:10px; }
+.hdk-caption{ margin-top:14px; color: var(--ink-soft); font-size:.9rem; }
+.hdk-button{ display:inline-flex; align-items:center; gap:8px; margin-top:18px; background: var(--red); color:#fff; text-decoration:none; font-weight:700; font-size:.92rem; padding:12px 20px; border-radius:6px; }
+.hdk-button:hover{ background: var(--red-deep); }
+.hdk-roles{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:24px; }
+@media (max-width:700px){ .hdk-roles{ grid-template-columns:1fr; } }
+.hdk-role-card{ background: var(--surface); border:1px solid var(--rule); border-radius:6px; padding:18px 20px; }
+.hdk-role-card h3{ font-size:.96rem; font-family:"Public Sans",sans-serif; font-weight:700; }
+.hdk-role-card p{ margin-top:6px; color: var(--ink-soft); font-size:.9rem; }
+.hdk-role-card.accent{ border-top:3px solid var(--red); }
+.hdk-gate-chain{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:22px; }
+.hdk-gate{ background: var(--surface-2); border-radius:20px; padding:8px 16px; font-size:.84rem; font-weight:700; color: var(--ink); white-space:nowrap; }
+.hdk-gate-arrow{ color: var(--red); font-weight:700; }
+.hdk-learn{ margin-top:18px; }
+.hdk-learn .note{ margin-top:14px; }
+.hdk-close{ padding:88px 0; text-align:center; }
+.hdk-close .eyebrow-name{ font-family:"Archivo",sans-serif; font-weight:700; font-size:1.05rem; color: var(--ink-soft); }
+.hdk-close h2{ font-size: clamp(1.5rem,3vw,2rem); margin-top:10px; color: var(--red); }
+.hdk-close .role{ margin-top:10px; font-weight:700; color: var(--ink); }
+.hdk-close .quote{ margin-top:26px; font-family:"Archivo",sans-serif; font-weight:600; font-size:1.2rem; max-width:46ch; margin-left:auto; margin-right:auto; }
+.hdk-close .leitmotiv{ margin-top:34px; max-width:420px; margin-left:auto; margin-right:auto; }
+.hdk-close .leitmotiv img{ width:100%; height:auto; }
+.hdk-attrib{ margin-top:8px; }
+.hdk-hero-photo{ flex:1 1 460px; min-width:0; }
+.hdk-hero-photo img{ display:block; width:100%; height:auto; border-radius:12px; box-shadow:var(--shadow); border:1px solid var(--rule); }
+.hdk-full-photo{ border-radius:10px; overflow:hidden; margin-bottom:34px; box-shadow:var(--shadow); border:1px solid var(--rule); background:var(--surface); }
+.hdk-full-photo img{ width:100%; height:auto; display:block; }
+.hdk-full-photo .caption{ padding:12px 18px; background: var(--surface-2); color: var(--ink-soft); font-size:.78rem; font-weight:600; letter-spacing:.01em; }
+.hdk-tool-icon{ display:block; width:26px; height:26px; color: var(--red); margin-bottom:10px; }
+.hdk-tool-icon svg{ width:100%; height:100%; stroke:currentColor; }
+.hdk-thumb{ width:100%; aspect-ratio:16/10; object-fit:contain; background:var(--surface-2); border-radius:6px; border:1px solid var(--rule); margin-bottom:14px; }
+.hdk-learn .fact-chip{ border-color: var(--red); display:inline-flex; align-items:center; gap:7px; }
+.hdk-chip-icon{ display:block; width:15px; height:15px; color: var(--red); flex:none; }
+.hdk-chip-icon svg{ width:100%; height:100%; stroke:currentColor; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION -->
+<!-- ============================================================ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="annette-adler.html" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="10" fill="var(--red)"/>
+          <path d="M9 29 L18 19 L24 25 L35 11" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="35" cy="11" r="3.4" fill="#fff"/>
+        </svg>
+      </span>
+      <span style="color:var(--red)">Annette Adler<small>Profil &amp; Beratungskonzept</small></span>
+    </a>
+    <nav class="jump">
+      <a href="annette-adler.html">KI &amp; Nachhaltigkeit</a>
+      <a href="meine-beratungsstrategie.html">Meine Beratungsstrategie</a>
+      <a href="nachhaltige-ki.html">Nachhaltige KI</a>
+      <a href="index.html">Projekt</a>
+      <a href="daten-dashboard.html">Daten-Dashboard</a>
+      <a href="cloud-strategie.html">Cloud-Strategie</a>
+      <a href="llm-ki-strategie.html">LLM- &amp; KI-Strategie</a>
+      <a href="evaluation-quality-assurance-blueprint.html">Eval &amp; QA</a>
+      <a href="datentransfer.html">Datentransfer</a>
+      <a href="recht-datenschutz.html">Recht &amp; Datenschutz</a>
+      <a href="annette-adler.html#kontakt">Kontakt</a>
+      <a href="hinter-den-kulissen.html" class="current">Hinter den Kulissen</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HERO -->
+<!-- ============================================================ -->
+<header class="profile-hero">
+  <div class="wrap profile-hero-inner">
+    <div class="profile-hero-text">
+      <span class="kicker">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 L12 22 M2 12 L22 12" stroke="currentColor" stroke-width="2"/></svg>
+        So ist mein Projekt entstanden
+      </span>
+      <h1>Hinter den Kulissen</h1>
+      <p class="profile-tagline">Von der ersten Idee bis zur veröffentlichten Website – mit KI, Tools, Workflows und eigener Verantwortung.</p>
+      <p class="lede">Diese Seite zeigt transparent, wie ich dieses mehrseitige Projekt entwickelt habe, welche Werkzeuge ich tatsächlich eingesetzt habe und wie menschliche Expertise, KI-Unterstützung, Automatisierung und überprüfbare Umsetzung zusammenspielen.</p>
+    </div>
+    <div class="hdk-hero-photo">
+      <img src="images/hinter-den-kulissen-hero.png" alt="Illustration: Annette Adler am Schreibtisch, umgeben von einem Ablaufschema ihres Projekts – von Idee & Zielen über Prompts, Daten und KI-Modelle bis zur veröffentlichten Website.">
+    </div>
+  </div>
+</header>
+
+<div class="rule-divider"></div>
+
+<!-- ============================================================ -->
+<!-- 01 WIE ICH DIESES PROJEKT AUFGEBAUT HABE -->
+<!-- ============================================================ -->
+<section class="band" id="aufbau">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          01 · Vorgehen
+        </div>
+        <h2>Wie ich dieses Projekt aufgebaut habe</h2>
+      </div>
+      <p class="note">Fünf Schritte von der fachlichen Idee bis zur veröffentlichten Website.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card"><span class="hdk-num">01</span><h3>Ziel klären</h3><p class="sub">Ziel, Zielgruppen, Nachhaltigkeit, KI und Anforderungen definieren.</p></article>
+      <article class="card"><span class="hdk-num">02</span><h3>Inhalte recherchieren &amp; strukturieren</h3><p class="sub">Themen recherchieren, Quellen prüfen, Inhalte ordnen und Seitenstruktur entwickeln.</p></article>
+      <article class="card"><span class="hdk-num">03</span><h3>Prompts &amp; Entwürfe entwickeln</h3><p class="sub">Mit KI Ideen, Texte, Varianten, Visualisierungskonzepte und Seiteninhalte entwickeln.</p></article>
+      <article class="card"><span class="hdk-num">04</span><h3>Technisch umsetzen</h3><p class="sub">HTML, CSS und JavaScript mit VS Code bearbeiten und die einzelnen Projektseiten integrieren.</p></article>
+      <article class="card"><span class="hdk-num">05</span><h3>Prüfen &amp; veröffentlichen</h3><p class="sub">Inhalte, Links, Layout, mobile Darstellung und Funktion prüfen und anschließend über GitHub Pages veröffentlichen.</p></article>
+      <article class="card"><span class="hdk-num">06</span><h3>Mein Beitrag</h3><ul class="plist"><li>Anforderungen formulieren</li><li>Varianten beurteilen</li><li>Inhalte prüfen</li><li>Änderungen freigeben</li><li>Veröffentlichung steuern</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 02 WELCHE KIS UND WERKZEUGE ICH EINGESETZT HABE -->
+<!-- ============================================================ -->
+<section class="band tint" id="werkzeuge">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          02 · Werkzeugkasten
+        </div>
+        <h2>Welche KIs und Werkzeuge ich eingesetzt habe</h2>
+      </div>
+      <p class="note">Nur tatsächlich eingesetzte Werkzeuge – für jedes kurz erklärt: was und wofür.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 11.5a8.5 8.5 0 0 1-11.8 7.8L4 21l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><h3>ChatGPT</h3><ul class="plist"><li>Brainstorming</li><li>Strukturierung</li><li>Textentwürfe</li><li>Formulierungen</li><li>Überarbeitung</li><li>Seitenkonzepte</li><li>Promptentwicklung</li><li>Bildgenerierung und Bildbearbeitung</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><h3>Claude</h3><ul class="plist"><li>Unterstützung bei Konzepten</li><li>Code-/HTML-/CSS-Unterstützung</li><li>Analyse und Strukturierung</li><li>Unterstützung beim n8n-Workflow</li><li>Dokumentation/Anleitung</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 14 10 21 12 14 14 12 21 10 14 3 12 10 10Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><h3>Google Gemini</h3><ul class="plist"><li>Innerhalb des n8n-Workflows</li><li>Thematische Relevanzprüfung von Nachrichten</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>VS Code</h3><ul class="plist"><li>HTML, CSS und JavaScript bearbeiten</li><li>Neue Seiten einfügen</li><li>Vorhandene Seiten ändern</li><li>Projektdateien verwalten</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m7 8-4 4 4 4m10-8 4 4-4 4M13 6l-2 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>HTML / CSS / JavaScript</h3><ul class="plist"><li>Technische Grundlage der Website</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M9 6c-1.5 2-1.5 10 0 12M15 6c1.5 2 1.5 10 0 12M3.5 9.5h17M3.5 14.5h17" stroke="currentColor" stroke-width="1.5"/></svg></span><h3>GitHub / GitHub Pages</h3><ul class="plist"><li>Dateien verwalten</li><li>Website veröffentlichen</li><li>Änderungen online bereitstellen</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="12" r="2.3" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="6" r="2.3" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="18" r="2.3" stroke="currentColor" stroke-width="1.6"/><path d="M7.2 11 16.8 6.9M7.2 13l9.6 4.1" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>n8n</h3><ul class="plist"><li>Workflow Automation</li><li>Tagesschau-Nachrichtenworkflow</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4v3a13 13 0 0 1 13 13h3A16 16 0 0 0 4 4Z" stroke="currentColor" stroke-width="1.4"/><path d="M4 10v3a7 7 0 0 1 7 7h3a10 10 0 0 0-10-10Z" stroke="currentColor" stroke-width="1.4"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.4"/></svg></span><h3>RSS</h3><ul class="plist"><li>Nachrichtenquelle des Tagesschau-Workflows</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="m4 6.5 8 6 8-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>Gmail</h3><ul class="plist"><li>Versand der automatisch erstellten Themenübersicht</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 4v16M16 4v16" stroke="currentColor" stroke-width="1.5"/></svg></span><h3>Miro</h3><ul class="plist"><li>Ideen und Inhalte visualisieren und strukturieren</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 12h8M8 16h8M8 8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><h3>Notion</h3><ul class="plist"><li>Wissensbasis, Ablage und Strukturierung</li></ul></article>
+      <article class="card"><span class="hdk-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 4v6M12 4v10M16 4v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="6" y="10" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/></svg></span><h3>Slack</h3><ul class="plist"><li>Austausch und Kommunikation im Kurs während der Projekterstellung</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 03 MEIN N8N-WORKFLOW IM DETAIL -->
+<!-- ============================================================ -->
+<section class="band" id="n8n-workflow">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 17V7a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.7"/></svg>
+          03 · Automatisierung im Detail
+        </div>
+        <h2>Mein n8n-Workflow im Detail</h2>
+      </div>
+      <p class="note">Tagesschau Themenübersicht – Nachhaltigkeit &amp; Klima</p>
+    </div>
+    <div class="hdk-full-photo">
+      <img src="images/n8n-tagesschau-workflow.png" alt="Original-Screenshot des n8n-Workflows „Tagesschau Themenübersicht – Nachhaltigkeit & Klima“ mit den Knoten Täglich 12 Uhr, Tagesschau RSS, Artikel normalisieren, Neue Artikel Duplikat-Check, Limit, Themen-Relevanz prüfen, Google Gemini Flash Lite, Digest bauen, Themenübersicht senden, Ursprüngliche Artikel für Protokoll und Gesendete Artikel speichern.">
+      <div class="caption">Original-Screenshot aus n8n · unverändert</div>
+    </div>
+    <div class="grid-3">
+      <article class="card"><span class="hdk-num">01</span><h3>Start</h3><p class="sub">Täglich um 12 Uhr automatisch ausgelöst.</p></article>
+      <article class="card"><span class="hdk-num">02</span><h3>RSS laden</h3><p class="sub">Neue Meldungen aus dem Tagesschau-Feed technisch aufbereiten.</p></article>
+      <article class="card"><span class="hdk-num">03</span><h3>Duplikate prüfen</h3><p class="sub">Bereits verarbeitete Meldungen erkennen.</p></article>
+      <article class="card"><span class="hdk-num">04</span><h3>Relevanz prüfen</h3><p class="sub">Google Gemini bewertet Nachhaltigkeit, Umweltschutz, Klimawandel und Regulatorik.</p></article>
+      <article class="card"><span class="hdk-num">05</span><h3>Digest &amp; Versand</h3><p class="sub">Themenübersicht zusammenführen und per Gmail senden.</p></article>
+      <article class="card"><span class="hdk-num">06</span><h3>Protokoll</h3><p class="sub">Gesendete Artikel speichern, damit der Prozess beim nächsten Lauf nachvollziehbar fortgesetzt wird.</p></article>
+    </div>
+    <a class="hdk-button" href="https://claude.ai/code/artifact/f178a289-e780-4be1-9875-9e8dc3fa85d9?org=cbd67638-addd-43ca-a94d-82a54094d27a" target="_blank" rel="noopener noreferrer">Zur Anleitung des Workflows ↗</a>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 04 AGENTEN, WORKFLOWS UND AUTOMATISIERUNGEN -->
+<!-- ============================================================ -->
+<section class="band tint" id="agenten">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M9 9h.01M15 9h.01M8 15c1.2 1 2.6 1.5 4 1.5s2.8-.5 4-1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          04 · Klare Abgrenzung
+        </div>
+        <h2>Agenten, Workflows und Automatisierungen</h2>
+      </div>
+      <p class="note">Wichtig: Nicht die gesamte Website ist autonom durch einen Agenten entstanden.</p>
+    </div>
+    <div class="hdk-roles">
+      <div class="hdk-role-card accent"><h3>Rechercheworkflow</h3><p>n8n automatisiert definierte Schritte zur Nachrichtenauswahl und Aufbereitung.</p></div>
+      <div class="hdk-role-card accent"><h3>KI innerhalb des Workflows</h3><p>Gemini übernimmt einen abgegrenzten Bewertungsschritt.</p></div>
+      <div class="hdk-role-card"><h3>Agentische Unterstützung</h3><p>KI hilft bei Auswahl, Strukturierung und Verarbeitung, arbeitet aber nicht ohne definierte Regeln und Grenzen.</p></div>
+      <div class="hdk-role-card"><h3>Menschliche Steuerung</h3><p>Ich bestimme Ziel, Kriterien, Inhalte, Qualitätsanforderungen und Freigabe.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 05 DIE PASSENDEN WERKZEUGE AUSWÄHLEN -->
+<!-- ============================================================ -->
+<section class="band" id="passende-werkzeuge">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 L12 22 M2 12 L22 12" stroke="currentColor" stroke-width="2"/></svg>
+          05 · Auswahl statt Vielzahl
+        </div>
+        <h2>Die passenden Werkzeuge auswählen</h2>
+      </div>
+    </div>
+    <div class="hdk-full-photo">
+      <img src="images/hinter-den-kulissen-werkzeuge.png" alt="Illustration: Annette Adler wählt aus einem Regal mit beschrifteten Boxen (Prompts, Data, Workflows, Agents, ChatGPT, Claude, Gemini, n8n u.a.) die passenden Werkzeuge für die richtige Aufgabe aus.">
+      <div class="caption">Die passenden Werkzeuge für die richtige Aufgabe</div>
+    </div>
+    <p class="hdk-caption">Nicht jedes Tool ist für jede Aufgabe geeignet. Aus der Vielzahl der Möglichkeiten wähle ich die Werkzeuge aus, die für Ziel, Aufgabe und gewünschte Wirkung sinnvoll sind. Entscheidend ist nicht die Menge der eingesetzten KI-Systeme, sondern ihr kontrolliertes Zusammenspiel.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 06 WIE DIE BEIDEN BILDER ENTSTANDEN SIND -->
+<!-- ============================================================ -->
+<section class="band tint" id="bildentstehung">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="11" r="1.6" stroke="currentColor" stroke-width="1.5"/><path d="m4 17 5-4 3 2.5 4-4 4 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          06 · Bildnachweis
+        </div>
+        <h2>Wie die beiden Bilder entstanden sind</h2>
+      </div>
+    </div>
+    <div class="grid-2">
+      <article class="card"><img class="hdk-thumb" src="images/hinter-den-kulissen-hero.png" alt="Kleine Vorschau des Hero-Motivs"><h3>Bild 1 – Hero-Motiv</h3><p class="sub">Erstellt mit ChatGPT Bildgenerierung. Visualisiert den gesamten Projektprozess von Idee und Struktur bis zur Website.</p></article>
+      <article class="card"><img class="hdk-thumb" src="images/hinter-den-kulissen-werkzeuge.png" alt="Kleine Vorschau des Werkzeugauswahl-Motivs"><h3>Bild 2 – Werkzeugauswahl</h3><p class="sub">Erstellt mit ChatGPT Bildgenerierung. Visualisiert die Auswahl und Kombination geeigneter KI-Systeme, Tools, Workflows und Methoden.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 07 IM KURS KENNENGELERNT ODER ERPROBT -->
+<!-- ============================================================ -->
+<section class="band hdk-learn" id="lernkontext">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 2 8l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" stroke="currentColor" stroke-width="1.7"/></svg>
+          07 · Abgrenzung
+        </div>
+        <h2>Im Kurs kennengelernt oder erprobt</h2>
+      </div>
+    </div>
+    <div class="card neutral">
+      <div class="fact-row">
+        <span class="fact-chip"><span class="hdk-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Perplexity</span>
+        <span class="fact-chip"><span class="hdk-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 19V7a2 2 0 0 1 2-2h5l2 2h5a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.6"/></svg></span>NotebookLM</span>
+        <span class="fact-chip"><span class="hdk-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 21h8M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Gamma</span>
+        <span class="fact-chip"><span class="hdk-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/><path d="m5 18 5-5 3 3 3-4 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>OpenArt</span>
+        <span class="fact-chip"><span class="hdk-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Lovable</span>
+        <span class="fact-chip"><span class="hdk-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M9 9h6v6H9z" stroke="currentColor" stroke-width="1.5"/></svg></span>Base44</span>
+        <span class="fact-chip">weitere im Kurs behandelte Modelle und Tools</span>
+      </div>
+      <p class="note" style="margin-top:16px">Diese Werkzeuge gehören zu meinem Lern- und Erprobungskontext. Ihre Nennung bedeutet nicht automatisch, dass sie für die Erstellung dieser Website produktiv eingesetzt wurden.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 08 QUALITÄT UND HUMAN-IN-THE-LOOP -->
+<!-- ============================================================ -->
+<section class="band tint" id="qualitaet">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12.5 11.2 15 16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
+          08 · Qualität &amp; Kontrolle
+        </div>
+        <h2>Qualität und <span style="color:var(--red)">Human-in-the-Loop</span></h2>
+      </div>
+    </div>
+    <ul class="plist">
+      <li>Anforderungen und Ziele definiere ich</li>
+      <li>Inhalte prüfe ich</li>
+      <li>Quellen und Aussagen werden kontrolliert</li>
+      <li>Varianten werden von mir bewertet</li>
+      <li>Änderungen werden bewusst übernommen</li>
+      <li>Veröffentlichung erfolgt erst nach Prüfung</li>
+    </ul>
+    <div class="hdk-gate-chain" aria-label="Meine sechs Prüfschritte">
+      <span class="hdk-gate">Daten</span><span class="hdk-gate-arrow" aria-hidden="true">→</span>
+      <span class="hdk-gate">Quellen</span><span class="hdk-gate-arrow" aria-hidden="true">→</span>
+      <span class="hdk-gate">Regulatorik</span><span class="hdk-gate-arrow" aria-hidden="true">→</span>
+      <span class="hdk-gate">Plausibilität</span><span class="hdk-gate-arrow" aria-hidden="true">→</span>
+      <span class="hdk-gate">Fachliche Freigabe</span><span class="hdk-gate-arrow" aria-hidden="true">→</span>
+      <span class="hdk-gate">Finale Freigabe</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ABSCHLUSS -->
+<!-- ============================================================ -->
+<section class="hdk-close">
+  <div class="wrap">
+    <div class="eyebrow-name">Annette Adler</div>
+    <h2>KI-Übersetzerin für verantwortliche Umsetzung</h2>
+    <p class="role">Consultant für verantwortliche KI &amp; Nachhaltigkeit</p>
+    <p class="quote">„Ich übersetze zwischen Technologie, Menschen und Verantwortung.“</p>
+    <figure class="leitmotiv">
+      <img src="assets/ki-uebersetzerin/leitmotiv-handschrift.webp" alt="Verstehen. Gemeinsam gestalten. Verantwortlich verbessern.">
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>Über diese Seite</h4>
+        <p>Diese Seite dokumentiert transparent die tatsächlich eingesetzten Werkzeuge, KI-Systeme und Arbeitsschritte hinter diesem privaten Projekt. Sie erhebt keinen Anspruch auf Vollständigkeit gegenüber jeder einzelnen Zwischenversion.</p>
+      </div>
+      <div>
+        <h4>Bildnachweis</h4>
+        <p>Hero- und Werkzeugauswahl-Illustration: mit ChatGPT Bildgenerierung erstellt, auf Basis eigener Konzepte. n8n-Screenshot: originale, unveränderte Bildschirmaufnahme aus meinem eigenen Workflow.</p>
+      </div>
+    </div>
+    <p class="fine">Diese Seite ergänzt die übrigen Projektseiten und ersetzt keine davon.</p>
+  </div>
+</footer>
+
+<div style="text-align:center;padding:28px 20px;background:#fff">
+  <img src="images/adler-nachhaltigkeit-ki-label.png" alt="ADLER · Nachhaltigkeit & KI" style="max-width:220px;width:100%;height:auto;display:inline-block">
+</div>
+
+<script src="chatbot-widget.js" defer></script>
+
+</body>
+</html>
